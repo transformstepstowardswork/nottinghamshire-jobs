@@ -16,7 +16,7 @@ from pathlib import Path
 import re
 import time
 from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qs, urljoin, urlparse
+from urllib.parse import parse_qs, unquote, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 from scripts.role_content import role_paragraphs
@@ -336,6 +336,7 @@ def parse_list(source, html, page_url):
                 raise CollectionError("iTrent detail route disagrees with observed VACANCY_ID")
             links = card.nodes("a", "Mhr-jobDetailTitleLink")
             title = links[0].text() if links else ""
+            title = re.sub(r"\s+Job profile\s*$", "", title, flags=re.I)
             if not title:
                 raise CollectionError("iTrent card title missing")
             facts = _labelled_class_facts(card, "Mhr-jobDetailEntry--label", "Mhr-jobDetailEntry--text")
@@ -427,6 +428,7 @@ def parse_detail(source, row, html):
     facts = labelled(root)
     body = ""
     apply_url = row.get("url", "")
+    participant_url = ""
     if source.source_id == PILOTS[0]:
         headers = root.nodes(cls="advertheader")
         titles = root.nodes("h1", "pagetitle")
@@ -535,11 +537,27 @@ def parse_detail(source, row, html):
         facts["closing date"] = re.sub(r"^Apply by\s*", "", closing, flags=re.I)
         content = profile.nodes(cls="Mhr-jobProfile--description")
         body = content[0].text() if content else ""
-        apply_links = [
-            link for link in profile.nodes("a")
-            if "apply" in link.text().lower() and link.attrs.get("href")
-        ]
-        apply_url = advert_url(apply_links[0].attrs["href"], row["url"]) if apply_links else row["url"]
+        for link in profile.nodes("a"):
+            href = link.attrs.get("href", "")
+            if "sharer/sharer.php" not in href:
+                continue
+            shared = parse_qs(urlparse(href).query).get("u", [""])[0]
+            if not shared:
+                continue
+            shared = unquote(shared)
+            if urlparse(shared).scheme not in {"http", "https"}:
+                continue
+            if urlparse(shared).netloc != urlparse(source.fixed_route).netloc:
+                continue
+            if _query_value(shared, "WVID") != registered_wvid:
+                continue
+            if _query_value(shared, "VACANCY_ID") != row["platform_id"]:
+                continue
+            if _query_value(shared, "USESSION"):
+                continue
+            participant_url = shared
+            break
+        apply_url = participant_url or source.fixed_route
     elif source.source_id == PILOTS[2]:
         if not root.nodes(cls="hj-job-details"):
             raise CollectionError("HealthJobsUK job summary facts missing")
@@ -569,6 +587,7 @@ def parse_detail(source, row, html):
         raw_organization=facts.get("employer") or row.get("organization") or source.name,
         detail_body=body,
         raw_apply_url=apply_url,
+        raw_source_url=((participant_url or source.fixed_route) if source.method == "itrent" else apply_url),
     )
 
 
@@ -582,6 +601,7 @@ class Transport:
         self.channel, self.headed, self.timeout = channel, headed, timeout
         self.pw = self.browser = self.page = None
         self.requests = self.cache_hits = 0
+        self.itrent_list_ready = False
 
     def close(self):
         if self.browser:
@@ -597,6 +617,75 @@ class Transport:
             self.page = self.browser.new_page()
             self.page.set_default_timeout(self.timeout)
         return self.page
+
+    def prepare_itrent_list(self, source):
+        """Open and fully expand the registered iTrent board in the browser."""
+        page = self.browser_page()
+        response = page.goto(source.fixed_route, wait_until="domcontentloaded", timeout=self.timeout)
+        self.requests += 1
+        if response is None or response.status >= 400:
+            raise CollectionError(f"iTrent list HTTP {response.status if response else 'no response'}")
+        page.wait_for_function("() => document.querySelector('#main-find-jobs')", timeout=self.timeout)
+        find_jobs = page.locator("#main-find-jobs")
+        if not find_jobs.is_visible():
+            raise CollectionError("iTrent Find jobs control is not visible")
+        find_jobs.click(timeout=self.timeout)
+        page.wait_for_function(
+            "() => /\\d+\\s+jobs?\\s+match/i.test(document.body.innerText) || /\\d+\\s+open jobs/i.test(document.body.innerText) || /Results\\s*-\\s*\\d+\\s+match(?:es)?\\s+found/i.test(document.body.innerText)",
+            timeout=self.timeout,
+        )
+        for _ in range(100):
+            more = page.locator(".Mhr-jobSearchMoreResultsButton")
+            if not more.is_visible():
+                break
+            before = page.locator(".Mhr-jobDetail--listItem[vac-id]").count()
+            more.click(timeout=self.timeout)
+            page.wait_for_function(
+                "before => document.querySelectorAll('.Mhr-jobDetail--listItem[vac-id]').length > before",
+                arg=before,
+                timeout=self.timeout,
+            )
+        else:
+            raise CollectionError("iTrent normal Show more results exceeded bounded page budget")
+        self.itrent_list_ready = True
+        return page
+
+    def fetch_itrent_profile(self, source, row):
+        """Read a profile through the board's normal in-page job-profile click."""
+        if not self.itrent_list_ready:
+            self.prepare_itrent_list(source)
+        page = self.browser_page()
+        platform_id = row["platform_id"]
+        card = page.locator(f'.Mhr-jobDetail--listItem[vac-id="{platform_id}"]')
+        if card.count() != 1:
+            raise CollectionError(f"iTrent rendered card missing for VACANCY_ID {platform_id}")
+        title_link = card.locator("a.Mhr-jobDetailTitleLink")
+        if title_link.count() != 1:
+            raise CollectionError(f"iTrent rendered profile link missing for VACANCY_ID {platform_id}")
+        self.requests += 1
+        title_link.click(timeout=self.timeout)
+        page.wait_for_function(
+            "vacancyId => { const profile = document.querySelector(`.Mhr-jobProfile[vac-id=\"${vacancyId}\"]`); return profile && profile.querySelector('.Mhr-jobProfile--description') && profile.getBoundingClientRect().height > 0; }",
+            arg=platform_id,
+            timeout=self.timeout,
+        )
+        body_text = page.locator("body").inner_text(timeout=self.timeout)
+        if rendered_access_blocked(body_text):
+            raise CollectionError(f"Access/security check blocked rendered iTrent profile click: {platform_id}")
+        html = page.content()
+        meta = self.save(html, page.url, f"itrent-detail-click:{platform_id}")
+        profile = page.locator(f'.Mhr-jobProfile[vac-id="{platform_id}"]')
+        return_controls = profile.locator("button.Mhr-jobSkipTo--bottom")
+        if return_controls.count() == 0:
+            return_controls = profile.locator("button.Mhr-jobSkipTo")
+        if return_controls.count() == 0:
+            raise CollectionError(f"iTrent profile return control missing for VACANCY_ID {platform_id}")
+        # iTrent can report the return control as visible while its long profile
+        # layout keeps it outside the viewport.  Dispatch only that button's
+        # own click event; the job-profile link above remains an ordinary
+        # rendered click and this does not bypass any access or human check.
+        return_controls.last.evaluate("element => element.click()")
+        return html, meta
 
     def save(self, html, url, key):
         check_document(html)
@@ -712,17 +801,8 @@ def enumerate_source(source, transport, checkpoint, save_checkpoint):
         else:
             raise CollectionError("NTU normal Load More exceeded bounded page budget")
     elif source.method == "itrent":
+        transport.prepare_itrent_list(source)
         page = transport.browser_page()
-        response = page.goto(source.fixed_route, wait_until="domcontentloaded", timeout=transport.timeout)
-        transport.requests += 1
-        if response is None or response.status >= 400:
-            raise CollectionError(f"iTrent list HTTP {response.status if response else 'no response'}")
-        page.wait_for_function("() => document.querySelector('#main-find-jobs')", timeout=transport.timeout)
-        find_jobs = page.locator("#main-find-jobs")
-        if not find_jobs.is_visible():
-            raise CollectionError("iTrent Find jobs control is not visible")
-        find_jobs.click(timeout=transport.timeout)
-        page.wait_for_function("() => /\\d+\\s+jobs?\\s+match/i.test(document.body.innerText) || /\\d+\\s+open jobs/i.test(document.body.innerText) || /Results\\s*-\\s*\\d+\\s+match(?:es)?\\s+found/i.test(document.body.innerText)", timeout=transport.timeout)
         for step in range(100):
             html = page.content()
             meta = transport.save(html, page.url, f"itrent-list:{step}")
@@ -876,11 +956,15 @@ def _collect(source_id, working_root, *, channel=None, headed=False, stop_after=
             if candidate.status == RawCandidateStatus.DETAIL_COMPLETE:
                 continue
             try:
-                html, meta = transport.fetch(candidate.detail_url, rendered=_source_is_rendered(source))
+                if source.method == "itrent":
+                    html, meta = transport.fetch_itrent_profile(source, rows[index])
+                else:
+                    html, meta = transport.fetch(candidate.detail_url, rendered=_source_is_rendered(source))
                 facts = parse_detail(source, rows[index], html)
                 apply_url = facts.pop("raw_apply_url", candidate.apply_url)
+                source_url = facts.pop("raw_source_url", candidate.detail_url)
                 provenance = {key: value for key, value in candidate.provenance.items() if key != "detail_error"}
-                candidates[index] = replace(candidate, **facts, apply_url=apply_url, source_url=candidate.detail_url, status=RawCandidateStatus.DETAIL_COMPLETE, provenance={**provenance, "detail_evidence": meta})
+                candidates[index] = replace(candidate, **facts, apply_url=apply_url, source_url=source_url, status=RawCandidateStatus.DETAIL_COMPLETE, provenance={**provenance, "observed_detail_url": candidate.detail_url, "detail_evidence": meta})
             except (Exception, KeyboardInterrupt) as exc:
                 failure = f"{candidate.detail_url}: {type(exc).__name__}: {exc}"
                 failures.append(failure)
