@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from urllib.parse import quote
 from unittest.mock import patch
 
 from scripts.collect_weekly_jobs import (
@@ -53,6 +54,64 @@ class FixtureTransport:
 
     def close(self):
         pass
+
+
+class FakeITrentLocator:
+    def __init__(self, *, count=1, text="", children=None):
+        self._count = count
+        self._text = text
+        self._children = children or {}
+        self.click_count = 0
+        self.evaluate_count = 0
+
+    @property
+    def last(self):
+        return self
+
+    def count(self):
+        return self._count
+
+    def locator(self, selector):
+        return self._children.get(selector, FakeITrentLocator(count=0))
+
+    def click(self, **_kwargs):
+        self.click_count += 1
+
+    def evaluate(self, _expression):
+        self.evaluate_count += 1
+
+    def inner_text(self, **_kwargs):
+        return self._text
+
+
+class FakeITrentPage:
+    def __init__(self, html, vacancy_id, url):
+        self.url = url
+        self.waits = []
+        self.body = FakeITrentLocator(text="Job profile for Housing Officer")
+        self.title_link = FakeITrentLocator()
+        self.return_control = FakeITrentLocator()
+        self.card = FakeITrentLocator(children={"a.Mhr-jobDetailTitleLink": self.title_link})
+        self.profile = FakeITrentLocator(children={
+            "button.Mhr-jobSkipTo--bottom": self.return_control,
+        })
+        self.html = html
+        self.vacancy_id = vacancy_id
+
+    def locator(self, selector):
+        if selector == "body":
+            return self.body
+        if selector.startswith(".Mhr-jobDetail--listItem"):
+            return self.card
+        if selector.startswith(".Mhr-jobProfile"):
+            return self.profile
+        raise AssertionError(f"Unexpected locator: {selector}")
+
+    def wait_for_function(self, expression, **_kwargs):
+        self.waits.append(expression)
+
+    def content(self):
+        return self.html
 
 
 class CollectorParserTests(unittest.TestCase):
@@ -164,10 +223,11 @@ class CollectorParserTests(unittest.TestCase):
         source = load_registry().get("ashfield-district-council")
         listing = '''<p>Results - 1 match found</p><div class="Mhr-card Mhr-jobDetail Mhr-jobDetail--listItem"
         vac-id="0947126vEt" bu-send="/ce0930li_webrecruitment/wrd/run/ETREC148GF.open?WVID=6777852QI7&amp;VACANCY_ID=0947126vEt">
-        <a class="Mhr-jobDetailTitleLink" href="#">Housing Officer</a><div><span class="Mhr-jobDetailEntry--label">Salary</span><span class="Mhr-jobDetailEntry--text">£35,000</span></div>
+        <a class="Mhr-jobDetailTitleLink" href="#">Housing Officer Job profile</a><div><span class="Mhr-jobDetailEntry--label">Salary</span><span class="Mhr-jobDetailEntry--text">£35,000</span></div>
         <div><span class="Mhr-jobDetailEntry--label">Location</span><span class="Mhr-jobDetailEntry--text">Kirkby-in-Ashfield</span></div></div>'''
         row = parse_list(source, listing, source.fixed_route)[0]
         self.assertEqual("0947126vEt", row["platform_id"])
+        self.assertEqual("Housing Officer", row["title"])
         self.assertIn("WVID=6777852QI7", row["url"])
         detail = '''<div class="Mhr-jobProfile"><h1 class="Mhr-jobProfile--title">Housing Officer</h1>
         <div class="Mhr-jobProfile--closingDate">Apply by 31 October 2026</div>
@@ -178,7 +238,57 @@ class CollectorParserTests(unittest.TestCase):
         facts = parse_detail(source, row, detail)
         self.assertEqual("Full time", facts["raw_work_pattern"])
         self.assertEqual("31 October 2026", facts["raw_deadline"])
-        self.assertTrue(facts["raw_apply_url"].endswith("/apply/0947126vEt"))
+        self.assertEqual(source.fixed_route, facts["raw_apply_url"])
+        self.assertEqual(source.fixed_route, facts["raw_source_url"])
+
+    def test_itrent_prefers_stable_share_url_and_ignores_session_share_url(self):
+        source = load_registry().get("ashfield-district-council")
+        row = {
+            "url": "https://ce0930li.webitrent.com/ce0930li_webrecruitment/wrd/run/ETREC109DF.open?WVID=6777852QI7&VACANCY_ID=0947126vEt",
+            "platform_id": "0947126vEt",
+        }
+        stable = "https://ce0930li.webitrent.com/ce0930li_webrecruitment/wrd/run/etrec179gf.open?WVID=6777852QI7&LANG=USA&VACANCY_ID=0947126vEt"
+        session = stable + "&USESSION=do-not-publish"
+        detail = f'''<div class="Mhr-jobProfile"><h1 class="Mhr-jobProfile--title">Housing Officer</h1>
+        <div class="Mhr-jobProfile--closingDate">Apply by 31 October 2026</div>
+        <div class="Mhr-jobProfile--description"><p>Support residents and deliver housing services.</p></div>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={quote(session, safe='')}">Session share</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={quote(stable, safe='')}">Stable share</a>
+        <a href="/apply/0947126vEt?USESSION=do-not-publish">Apply online</a></div>'''
+        facts = parse_detail(source, row, detail)
+        self.assertEqual(stable, facts["raw_apply_url"])
+        self.assertEqual(stable, facts["raw_source_url"])
+
+    def test_itrent_without_stable_share_url_falls_back_to_registered_board(self):
+        source = load_registry().get("ashfield-district-council")
+        row = {
+            "url": "https://ce0930li.webitrent.com/ce0930li_webrecruitment/wrd/run/ETREC109DF.open?WVID=6777852QI7&VACANCY_ID=0947126vEt",
+            "platform_id": "0947126vEt",
+        }
+        detail = '''<div class="Mhr-jobProfile"><h1 class="Mhr-jobProfile--title">Housing Officer</h1>
+        <div class="Mhr-jobProfile--description"><p>Support residents and deliver housing services.</p></div>
+        <a href="/apply/0947126vEt?USESSION=do-not-publish">Apply online</a></div>'''
+        facts = parse_detail(source, row, detail)
+        self.assertEqual(source.fixed_route, facts["raw_apply_url"])
+        self.assertEqual(source.fixed_route, facts["raw_source_url"])
+
+    def test_itrent_profile_fetch_uses_rendered_link_and_return_control(self):
+        source = load_registry().get("ashfield-district-council")
+        row = {"platform_id": "0947126vEt"}
+        detail = '''<div class="Mhr-jobProfile"><div class="Mhr-jobProfile--description">Details</div></div>'''
+        with tempfile.TemporaryDirectory(dir=Path.cwd()) as temp:
+            transport = Transport(Path(temp), source)
+            page = FakeITrentPage(detail, row["platform_id"], source.fixed_route)
+            transport.page = page
+            transport.itrent_list_ready = True
+            html, meta = transport.fetch_itrent_profile(source, row)
+            self.assertEqual(detail, html)
+            self.assertEqual(1, page.title_link.click_count)
+            self.assertEqual(1, page.return_control.evaluate_count)
+            self.assertEqual(1, len(page.waits))
+            transport.close()
+            self.assertEqual(source.fixed_route, meta["url"])
+            self.assertEqual(64, len(meta["sha256"]))
 
     def test_oracle_cloud_preserves_rendered_job_id_and_detail_facts(self):
         source = load_registry().get("nottingham-city-council")
