@@ -15,6 +15,7 @@
       'language.selector': 'Language selector',
       'language.label': 'Language:',
       'nav.main': 'Main navigation',
+      'nav.skip': 'Skip to main content',
       'nav.jobs': 'Jobs',
       'nav.support': 'Get support',
       'footer.nav': 'Transform Training information',
@@ -61,19 +62,20 @@
     },
     'zh-Hant': {
       'meta.jobsDescription': '搜尋來自地方議會、國民保健服務、院校、學校、學院信託、慈善機構及志願／社區組織的現有有薪職位。',
-      'meta.jobsTitle': '洛定咸郡職位機會 | Transform Training',
+      'meta.jobsTitle': '諾定咸郡職位機會 | Transform Training',
       'meta.supportDescription': 'Transform Training 提供支援，協助你建立信心、發展技能並繼續前行。',
-      'meta.supportTitle': '求職支援 | 洛定咸郡職位 | Transform Training',
-      'brand.aria': '由 Transform Training 提供的洛定咸郡職位',
+      'meta.supportTitle': '求職支援 | 諾定咸郡職位 | Transform Training',
+      'brand.aria': '由 Transform Training 提供的諾定咸郡職位',
       'brand.byTransform': '由 Transform Training 提供',
       'language.selector': '語言選擇',
       'language.label': '語言：',
       'nav.main': '主要導覽',
+      'nav.skip': '跳至主要內容',
       'nav.jobs': '職位',
       'nav.support': '獲取支援',
       'footer.nav': 'Transform Training 資訊',
       'jobs.eyebrow': '本地最新機會',
-      'jobs.title': '在洛定咸郡尋找工作',
+      'jobs.title': '在諾定咸郡尋找工作',
       'jobs.lede': '搜尋來自地方議會、國民保健服務、院校、學校、慈善機構及社區組織的近期核實職位。',
       'jobs.currentVacancies': '個現有職位',
       'jobs.lastChecked': '最近檢查',
@@ -111,7 +113,7 @@
       'footer.legalUpdate': '這份職位清單由 Transform Training 定期更新。職位可能提早截止或被撤回，因此申請前請務必查看僱主的官方招聘廣告。',
       'footer.legalRegistration': 'Transform Training Ltd 是一家在英格蘭及威爾斯註冊的擔保有限公司，註冊公司編號 08929034，亦是英格蘭及威爾斯的註冊慈善機構，慈善編號 1158831。',
       'support.eyebrow': 'Transform Training 提供的支援',
-      'support.backToJobs': '← 返回洛定咸郡職位'
+      'support.backToJobs': '← 返回諾定咸郡職位'
     }
   };
 

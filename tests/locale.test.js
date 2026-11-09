@@ -54,10 +54,15 @@ test('Jobs and Support expose only static locale hooks and the shared language s
 
   const keys = new Set();
   for (const markup of [index, support]) {
+    assert.match(markup, /<a class="brand"[^>]*data-locale-link/);
+    assert.match(markup, /<a class="skip-link" href="#main-content" data-i18n="nav\.skip"/);
+    assert.match(markup, /id="main-content"/);
     for (const match of markup.matchAll(/data-i18n(?:-[a-z-]+)?="([^"]+)"/g)) {
       keys.add(match[1]);
     }
   }
+  assert.equal(COPY['zh-Hant']['nav.skip'], '跳至主要內容');
+  assert.doesNotMatch(Object.values(COPY['zh-Hant']).join(' '), /洛定咸/);
   for (const key of keys) {
     assert.ok(COPY.en[key], `English locale is missing ${key}`);
     assert.ok(COPY['zh-Hant'][key], `Traditional Chinese locale is missing ${key}`);
