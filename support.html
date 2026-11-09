@@ -3,46 +3,55 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Support from Transform Training to help you build confidence, develop skills and move forward.">
+    <meta name="description" content="Support from Transform Training to help you build confidence, develop skills and move forward." data-i18n-content="meta.supportDescription">
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#FBAB6B">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Nottinghamshire Jobs">
-    <title>Job-search support | Nottinghamshire Jobs | Transform Training</title>
+    <title data-i18n="meta.supportTitle">Job-search support | Nottinghamshire Jobs | Transform Training</title>
     <link rel="icon" href="logo_wbg.jpg" type="image/jpeg">
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
+    <script src="locale.js" defer></script>
   </head>
   <body class="support-page">
     <a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="site">
 <header class="site-header">
   <div class="site-header__inner page-width">
-    <a class="brand" href="./" aria-label="Nottinghamshire Jobs by Transform Training">
+    <a class="brand" href="./" aria-label="Nottinghamshire Jobs by Transform Training" data-i18n-aria-label="brand.aria">
       <img src="icons/apple-touch-icon.png" alt="">
       <span class="brand-copy">
         <strong>Nottinghamshire Jobs</strong>
-        <span>by Transform Training</span>
+        <span data-i18n="brand.byTransform">by Transform Training</span>
       </span>
     </a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <a href="./">Jobs</a>
-      <a href="support.html" aria-current="page">Get support</a>
-    </nav>
+    <div class="site-header__actions">
+      <nav class="site-nav" aria-label="Main navigation" data-i18n-aria-label="nav.main">
+        <a href="./" data-locale-link data-i18n="nav.jobs">Jobs</a>
+        <a href="support.html" aria-current="page" data-locale-link data-i18n="nav.support">Get support</a>
+      </nav>
+      <nav class="language-switch" aria-label="Language selector" data-i18n-aria-label="language.selector">
+        <span class="language-switch__label" data-i18n="language.label">Language:</span>
+        <a href="support.html" data-lang-option="en" aria-current="true">English</a>
+        <span aria-hidden="true">/</span>
+        <a href="support.html?lang=zh-Hant" data-lang-option="zh-Hant">繁體中文</a>
+      </nav>
+    </div>
   </div>
 </header>
 
 <section class="hero-band">
   <div class="hero page-width">
-    <p class="eyebrow">Support from Transform Training</p>
-    <h1>Support to help you move forward</h1>
-    <p class="lede">Everyone’s situation is different. Our support is designed to work with you over time, understand what you need, and help you make realistic progress towards your next step.</p>
-    <a class="back-link" href="./">← Back to Nottinghamshire Jobs</a>
+    <p class="eyebrow" data-i18n="support.eyebrow">Support from Transform Training</p>
+    <h1 lang="en" data-locale-copy-pending="zh-Hant">Support to help you move forward</h1>
+    <p class="lede" lang="en" data-locale-copy-pending="zh-Hant">Everyone’s situation is different. Our support is designed to work with you over time, understand what you need, and help you make realistic progress towards your next step.</p>
+    <a class="back-link" href="./" data-locale-link data-i18n="support.backToJobs">← Back to Nottinghamshire Jobs</a>
   </div>
 </section>
 
-<main class="page-width" id="main-content">
+<main class="page-width" id="main-content" lang="en" data-locale-copy-pending="zh-Hant">
   <section class="intro" aria-labelledby="pathways-heading">
     <p id="pathways-heading"><strong>We currently offer two support pathways.</strong></p>
   </section>
@@ -102,9 +111,9 @@
   <div class="footer-accent"></div>
   <div class="footer-inner page-width">
     <div>
-      <h2 class="footer-title">Transform Training</h2>
-      <div class="footer-copy">Practical support to help people build confidence, develop skills and move forward.</div>
-      <address class="footer-copy footer-contact">
+      <h2 class="footer-title" data-i18n="footer.title">Transform Training</h2>
+      <div class="footer-copy" data-i18n="footer.copy">Practical support to help people build confidence, develop skills and move forward.</div>
+      <address class="footer-copy footer-contact" lang="en">
         <span>Dukeries Business Centre</span>
         <span>31–33 Retford Road</span>
         <span>Worksop</span>
@@ -115,14 +124,14 @@
         <a href="tel:+441909712220">01909 712220</a>
       </address>
     </div>
-    <nav class="footer-links" aria-label="Transform Training information">
-      <a href="https://www.transformtraining.org.uk/" target="_blank" rel="noopener noreferrer">Official website</a>
-      <a href="support.html" aria-current="page">Get job-search support</a>
-      <a href="https://www.transformtraining.org.uk/website-terms-and-conditions" target="_blank" rel="noopener noreferrer">Terms &amp; Privacy</a>
+    <nav class="footer-links" aria-label="Transform Training information" data-i18n-aria-label="footer.nav">
+      <a href="https://www.transformtraining.org.uk/" target="_blank" rel="noopener noreferrer" data-i18n="footer.official">Official website</a>
+      <a href="support.html" aria-current="page" data-locale-link data-i18n="footer.support">Get job-search support</a>
+      <a href="https://www.transformtraining.org.uk/website-terms-and-conditions" target="_blank" rel="noopener noreferrer" data-i18n="footer.terms">Terms &amp; Privacy</a>
     </nav>
     <div class="footer-legal">
-      <p>This job list is updated regularly by Transform Training. Vacancies can close early or be withdrawn, so always check the employer’s official advert before applying.</p>
-      <p>Transform Training Ltd is a company limited by guarantee registered in England and Wales, company number 08929034, and a registered charity in England and Wales, charity number 1158831.</p>
+      <p data-i18n="footer.legalUpdate">This job list is updated regularly by Transform Training. Vacancies can close early or be withdrawn, so always check the employer’s official advert before applying.</p>
+      <p data-i18n="footer.legalRegistration">Transform Training Ltd is a company limited by guarantee registered in England and Wales, company number 08929034, and a registered charity in England and Wales, charity number 1158831.</p>
       <p>© 2026 Transform Training Ltd</p>
     </div>
   </div>

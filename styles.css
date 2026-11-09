@@ -44,6 +44,7 @@
   .brand-copy{display:grid;gap:1px;min-width:0}
   .brand-copy strong{font-size:18px;line-height:1.15}
   .brand-copy span{color:var(--soft);font-size:12px;line-height:1.2}
+  .site-header__actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap}
   .site-nav{display:flex;align-items:center;gap:6px}
   .site-nav a{
     min-height:44px;display:inline-flex;align-items:center;padding:8px 12px;border-radius:12px;
@@ -51,6 +52,17 @@
   }
   .site-nav a[aria-current="page"]{background:var(--surface-subtle);color:var(--accent-deep)}
   .site-nav a:hover{background:var(--surface-soft);color:var(--text)}
+  .language-switch{
+    display:inline-flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--border);
+    border-radius:999px;background:var(--surface);color:var(--soft);font-size:12px;line-height:1
+  }
+  .language-switch__label{padding-inline:7px 3px;white-space:nowrap}
+  .language-switch a{
+    min-height:32px;display:inline-flex;align-items:center;padding:6px 8px;border-radius:999px;
+    color:var(--muted);font-weight:750;text-decoration:none;white-space:nowrap
+  }
+  .language-switch a:hover{background:var(--surface-soft);color:var(--text)}
+  .language-switch a.is-current{background:var(--surface-subtle);color:var(--accent-deep)}
 
   .hero-band{background:linear-gradient(180deg,var(--surface-warm),var(--surface-soft));border-bottom:1px solid var(--border-subtle)}
   .hero{padding:42px 0 34px}
@@ -186,8 +198,11 @@
     .brand img{width:44px;height:44px;border-radius:12px}
     .brand-copy strong{font-size:16px}
     .brand-copy span{display:none}
+    .site-header__actions{display:grid;justify-items:end;gap:4px}
     .site-nav{gap:2px}
     .site-nav a{padding:7px 8px;font-size:13px}
+    .language-switch__label{display:none}
+    .language-switch a{min-height:30px;padding:5px 7px;font-size:12px}
     .hero{padding:31px 0 27px}
     h1{font-size:clamp(2.15rem,11vw,2.8rem)}
     .lede{font-size:16px;margin-top:11px}
@@ -221,10 +236,11 @@
   }
   @media (max-width: 470px){
     .page-width{width:min(100% - 24px,1180px)}
-    .site-header__inner{align-items:flex-start;padding-block:10px}
+    .site-header__inner{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;padding-block:10px}
     .brand{gap:9px}
-    .brand-copy strong{font-size:15px;max-width:170px}
-    .site-nav a{font-size:12px}
+    .brand-copy strong{font-size:15px;max-width:132px}
+    .site-nav a{padding-inline:6px;font-size:12px}
+    .language-switch a{padding-inline:6px;font-size:11px}
     .hero{padding-top:25px}
     h1{font-size:2.15rem}
     .filter-grid{grid-template-columns:1fr}
