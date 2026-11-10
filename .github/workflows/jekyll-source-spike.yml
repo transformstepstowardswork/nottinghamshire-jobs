@@ -32,6 +32,8 @@ jobs:
           done
           cp tests/fixtures/editorial/articles_en_untagged.md _articles_en/untagged.md
           cp tests/fixtures/editorial/articles_zh_untagged.md _articles_zh/untagged.md
+          cp tests/fixtures/editorial/articles_en_shared.md _articles_en/shared.md
+          cp tests/fixtures/editorial/articles_zh_shared.md _articles_zh/shared.md
           cp icons/apple-touch-icon.png media/images/example.png
       - name: Build with GitHub Pages Jekyll
         uses: actions/jekyll-build-pages@v1

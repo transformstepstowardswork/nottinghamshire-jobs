@@ -32,14 +32,14 @@ def chips(path):
 
 en = chips('_site/articles/index.html')
 zh = chips('_site/articles/zh-hant/index.html')
-assert [text for _, text in en] == ['#Work Skills', '#Career & Training', '#<Example>'], en
-assert [text for _, text in zh] == ['#求職', '#社區'], zh
+assert [text for _, text in en] == ['#Work Skills', '#Career & Training', '#<Example>', '#work skills'], en
+assert [text for _, text in zh] == ['#求職', '#社區', '#求職'], zh
 for href, text in en + zh:
     parsed = urlsplit(href)
     assert parse_qs(parsed.query)['tag'] == [text[1:]], (href, text)
     assert parsed.path.startswith('/nottinghamshire-jobs/articles/')
-assert chips('_site/articles/en/sample/index.html') == en
-assert chips('_site/articles/zh-hant/sample/index.html') == zh
+assert chips('_site/articles/en/sample/index.html') == en[:3]
+assert chips('_site/articles/zh-hant/sample/index.html') == zh[:2]
 assert not chips('_site/articles/en/untagged/index.html')
 assert not chips('_site/articles/zh-hant/untagged/index.html')
 print('Locale-specific, deduplicated, escaped article topics and shareable links verified.')
