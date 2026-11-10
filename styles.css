@@ -234,13 +234,18 @@
     .footer-inner{grid-template-columns:1fr;gap:24px;padding-top:28px}
     .footer-legal{grid-column:auto}
   }
-  @media (max-width: 470px){
-    .page-width{width:min(100% - 24px,1180px)}
+  @media (max-width: 540px){
     .site-header__inner{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;padding-block:10px}
+    .site-header__actions{grid-column:1 / -1;display:grid;justify-content:stretch;justify-items:stretch}
+    .site-nav{justify-content:space-between}
+    .language-switch{justify-self:end}
     .brand{gap:9px}
     .brand-copy strong{font-size:15px;max-width:132px}
     .site-nav a{padding-inline:6px;font-size:12px}
     .language-switch a{padding-inline:6px;font-size:11px}
+  }
+  @media (max-width: 470px){
+    .page-width{width:min(100% - 24px,1180px)}
     .hero{padding-top:25px}
     h1{font-size:2.15rem}
     .filter-grid{grid-template-columns:1fr}
