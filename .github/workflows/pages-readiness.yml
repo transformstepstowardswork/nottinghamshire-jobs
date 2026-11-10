@@ -1,0 +1,96 @@
+name: Verify Pages readiness (no deployment)
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      artifact_sha256: ${{ steps.digest.outputs.sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Build and verify real output using production gate
+        uses: ./.github/actions/build-verified-pages
+      - name: Package verified output with official Pages uploader (no deploy)
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+          name: pages-readiness
+          retention-days: 3
+      - name: Record exact packaged artifact digest
+        id: digest
+        run: echo "sha256=$(sha256sum "$RUNNER_TEMP/artifact.tar" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+
+  handoff:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: pages-readiness
+          path: ${{ runner.temp }}/pages-handoff
+      - name: Verify exact upstream artifact and public-site integrity
+        env:
+          EXPECTED_SHA256: ${{ needs.build.outputs.artifact_sha256 }}
+        run: |
+          echo "$EXPECTED_SHA256  $RUNNER_TEMP/pages-handoff/artifact.tar" | sha256sum --check
+          mkdir "$RUNNER_TEMP/verified-site"
+          tar -xf "$RUNNER_TEMP/pages-handoff/artifact.tar" -C "$RUNNER_TEMP/verified-site"
+          python scripts/verify_editorial_html.py "$RUNNER_TEMP/verified-site"
+          python scripts/verify_public_site.py "$RUNNER_TEMP/verified-site"
+
+  hostile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Install deliberate hostile build-only fixture
+        run: cp tests/fixtures/editorial/unsafe.md _articles_en/unsafe.md
+      - name: Exercise production gate on hostile generated output
+        id: gate
+        continue-on-error: true
+        uses: ./.github/actions/build-verified-pages
+      - name: Upload only if hostile output unexpectedly passed
+        id: upload
+        if: steps.gate.outcome == 'success'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+          name: unexpected-hostile-output
+          retention-days: 1
+      - name: Require actual rejection and skipped artifact upload
+        if: always()
+        env:
+          GATE_OUTCOME: ${{ steps.gate.outcome }}
+          UPLOAD_OUTCOME: ${{ steps.upload.outcome }}
+        run: |
+          test "$GATE_OUTCOME" = failure
+          test "$UPLOAD_OUTCOME" = skipped
+          # A build/tool failure is not proof the security verifier rejected HTML.
+          test -f _site/articles/en/unsafe/index.html
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, 'scripts')
+          from verify_editorial_html import verify
+          errors = verify(Path('_site'))
+          assert any('unsafe/index.html:' in e and 'unsupported URL scheme' in e for e in errors), errors
+          print('Hostile generated HTML rejected; official artifact upload was skipped. No deployment attempted.')
+          PY

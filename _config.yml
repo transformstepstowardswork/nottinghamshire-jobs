@@ -25,4 +25,4 @@ defaults:
     values: {layout: editorial, locale: en, section: activities}
   - scope: {path: "", type: activities_zh}
     values: {layout: editorial, locale: zh-Hant, section: activities}
-exclude: [tests, scripts, README.md, AGENTS.md, Nottinghamshire_Jobs_Website_MVP_Brief.md]
+exclude: [tests, scripts, README.md, AGENTS.md, PAGES_RUNBOOK.md, Nottinghamshire_Jobs_Website_MVP_Brief.md]

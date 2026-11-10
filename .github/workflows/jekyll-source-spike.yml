@@ -1,7 +1,5 @@
 name: Validate Jekyll source
 on:
-  push:
-    branches: [main, codex/ant-424-articles-activities-cms]
   pull_request:
     branches: [main]
 permissions:
@@ -11,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
       - name: Build actual source with GitHub Pages Jekyll
         uses: actions/jekyll-build-pages@v1
       - name: Gate actual publication output
@@ -46,7 +47,7 @@ jobs:
       - name: Save non-public CI test output
         uses: actions/upload-artifact@v4
         with:
-          name: ant424-fixture-site
+          name: editorial-fixture-site
           path: _site
           retention-days: 3
       - name: Create, edit and delete independent fixtures

@@ -1,0 +1,59 @@
+name: Publish verified Pages
+
+# Inert on review branches. Owner must switch Pages Source to GitHub Actions
+# BEFORE promoting the combined editorial source to main. See PAGES_RUNBOOK.md.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-production
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out triggering immutable commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Build and verify real output
+        uses: ./.github/actions/build-verified-pages
+      - name: Upload only verified output
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+          name: github-pages
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Reject a stale run before deployment
+        shell: bash
+        run: |
+          current=$(git ls-remote https://github.com/transformstepstowardswork/nottinghamshire-jobs.git refs/heads/main | cut -f1)
+          if [ "$current" != "$GITHUB_SHA" ]; then
+            echo 'Refusing to publish: this run is no longer the current main commit.' >&2
+            exit 1
+          fi
+      - name: Deploy the verified artifact without rebuilding
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
