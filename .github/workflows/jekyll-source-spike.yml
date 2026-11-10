@@ -41,6 +41,14 @@ jobs:
           name: ant424-fixture-site
           path: _site
           retention-days: 3
+      - name: Create, edit and delete independent fixtures
+        run: python tests/editorial_fixture_lifecycle.py prepare
+      - name: Rebuild changed fixtures with GitHub Pages Jekyll
+        uses: actions/jekyll-build-pages@v1
+      - name: Assert lifecycle output and safety
+        run: |
+          python tests/editorial_fixture_lifecycle.py check
+          python scripts/verify_editorial_html.py _site
       - name: Install hostile fixture
         run: cp tests/fixtures/editorial/unsafe.md _articles_en/unsafe.md
       - name: Build hostile fixture with GitHub Pages Jekyll
