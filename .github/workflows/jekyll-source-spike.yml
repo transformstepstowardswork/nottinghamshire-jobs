@@ -22,6 +22,7 @@ jobs:
       - name: Assert generated pages and protected assets
         run: python tests/assert_jekyll_output.py
       - name: Save non-public CI test output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ant424-fixture-site
