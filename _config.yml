@@ -1,0 +1,5 @@
+baseurl: /nottinghamshire-jobs
+collections:
+  spike:
+    output: true
+    permalink: /articles/en/:name/
