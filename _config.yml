@@ -1,0 +1,28 @@
+baseurl: /nottinghamshire-jobs
+markdown: CommonMarkGhPages
+commonmark:
+  extensions: [table, strikethrough, autolink, tagfilter]
+  options: []
+collections:
+  articles_en:
+    output: true
+    permalink: /articles/en/:name/
+  articles_zh:
+    output: true
+    permalink: /articles/zh-hant/:name/
+  activities_en:
+    output: true
+    permalink: /activities/en/:name/
+  activities_zh:
+    output: true
+    permalink: /activities/zh-hant/:name/
+defaults:
+  - scope: {path: "", type: articles_en}
+    values: {layout: editorial, locale: en, section: articles}
+  - scope: {path: "", type: articles_zh}
+    values: {layout: editorial, locale: zh-Hant, section: articles}
+  - scope: {path: "", type: activities_en}
+    values: {layout: editorial, locale: en, section: activities}
+  - scope: {path: "", type: activities_zh}
+    values: {layout: editorial, locale: zh-Hant, section: activities}
+exclude: [tests, scripts, README.md, AGENTS.md, PAGES_RUNBOOK.md, Nottinghamshire_Jobs_Website_MVP_Brief.md]

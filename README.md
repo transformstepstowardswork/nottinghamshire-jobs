@@ -247,7 +247,31 @@ The live HTTPS site includes `manifest.webmanifest` and branded square icons for
 
 ## GitHub Pages
 
-GitHub Pages deploys the repository root from `main`. Normal weekly updates change only `jobs.csv`, so each approved update produces one public deployment after merge.
+The existing live publisher uses the repository root from `main`. This review
+branch prepares a single guarded Actions publisher; it has not switched the live
+Pages Source setting or deployed the editorial site. Follow the
+[commissioning and recovery runbook](PAGES_RUNBOOK.md): independent review and
+Anthony's specific approvals precede a Pages Source switch to GitHub Actions,
+then combined-source promotion. Never merge editorial source while the old
+branch-source publisher can bypass the generated-HTML verifier.
+
+After commissioning, every approved main push, including an ordinary one-file
+weekly Jobs merge, attempts `Publish verified Pages`: build → editorial/public
+integrity gates → upload that verified output → downstream Pages deploy. A failed
+gate does not upload or deploy. Weekly Jobs review/squash-merge controls remain.
+
+Non-deploying `Verify Pages readiness` checks the same build gate and official
+artifact handoff, plus a hostile generated-HTML rejection with upload skipped.
+`Validate Jekyll source` retains safe language/tag/lifecycle fixture checks.
+To inspect the actual workflow YAML locally (development-only parser):
+
+```powershell
+py -m pip install -r scripts/requirements-workflow-tests.txt
+py tests/check_pages_workflows.py
+```
+
+Local Python/Node tests require no Jekyll. The official source-only Actions checks
+provide the Pages-compatible Jekyll build on hosts without Ruby/Jekyll.
 
 ## Web analytics
 

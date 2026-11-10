@@ -1,0 +1,17 @@
+name: Build and verify Pages
+description: Build one real site directory and fail before any artifact upload on unsafe output.
+runs:
+  using: composite
+  steps:
+    - name: Build with GitHub Pages Jekyll
+      uses: actions/jekyll-build-pages@v1
+      with:
+        source: ./
+        destination: ./_site
+        build_revision: ${{ github.event.pull_request.head.sha || github.sha }}
+    - name: Verify generated editorial HTML
+      shell: bash
+      run: python scripts/verify_editorial_html.py _site
+    - name: Verify public pages, assets and feed
+      shell: bash
+      run: python scripts/verify_public_site.py _site

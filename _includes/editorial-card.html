@@ -1,0 +1,8 @@
+<article class="editorial-card" {% if page.section == 'activities' %}data-event data-start="{{ include.item.start_date | date: '%Y-%m-%d' | escape }}" data-end="{{ include.item.end_date | date: '%Y-%m-%d' | escape }}" data-end-time="{{ include.item.end_time | escape }}"{% endif %}>
+  {% if include.item.image and include.item.image_alt %}{% assign image_prefix = include.item.image | slice: 0, 35 %}{% if image_prefix == '/nottinghamshire-jobs/media/images/' %}<img class="editorial-card__image" src="{{ include.item.image | escape }}" alt="{{ include.item.image_alt | escape }}">{% endif %}{% endif %}
+  <div><h2><a href="{{ include.item.url | relative_url }}">{{ include.item.title | escape }}</a></h2>
+  {% if page.section == 'articles' and include.item.date %}<p><time datetime="{{ include.item.date | date: '%Y-%m-%d' }}">{{ include.item.date | date: '%-d %B %Y' }}</time>{% if include.item.category %} · {{ include.item.category | escape }}{% endif %}</p>{% endif %}
+  {% if page.section == 'activities' %}<p>{% if include.item.start_date %}{{ include.item.start_date | date: '%Y-%m-%d' }}{% if include.item.start_time %} · {{ include.item.start_time | escape }}{% endif %}{% else %}{% if page.locale == 'zh-Hant' %}日期待確認{% else %}Date to be confirmed{% endif %}{% endif %}{% if include.item.venue %} · {{ include.item.venue | escape }}{% endif %}</p>{% endif %}
+  {% if include.item.summary %}<p>{{ include.item.summary | escape }}</p>{% endif %}</div>
+  {% if page.section == 'articles' and include.item.tags %}<div class="article-tags" aria-label="{% if page.locale == 'zh-Hant' %}文章主題{% else %}Article topics{% endif %}">{% include article-tags.html tags=include.item.tags %}</div>{% endif %}
+</article>

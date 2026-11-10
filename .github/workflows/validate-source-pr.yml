@@ -7,11 +7,27 @@ on:
     paths:
       - app.js
       - index.html
+      - support.html
+      - locale.js
+      - activities.js
+      - articles.js
       - styles.css
+      - _config.yml
+      - _layouts/**
+      - _includes/**
+      - _articles_*/**
+      - _activities_*/**
+      - articles/**
+      - activities/**
+      - media/**
+      - .pages.yml
       - README.md
+      - EDITOR_GUIDE.md
+      - PAGES_RUNBOOK.md
       - scripts/**
       - tests/**
-      - .github/workflows/validate-source-pr.yml
+      - .github/workflows/**
+      - .github/actions/**
 
 permissions:
   contents: read
@@ -40,8 +56,16 @@ jobs:
       - name: Run Python regression tests
         run: python -m unittest discover -s tests -v
 
+      - name: Check actual Pages workflow control flow and permissions
+        run: |
+          python -m pip install -r scripts/requirements-workflow-tests.txt
+          python tests/check_pages_workflows.py
+
       - name: Validate the unchanged public jobs feed
         run: python scripts/validate_job_update.py jobs.csv
 
       - name: Run browser link-policy regression tests
         run: node --test tests/job-link-policy.test.js
+
+      - name: Run locale and activity-time regression tests
+        run: node --test tests/locale.test.js tests/activities.test.js tests/articles.test.js

@@ -1,0 +1,70 @@
+name: Validate Jekyll source
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Build actual source with GitHub Pages Jekyll
+        uses: actions/jekyll-build-pages@v1
+      - name: Gate actual publication output
+        run: python scripts/verify_editorial_html.py _site
+      - name: Save verified source build (no deployment)
+        uses: actions/upload-artifact@v4
+        with:
+          name: verified-source-site
+          path: _site
+          retention-days: 3
+      - name: Test editorial verifier
+        run: python -m unittest discover -s tests -p test_editorial_html.py -v
+      - name: Test article topic matching
+        run: node --test tests/articles.test.js
+      - name: Install synthetic build-only fixtures
+        run: |
+          for collection in articles_en articles_zh activities_en activities_zh; do
+            cp "tests/fixtures/editorial/$collection.md" "_$collection/sample.md"
+          done
+          cp tests/fixtures/editorial/articles_en_untagged.md _articles_en/untagged.md
+          cp tests/fixtures/editorial/articles_zh_untagged.md _articles_zh/untagged.md
+          cp tests/fixtures/editorial/articles_en_shared.md _articles_en/shared.md
+          cp tests/fixtures/editorial/articles_zh_shared.md _articles_zh/shared.md
+          cp icons/apple-touch-icon.png media/images/example.png
+      - name: Build with GitHub Pages Jekyll
+        uses: actions/jekyll-build-pages@v1
+      - name: Assert generated pages and protected assets
+        run: |
+          python tests/assert_jekyll_output.py
+          python tests/assert_article_tags.py
+      - name: Verify safe fixture output
+        run: python scripts/verify_editorial_html.py _site
+      - name: Save non-public CI test output
+        uses: actions/upload-artifact@v4
+        with:
+          name: editorial-fixture-site
+          path: _site
+          retention-days: 3
+      - name: Create, edit and delete independent fixtures
+        run: python tests/editorial_fixture_lifecycle.py prepare
+      - name: Rebuild changed fixtures with GitHub Pages Jekyll
+        uses: actions/jekyll-build-pages@v1
+      - name: Assert lifecycle output and safety
+        run: |
+          python tests/editorial_fixture_lifecycle.py check
+          python scripts/verify_editorial_html.py _site
+      - name: Install hostile fixture
+        run: cp tests/fixtures/editorial/unsafe.md _articles_en/unsafe.md
+      - name: Build hostile fixture with GitHub Pages Jekyll
+        uses: actions/jekyll-build-pages@v1
+      - name: Confirm hostile output is blocked
+        run: |
+          if python scripts/verify_editorial_html.py _site; then
+            echo 'ERROR: hostile editorial output was accepted'
+            exit 1
+          fi

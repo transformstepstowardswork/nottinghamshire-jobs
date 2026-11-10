@@ -1,0 +1,2 @@
+# Development-only parser for inspecting the actual GitHub Actions YAML graph.
+PyYAML==6.0.3

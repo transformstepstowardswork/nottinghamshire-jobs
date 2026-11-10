@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="{{ page.locale | default: 'en' }}" data-content-locale="{{ page.locale | default: 'en' }}" data-content-section="{{ page.section }}" data-site-base="{{ '/' | relative_url }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FBAB6B">
+  <title>{{ page.title | escape }} | Nottinghamshire Jobs | Transform Training</title>
+  <link rel="icon" href="{{ '/logo_wbg.jpg' | relative_url }}" type="image/jpeg">
+  <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
+  <script src="{{ '/locale.js' | relative_url }}" defer></script>
+  {% if page.section == 'articles' and page.layout == 'archive' %}<script src="{{ '/articles.js' | relative_url }}" defer></script>{% endif %}
+  {% if page.section == 'activities' %}<script src="{{ '/activities.js' | relative_url }}" defer></script>{% endif %}
+</head>
+<body>
+<a class="skip-link" href="#main-content" data-i18n="nav.skip">{% if page.locale == 'zh-Hant' %}跳至主要內容{% else %}Skip to main content{% endif %}</a>
+<div class="site">
+  <header class="site-header"><div class="site-header__inner page-width">
+    <a class="brand" href="{{ '/' | relative_url }}" data-locale-link aria-label="Nottinghamshire Jobs by Transform Training" data-i18n-aria-label="brand.aria"><img src="{{ '/icons/apple-touch-icon.png' | relative_url }}" alt=""><span class="brand-copy"><strong>Nottinghamshire Jobs</strong><span data-i18n="brand.byTransform">{% if page.locale == 'zh-Hant' %}由 Transform Training 提供{% else %}by Transform Training{% endif %}</span></span></a>
+    <div class="site-header__actions"><nav class="site-nav" aria-label="Main navigation" data-i18n-aria-label="nav.main">
+      <a href="{{ '/' | relative_url }}" data-locale-link data-i18n="nav.jobs">{% if page.locale == 'zh-Hant' %}職位{% else %}Jobs{% endif %}</a>
+      <a href="{{ '/support.html' | relative_url }}" data-locale-link data-i18n="nav.support">{% if page.locale == 'zh-Hant' %}獲取支援{% else %}Get support{% endif %}</a>
+      <a href="{{ '/articles/' | relative_url }}{% if page.locale == 'zh-Hant' %}zh-hant/{% endif %}" data-section-link="articles" data-i18n="nav.articles" {% if page.section == 'articles' %}aria-current="page"{% endif %}>{% if page.locale == 'zh-Hant' %}文章{% else %}Articles{% endif %}</a>
+      <a href="{{ '/activities/' | relative_url }}{% if page.locale == 'zh-Hant' %}zh-hant/{% endif %}" data-section-link="activities" data-i18n="nav.activities" {% if page.section == 'activities' %}aria-current="page"{% endif %}>{% if page.locale == 'zh-Hant' %}活動{% else %}Activities{% endif %}</a>
+    </nav><nav class="language-switch" aria-label="Language selector" data-i18n-aria-label="language.selector"><span class="language-switch__label" data-i18n="language.label">{% if page.locale == 'zh-Hant' %}語言：{% else %}Language:{% endif %}</span>
+      <a href="{{ '/' | append: page.section | append: '/' | relative_url }}" data-lang-option="en" {% if page.locale != 'zh-Hant' %}aria-current="true"{% endif %}>English</a><span aria-hidden="true">/</span>
+      <a href="{{ '/' | append: page.section | append: '/zh-hant/' | relative_url }}" data-lang-option="zh-Hant" {% if page.locale == 'zh-Hant' %}aria-current="true"{% endif %}>繁體中文</a>
+    </nav></div>
+  </div></header>
+  {{ content }}
+  {% include editorial-footer.html %}
+</div>
+</body></html>

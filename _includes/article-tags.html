@@ -1,0 +1,10 @@
+{% assign seen_tags = '' | split: ',' %}
+{% capture archive %}/articles/{% if page.locale == 'zh-Hant' %}zh-hant/{% endif %}{% endcapture %}
+{% for raw_tag in include.tags %}
+  {% assign label = raw_tag | strip | split: ' ' | join: ' ' %}
+  {% assign key = label | downcase %}
+  {% unless label == '' or seen_tags contains key %}
+    {% assign seen_tags = seen_tags | push: key %}
+    <a class="tag-chip" href="{{ archive | relative_url }}?tag={{ label | url_encode | escape }}">#{{ label | escape }}</a>
+  {% endunless %}
+{% endfor %}
