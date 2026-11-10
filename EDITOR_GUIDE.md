@@ -4,6 +4,8 @@ After the CMS has been commissioned, open Pages CMS and select this repository a
 
 Choose **New** to create an entry, or open an existing entry to edit or delete it. Add a title and the available details. For an activity, leave unknown dates, times, cost and other details blank; use 24-hour `HH:MM` times in London local time. Unknown cost is displayed as unspecified. Add the main text in the rich-text editor; headings, lists, links and inline images can be added there. Use an `https://` or `http://` address for registration links.
 
+For an article, add one or more topics using the repeatable topic field, one topic per item. Enter the words without `#`; the site adds it. Readers can select topics on that language's article archive. Leave the field empty when no topic is needed.
+
 Choose an image from the image picker or upload one. Use a common web image (JPEG, PNG, WebP or GIF), a descriptive filename and a reasonably small file; add a clear image description in the alt-text field. Add a description to inline images too. A cover without an image description is not displayed. The CMS stores uploaded images in this repository.
 
 Save the entry. **Save creates a Git commit; it does not prove the site built or published successfully.** Check the repository's Pages build in GitHub Actions, then open the published archive and the entry's link in the intended language. A new item receives a stable filename; changing its title does not change that address. Entries with the same title remain separate. If the build reports an editorial HTML error, remove the unsafe link or unsupported raw HTML and save again; ordinary headings, lists, links and images are supported.

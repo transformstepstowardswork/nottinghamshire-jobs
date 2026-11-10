@@ -10,6 +10,7 @@ on:
       - support.html
       - locale.js
       - activities.js
+      - articles.js
       - styles.css
       - _config.yml
       - _layouts/**
@@ -60,4 +61,4 @@ jobs:
         run: node --test tests/job-link-policy.test.js
 
       - name: Run locale and activity-time regression tests
-        run: node --test tests/locale.test.js tests/activities.test.js
+        run: node --test tests/locale.test.js tests/activities.test.js tests/articles.test.js

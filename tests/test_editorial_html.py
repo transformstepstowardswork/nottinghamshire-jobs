@@ -28,6 +28,15 @@ class EditorialSafetyTests(unittest.TestCase):
     def test_rejects_unsupported_metadata_and_inline_script(self):
         self.assertTrue(errors('<meta http-equiv="refresh" content="0;url=https://evil.test">'))
         self.assertTrue(errors('<script src="/nottinghamshire-jobs/locale.js" defer>alert(1)</script>'))
+        self.assertTrue(errors('<script src="/nottinghamshire-jobs/articles.js" defer></script>'))
+
+    def test_article_script_is_allowed_only_once_in_head(self):
+        parser = EditorialParser('/nottinghamshire-jobs/articles/')
+        parser.feed('<!doctype html><html><head><script src="/nottinghamshire-jobs/locale.js" defer></script><script src="/nottinghamshire-jobs/articles.js" defer></script></head><body><a href="/nottinghamshire-jobs/articles/?tag=Career+%26+Training">#Career &amp; Training</a></body></html>')
+        self.assertEqual(parser.finish(), [])
+        parser = EditorialParser('/nottinghamshire-jobs/articles/')
+        parser.feed('<!doctype html><html><head><script src="/nottinghamshire-jobs/locale.js" defer></script><script src="/nottinghamshire-jobs/articles.js" defer></script><script src="/nottinghamshire-jobs/articles.js" defer></script></head><body></body></html>')
+        self.assertTrue(parser.finish())
 
 
 if __name__ == '__main__':

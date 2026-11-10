@@ -14,7 +14,7 @@ ATTRS = {
     'meta': {'charset', 'name', 'content'}, 'link': {'href', 'rel', 'type'},
     'script': {'src', 'defer'}, 'ol': {'start'}, 'th': {'align'}, 'td': {'align'},
 }
-SCRIPTS = {BASE + 'locale.js', BASE + 'activities.js'}
+SCRIPTS = {BASE + 'locale.js', BASE + 'activities.js', BASE + 'articles.js'}
 
 
 def decoded_url(value):

@@ -360,6 +360,11 @@
 .editorial-card__image { width: 100%; max-width: 16rem; max-height: 10rem; object-fit: cover; border-radius: .6rem; margin-bottom: .8rem; }
 .editorial-card h2 { margin: 0 0 .5rem; font-size: 1.3rem; }
 .editorial-card p { margin: .4rem 0 0; }
+.article-tags, .article-tag-filter { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.article-tag-filter { margin: 0 0 1.5rem; }
+.article-tag-filter[hidden] { display: none; }
+.tag-chip { display: inline-block; padding: .4rem .75rem; border: 1px solid var(--border-strong); border-radius: 999px; color: var(--accent-deep); background: var(--surface); font-weight: 650; line-height: 1.3; text-decoration: none; overflow-wrap: anywhere; }
+.tag-chip:hover, .tag-chip[aria-current="true"] { background: var(--surface-subtle); color: var(--accent-deep); }
 .editorial-empty, .event-nojs { padding: 1.2rem; background: #fff8f1; border-radius: .75rem; }
 .event-group { margin-bottom: 2.5rem; }
 .event-group h2 { margin-bottom: 1rem; }

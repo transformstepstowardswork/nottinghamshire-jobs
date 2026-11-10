@@ -8,6 +8,7 @@ layout: base
       <h1>{{ page.title | escape }}</h1>
       {% if page.date %}<p><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%-d %B %Y' }}</time>{% if page.category %} · {{ page.category | escape }}{% endif %}</p>{% endif %}
       {% if page.summary %}<p class="lede">{{ page.summary | escape }}</p>{% endif %}
+      {% if page.section == 'articles' and page.tags %}<div class="article-tags" aria-label="{% if page.locale == 'zh-Hant' %}文章主題{% else %}Article topics{% endif %}">{% include article-tags.html tags=page.tags %}</div>{% endif %}
     </header>
     {% if page.image and page.image_alt %}{% assign image_prefix = page.image | slice: 0, 35 %}{% if image_prefix == '/nottinghamshire-jobs/media/images/' %}<img class="editorial-cover" src="{{ page.image | escape }}" alt="{{ page.image_alt | escape }}">{% endif %}{% endif %}
     {% if page.section == 'activities' %}

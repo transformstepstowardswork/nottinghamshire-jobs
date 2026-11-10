@@ -6,7 +6,9 @@ layout: base
   {% if page.section == 'articles' %}
     {% assign items = site[page.collection] | sort: 'date' | reverse %}
     {% if items.size == 0 %}<p class="editorial-empty">{% if page.locale == 'zh-Hant' %}暫時沒有文章。{% else %}There are no articles yet.{% endif %}</p>{% endif %}
-    <div class="editorial-list">{% for item in items %}{% include editorial-card.html item=item %}{% endfor %}</div>
+    <nav id="article-tag-filter" class="article-tag-filter" aria-label="{% if page.locale == 'zh-Hant' %}按主題篩選文章{% else %}Filter articles by topic{% endif %}" hidden></nav>
+    <p id="article-tag-empty" class="editorial-empty" hidden>{% if page.locale == 'zh-Hant' %}沒有符合這個主題的文章。{% else %}No articles match this topic.{% endif %}</p>
+    <div class="editorial-list" id="article-list">{% for item in items %}{% include editorial-card.html item=item %}{% endfor %}</div>
   {% else %}
     {% assign items = site[page.collection] | sort: 'start_date' %}
     {% if items.size == 0 %}<p class="editorial-empty">{% if page.locale == 'zh-Hant' %}暫時沒有活動。{% else %}There are no activities yet.{% endif %}</p>{% endif %}

@@ -39,6 +39,10 @@ content:
       - name: category
         label: Category / 類別
         type: string
+      - name: tags
+        label: Article topics (one per item) / 文章主題（每項一個）
+        type: string
+        list: true
       - name: body
         label: Content / 內容
         type: rich-text
@@ -77,6 +81,10 @@ content:
       - name: category
         label: Category / 類別
         type: string
+      - name: tags
+        label: Article topics (one per item) / 文章主題（每項一個）
+        type: string
+        list: true
       - name: body
         label: Content / 內容
         type: rich-text

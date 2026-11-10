@@ -23,16 +23,22 @@ jobs:
           retention-days: 3
       - name: Test editorial verifier
         run: python -m unittest discover -s tests -p test_editorial_html.py -v
+      - name: Test article topic matching
+        run: node --test tests/articles.test.js
       - name: Install synthetic build-only fixtures
         run: |
           for collection in articles_en articles_zh activities_en activities_zh; do
             cp "tests/fixtures/editorial/$collection.md" "_$collection/sample.md"
           done
+          cp tests/fixtures/editorial/articles_en_untagged.md _articles_en/untagged.md
+          cp tests/fixtures/editorial/articles_zh_untagged.md _articles_zh/untagged.md
           cp icons/apple-touch-icon.png media/images/example.png
       - name: Build with GitHub Pages Jekyll
         uses: actions/jekyll-build-pages@v1
       - name: Assert generated pages and protected assets
-        run: python tests/assert_jekyll_output.py
+        run: |
+          python tests/assert_jekyll_output.py
+          python tests/assert_article_tags.py
       - name: Verify safe fixture output
         run: python scripts/verify_editorial_html.py _site
       - name: Save non-public CI test output
