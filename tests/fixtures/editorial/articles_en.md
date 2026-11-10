@@ -12,6 +12,4 @@ image_alt: Sample image
 
 [Safe link](https://example.org/)
 
-[Unsafe link](javascript:alert(1))
-
-<script>alert(1)</script>
+![Inline example](/nottinghamshire-jobs/media/images/example.png)

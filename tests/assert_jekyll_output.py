@@ -20,6 +20,7 @@ assert '/nottinghamshire-jobs/articles/zh-hant/' in chinese
 assert 'Sample heading' in article and 'https://example.org/' in article
 assert 'href="javascript:' not in article.lower(), 'Unsafe Markdown link survived rendering'
 assert '<script>alert' not in article.lower(), 'Raw script survived rendering'
+assert 'alt="Inline example"' in article
 assert 'href="javascript:' not in activity.lower()
 assert 'Sample image' in article and '/nottinghamshire-jobs/media/images/example.png' in article
 assert (site / 'media/images/example.png').read_bytes() == Path('icons/apple-touch-icon.png').read_bytes()
