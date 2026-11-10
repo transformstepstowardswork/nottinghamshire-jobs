@@ -1,4 +1,4 @@
-name: Jekyll source compatibility spike
+name: Validate Jekyll source
 on:
   push:
     branches: [codex/ant-424-articles-activities-cms]
@@ -11,29 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install synthetic build-only fixture
+      - name: Install synthetic build-only fixtures
         run: |
-          mkdir -p _spike _layouts
-          cp tests/fixtures/jekyll-spike/sample.md _spike/sample.md
-          cp tests/fixtures/jekyll-spike/spike.html _layouts/spike.html
+          for collection in articles_en articles_zh activities_en activities_zh; do
+            cp "tests/fixtures/editorial/$collection.md" "_$collection/sample.md"
+          done
+          cp icons/apple-touch-icon.png media/images/example.png
       - name: Build with GitHub Pages Jekyll
         uses: actions/jekyll-build-pages@v1
-      - name: Assert output and protected assets
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          site = Path('_site')
-          sample = (site / 'articles/en/sample/index.html').read_text(encoding='utf-8')
-          assert '<html lang="en">' in sample
-          assert '<h1>Synthetic compatibility sample</h1>' in sample
-          assert 'href="/nottinghamshire-jobs/"' in sample
-          for name in ['index.html', 'support.html', 'app.js', 'jobs.csv', 'locale.js', 'styles.css', 'logo_wbg.jpg', 'manifest.webmanifest', 'icons/apple-touch-icon.png']:
-              assert (site / name).read_bytes() == Path(name).read_bytes(), name
-          assert 'fetch(`jobs.csv?updated=' in (site / 'app.js').read_text(encoding='utf-8')
-          for name in ['index.html', 'support.html']:
-              html = (site / name).read_text(encoding='utf-8')
-              for asset in ['styles.css', 'locale.js', 'icons/apple-touch-icon.png']:
-                  assert asset in html, (name, asset)
-          print('Synthetic permalink and root assets verified.')
-          PY
+      - name: Assert generated pages and protected assets
+        run: python tests/assert_jekyll_output.py
+      - name: Save non-public CI test output
+        uses: actions/upload-artifact@v4
+        with:
+          name: ant424-fixture-site
+          path: _site
+          retention-days: 3

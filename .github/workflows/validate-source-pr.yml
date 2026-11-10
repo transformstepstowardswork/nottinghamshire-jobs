@@ -7,8 +7,21 @@ on:
     paths:
       - app.js
       - index.html
+      - support.html
+      - locale.js
+      - activities.js
       - styles.css
+      - _config.yml
+      - _layouts/**
+      - _includes/**
+      - _articles_*/**
+      - _activities_*/**
+      - articles/**
+      - activities/**
+      - media/**
+      - .pages.yml
       - README.md
+      - EDITOR_GUIDE.md
       - scripts/**
       - tests/**
       - .github/workflows/validate-source-pr.yml
@@ -45,3 +58,6 @@ jobs:
 
       - name: Run browser link-policy regression tests
         run: node --test tests/job-link-policy.test.js
+
+      - name: Run locale and activity-time regression tests
+        run: node --test tests/locale.test.js tests/activities.test.js

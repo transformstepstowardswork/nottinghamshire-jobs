@@ -18,6 +18,8 @@
       'nav.skip': 'Skip to main content',
       'nav.jobs': 'Jobs',
       'nav.support': 'Get support',
+      'nav.articles': 'Articles',
+      'nav.activities': 'Activities',
       'footer.nav': 'Transform Training information',
       'jobs.eyebrow': 'Current local opportunities',
       'jobs.title': 'Find a job in Nottinghamshire',
@@ -73,6 +75,8 @@
       'nav.skip': '跳至主要內容',
       'nav.jobs': '職位',
       'nav.support': '獲取支援',
+      'nav.articles': '文章',
+      'nav.activities': '活動',
       'footer.nav': 'Transform Training 資訊',
       'jobs.eyebrow': '本地最新機會',
       'jobs.title': '在諾定咸郡尋找工作',
@@ -159,7 +163,7 @@
     });
   }
 
-  function applyLocale(document, window, locale = localeFromSearch(window.location.search)) {
+  function applyLocale(document, window, locale = document.documentElement.dataset.contentLocale || localeFromSearch(window.location.search)) {
     const activeLocale = normalizeLocale(locale);
     document.documentElement.setAttribute('lang', activeLocale);
     document.documentElement.setAttribute('data-locale', activeLocale);
@@ -184,10 +188,20 @@
       }
     });
 
+    document.querySelectorAll('[data-section-link]').forEach((link) => {
+      const section = link.getAttribute('data-section-link');
+      const base = document.documentElement.dataset.siteBase || new URL('.', window.location.href).pathname;
+      link.setAttribute('href', `${base}${section}/${activeLocale === TRADITIONAL_CHINESE_LOCALE ? 'zh-hant/' : ''}`);
+    });
+
     document.querySelectorAll('[data-lang-option]').forEach((link) => {
       const optionLocale = normalizeLocale(link.getAttribute('data-lang-option'));
       const href = link.getAttribute('href') || currentUrl.pathname;
-      link.setAttribute('href', localizedUrl(href, optionLocale, currentUrl.href));
+      const section = document.documentElement.dataset.contentSection;
+      const base = document.documentElement.dataset.siteBase;
+      link.setAttribute('href', section && base
+        ? `${base}${section}/${optionLocale === TRADITIONAL_CHINESE_LOCALE ? 'zh-hant/' : ''}`
+        : localizedUrl(href, optionLocale, currentUrl.href));
       if (optionLocale === activeLocale) {
         link.setAttribute('aria-current', 'true');
         link.classList.add('is-current');

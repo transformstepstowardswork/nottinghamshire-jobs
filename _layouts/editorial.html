@@ -1,0 +1,26 @@
+---
+layout: base
+---
+<main id="main-content" class="page-width editorial-page">
+  <a class="editorial-back" href="{{ '/' | append: page.section | append: '/' | relative_url }}{% if page.locale == 'zh-Hant' %}zh-hant/{% endif %}">{% if page.locale == 'zh-Hant' %}← 返回{% if page.section == 'articles' %}文章{% else %}活動{% endif %}{% else %}← Back to {{ page.section }}{% endif %}</a>
+  <article class="editorial-article">
+    <header><p class="eyebrow">{% if page.section == 'articles' %}{% if page.locale == 'zh-Hant' %}文章{% else %}Article{% endif %}{% else %}{% if page.locale == 'zh-Hant' %}活動{% else %}Activity{% endif %}{% endif %}</p>
+      <h1>{{ page.title | escape }}</h1>
+      {% if page.date %}<p><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%-d %B %Y' }}</time>{% if page.category %} · {{ page.category | escape }}{% endif %}</p>{% endif %}
+      {% if page.summary %}<p class="lede">{{ page.summary | escape }}</p>{% endif %}
+    </header>
+    {% if page.image and page.image_alt %}{% assign image_prefix = page.image | slice: 0, 35 %}{% if image_prefix == '/nottinghamshire-jobs/media/images/' %}<img class="editorial-cover" src="{{ page.image | escape }}" alt="{{ page.image_alt | escape }}">{% endif %}{% endif %}
+    {% if page.section == 'activities' %}
+      <dl class="event-details">
+        <div><dt>{% if page.locale == 'zh-Hant' %}日期及時間{% else %}Date and time{% endif %}</dt><dd>{% if page.start_date %}{{ page.start_date | escape }}{% if page.start_time %} {{ page.start_time | escape }}{% endif %}{% if page.end_date %} – {{ page.end_date | escape }}{% endif %}{% if page.end_time %} {{ page.end_time | escape }}{% endif %} (Europe/London){% else %}{% if page.locale == 'zh-Hant' %}尚未確定{% else %}To be confirmed{% endif %}{% endif %}</dd></div>
+        <div><dt>{% if page.locale == 'zh-Hant' %}地點{% else %}Venue{% endif %}</dt><dd>{{ page.venue | default: 'To be confirmed / 尚未確定' | escape }}</dd></div>
+        <div><dt>{% if page.locale == 'zh-Hant' %}主辦機構{% else %}Organiser{% endif %}</dt><dd>{{ page.organiser | default: 'To be confirmed / 尚未確定' | escape }}</dd></div>
+        <div><dt>{% if page.locale == 'zh-Hant' %}參加資格{% else %}Eligibility{% endif %}</dt><dd>{{ page.eligibility | default: 'Not specified / 未有資料' | escape }}</dd></div>
+        <div><dt>{% if page.locale == 'zh-Hant' %}費用{% else %}Cost{% endif %}</dt><dd>{{ page.cost | default: 'Not specified / 未有資料' | escape }}</dd></div>
+      </dl>
+      {% assign scheme8 = page.registration_url | slice: 0, 8 | downcase %}{% assign scheme7 = page.registration_url | slice: 0, 7 | downcase %}
+      {% if scheme8 == 'https://' or scheme7 == 'http://' %}<p><a href="{{ page.registration_url | escape }}" rel="noopener noreferrer">{% if page.locale == 'zh-Hant' %}報名或查看更多詳情{% else %}Registration or further details{% endif %}</a></p>{% endif %}
+    {% endif %}
+    <div class="editorial-prose">{{ content }}</div>
+  </article>
+</main>

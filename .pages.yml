@@ -1,0 +1,204 @@
+media:
+  input: media/images
+  output: /nottinghamshire-jobs/media/images
+  extensions: [jpg, jpeg, png, webp, gif]
+  rename: safe
+content:
+  - name: articles_en
+    label: Articles — English
+    type: collection
+    path: _articles_en
+    format: yaml-frontmatter
+    subfolders: false
+    filename:
+      template: "{year}-{month}-{day}-{hour}-{minute}-{second}.md"
+      field: false
+    view:
+      primary: title
+    fields:
+      - name: title
+        label: Title / 標題
+        type: string
+        required: true
+      - name: summary
+        label: Short summary / 簡介
+        type: text
+      - name: image
+        label: Cover image / 封面圖片
+        type: image
+      - name: image_alt
+        label: Image description / 圖片描述
+        type: string
+      - name: date
+        label: Publication date / 發布日期
+        type: date
+        required: true
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: category
+        label: Category / 類別
+        type: string
+      - name: body
+        label: Content / 內容
+        type: rich-text
+  - name: articles_zh
+    label: 文章 — 繁體中文
+    type: collection
+    path: _articles_zh
+    format: yaml-frontmatter
+    subfolders: false
+    filename:
+      template: "{year}-{month}-{day}-{hour}-{minute}-{second}.md"
+      field: false
+    view:
+      primary: title
+    fields:
+      - name: title
+        label: Title / 標題
+        type: string
+        required: true
+      - name: summary
+        label: Short summary / 簡介
+        type: text
+      - name: image
+        label: Cover image / 封面圖片
+        type: image
+      - name: image_alt
+        label: Image description / 圖片描述
+        type: string
+      - name: date
+        label: Publication date / 發布日期
+        type: date
+        required: true
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: category
+        label: Category / 類別
+        type: string
+      - name: body
+        label: Content / 內容
+        type: rich-text
+  - name: activities_en
+    label: Activities — English
+    type: collection
+    path: _activities_en
+    format: yaml-frontmatter
+    subfolders: false
+    filename:
+      template: "{year}-{month}-{day}-{hour}-{minute}-{second}.md"
+      field: false
+    view:
+      primary: title
+    fields:
+      - name: title
+        label: Title / 標題
+        type: string
+        required: true
+      - name: summary
+        label: Short summary / 簡介
+        type: text
+      - name: image
+        label: Cover image / 封面圖片
+        type: image
+      - name: image_alt
+        label: Image description / 圖片描述
+        type: string
+      - name: start_date
+        label: Start date / 開始日期
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: start_time
+        label: Start time (HH:MM) / 開始時間
+        type: string
+      - name: end_date
+        label: End date / 結束日期
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: end_time
+        label: End time (HH:MM) / 結束時間
+        type: string
+      - name: venue
+        label: Venue or online / 地點或網上
+        type: string
+      - name: organiser
+        label: Organiser / 主辦機構
+        type: string
+      - name: eligibility
+        label: Who can attend / 參加資格
+        type: text
+      - name: cost
+        label: Cost, if known / 費用（如已知）
+        type: string
+      - name: registration_url
+        label: Registration or details URL / 報名或詳情網址
+        type: string
+      - name: body
+        label: Content / 內容
+        type: rich-text
+  - name: activities_zh
+    label: 活動 — 繁體中文
+    type: collection
+    path: _activities_zh
+    format: yaml-frontmatter
+    subfolders: false
+    filename:
+      template: "{year}-{month}-{day}-{hour}-{minute}-{second}.md"
+      field: false
+    view:
+      primary: title
+    fields:
+      - name: title
+        label: Title / 標題
+        type: string
+        required: true
+      - name: summary
+        label: Short summary / 簡介
+        type: text
+      - name: image
+        label: Cover image / 封面圖片
+        type: image
+      - name: image_alt
+        label: Image description / 圖片描述
+        type: string
+      - name: start_date
+        label: Start date / 開始日期
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: start_time
+        label: Start time (HH:MM) / 開始時間
+        type: string
+      - name: end_date
+        label: End date / 結束日期
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: end_time
+        label: End time (HH:MM) / 結束時間
+        type: string
+      - name: venue
+        label: Venue or online / 地點或網上
+        type: string
+      - name: organiser
+        label: Organiser / 主辦機構
+        type: string
+      - name: eligibility
+        label: Who can attend / 參加資格
+        type: text
+      - name: cost
+        label: Cost, if known / 費用（如已知）
+        type: string
+      - name: registration_url
+        label: Registration or details URL / 報名或詳情網址
+        type: string
+      - name: body
+        label: Content / 內容
+        type: rich-text

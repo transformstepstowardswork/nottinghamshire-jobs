@@ -1,0 +1,21 @@
+---
+layout: base
+---
+<section class="hero-band"><div class="hero page-width"><p class="eyebrow">Transform Training</p><h1>{{ page.title | escape }}</h1><p class="lede">{{ page.intro | escape }}</p></div></section>
+<main id="main-content" class="page-width editorial-page">
+  {% if page.section == 'articles' %}
+    {% assign items = site[page.collection] | sort: 'date' | reverse %}
+    {% if items.size == 0 %}<p class="editorial-empty">{% if page.locale == 'zh-Hant' %}暫時沒有文章。{% else %}There are no articles yet.{% endif %}</p>{% endif %}
+    <div class="editorial-list">{% for item in items %}{% include editorial-card.html item=item %}{% endfor %}</div>
+  {% else %}
+    {% assign items = site[page.collection] | sort: 'start_date' %}
+    {% if items.size == 0 %}<p class="editorial-empty">{% if page.locale == 'zh-Hant' %}暫時沒有活動。{% else %}There are no activities yet.{% endif %}</p>{% endif %}
+    {% if items.size > 0 %}
+      <p class="event-nojs">{% if page.locale == 'zh-Hant' %}所有活動如下；啟用 JavaScript 可按日期分組。{% else %}All activities are listed below. Enable JavaScript to group them by date.{% endif %}</p>
+      <div class="editorial-list" id="events-all">{% for item in items %}{% include editorial-card.html item=item %}{% endfor %}</div>
+      <section class="event-group" id="events-upcoming" hidden><h2>{% if page.locale == 'zh-Hant' %}即將舉行及進行中的活動{% else %}Upcoming and current{% endif %}</h2><p class="event-empty">{% if page.locale == 'zh-Hant' %}暫時沒有活動。{% else %}No upcoming activities at present.{% endif %}</p><div class="editorial-list"></div></section>
+      <section class="event-group" id="events-uncertain" hidden><h2>{% if page.locale == 'zh-Hant' %}日期待確認{% else %}Date to be confirmed{% endif %}</h2><div class="editorial-list"></div></section>
+      <section class="event-group" id="events-past" hidden><h2>{% if page.locale == 'zh-Hant' %}過往活動{% else %}Past activities{% endif %}</h2><p class="event-empty">{% if page.locale == 'zh-Hant' %}沒有過往活動。{% else %}No past activities yet.{% endif %}</p><div class="editorial-list"></div></section>
+    {% endif %}
+  {% endif %}
+</main>
