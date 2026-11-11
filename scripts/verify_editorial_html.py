@@ -5,7 +5,7 @@ from urllib.parse import unquote, urljoin, urlsplit
 import argparse
 import sys
 
-BASE = '/nottinghamshire-jobs/'
+BASE = '/'
 VOID = {'meta', 'link', 'img', 'br', 'hr'}
 TAGS = set('html head body title meta link script a div span header nav main section article footer address p h1 h2 h3 h4 h5 h6 ul ol li blockquote em strong b i s del code pre br hr img time dl dt dd table thead tbody tr th td'.split())
 COMMON = {'class', 'id', 'lang', 'title', 'hidden', 'aria-label', 'aria-current', 'aria-hidden', 'aria-describedby', 'data-i18n', 'data-i18n-aria-label', 'data-locale-link', 'data-section-link', 'data-lang-option', 'data-content-locale', 'data-content-section', 'data-site-base', 'data-event', 'data-start', 'data-end', 'data-end-time'}
@@ -15,6 +15,10 @@ ATTRS = {
     'script': {'src', 'defer'}, 'ol': {'start'}, 'th': {'align'}, 'td': {'align'},
 }
 SCRIPTS = {BASE + 'locale.js', BASE + 'activities.js', BASE + 'articles.js'}
+# At the site root, all /paths share a prefix. Preserve the safety boundary
+# through a narrow route allowlist instead of accepting any local path.
+LOCAL_LINK_PREFIXES = ('/articles/', '/activities/', '/media/images/', '/icons/', '/demos/')
+LOCAL_LINK_EXACT = {'/', '/support.html', '/jobs.csv', '/logo_wbg.jpg', '/styles.css', '/manifest.webmanifest'}
 
 
 def decoded_url(value):
@@ -46,8 +50,8 @@ def check_url(value, page_path, image=False):
     if parts.netloc:
         raise ValueError('unexpected URL authority')
     target = urlsplit(urljoin('https://editorial.invalid' + page_path, url))
-    if not target.path.startswith(BASE):
-        raise ValueError('site link escapes project base path')
+    if target.path not in LOCAL_LINK_EXACT and not target.path.startswith(LOCAL_LINK_PREFIXES):
+        raise ValueError('site link leaves allowed public paths')
     if image and not (target.path.startswith(BASE + 'media/images/') or target.path in {BASE + 'icons/apple-touch-icon.png', BASE + 'logo_wbg.jpg'}):
         raise ValueError('image is outside the repository image store')
 
