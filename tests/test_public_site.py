@@ -20,7 +20,7 @@ class PublicSiteTests(unittest.TestCase):
         for name in ARCHIVES:
             target = self.site / name
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text('<html><head><link rel="stylesheet" href="/nottinghamshire-jobs/styles.css"></head><body><img src="/nottinghamshire-jobs/icons/apple-touch-icon.png" alt=""></body></html>', encoding='utf-8')
+            target.write_text('<html><head><link rel="stylesheet" href="/styles.css"></head><body><img src="/icons/apple-touch-icon.png" alt=""></body></html>', encoding='utf-8')
 
     def check(self):
         with redirect_stdout(io.StringIO()):
@@ -38,11 +38,18 @@ class PublicSiteTests(unittest.TestCase):
         self.assertTrue(any('expected language archive missing' in e for e in errors))
 
     def test_broken_generated_image_and_internal_source_block_publication(self):
-        (self.site / ARCHIVES[0]).write_text('<img src="/nottinghamshire-jobs/media/images/missing.png" alt="Example">', encoding='utf-8')
+        (self.site / ARCHIVES[0]).write_text('<img src="/media/images/missing.png" alt="Example">', encoding='utf-8')
         (self.site / 'PAGES_RUNBOOK.md').write_text('internal', encoding='utf-8')
         errors = self.check()
         self.assertTrue(any('missing local resource' in e for e in errors))
         self.assertTrue(any('internal source' in e for e in errors))
+
+    def test_legacy_root_prefix_resource_is_not_accepted(self):
+        (self.site / ARCHIVES[0]).write_text(
+            '<link rel="stylesheet" href="/nottinghamshire-jobs/styles.css">',
+            encoding='utf-8',
+        )
+        self.assertTrue(any('missing local resource' in e for e in self.check()))
 
     def test_missing_or_modified_public_preview_blocks_publication(self):
         demo = self.site / 'demos' / 'my-next-step-en.html'

@@ -62,7 +62,7 @@ def check_production(workflow, gate):
     for step in deploy_steps:
         require(not any(key in step for key in ('if', 'continue-on-error')), 'deploy cannot bypass freshness/failure')
     config = load('_config.yml')
-    require(config['baseurl'] == '/nottinghamshire-jobs', 'retain public project base path')
+    require(config['baseurl'] == '', 'custom-domain publication must use site root base path')
 
 
 class WorkflowSafetyTests(unittest.TestCase):

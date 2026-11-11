@@ -9,7 +9,7 @@ try:
 except ImportError:  # Direct CLI execution from scripts/.
     from validate_job_update import validate_csv_bytes, ValidationError
 
-BASE = '/nottinghamshire-jobs/'
+BASE = '/'
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ('app.js', 'jobs.csv', 'locale.js', 'articles.js', 'activities.js',
           'demos/my-next-step-en.html', 'demos/my-next-step-zh-hant.html',

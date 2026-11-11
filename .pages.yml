@@ -1,6 +1,6 @@
 media:
   input: media/images
-  output: /nottinghamshire-jobs/media/images
+  output: /media/images
   extensions: [jpg, jpeg, png, webp, gif]
   rename: safe
 content:
