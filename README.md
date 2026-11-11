@@ -1,4 +1,6 @@
-# Nottinghamshire Job Opportunities
+# Transform Jobs (Nottinghamshire Jobs repository)
+
+The public-facing site is branded **Transform Jobs**. The repository, GitHub Pages path (`/nottinghamshire-jobs/`) and public `jobs.csv` URL are intentionally unchanged for existing links and consumers. The Support page links to self-contained English and Traditional Chinese My Next Step story previews; the real app remains limited to enrolled Steps Towards Work participants.
 
 Static public vacancy list for Transform Training. The site uses plain HTML, CSS and JavaScript and loads the replaceable `jobs.csv` file directly in the browser. It covers vacancies from local councils, NHS organisations, universities, schools, academy trusts, charities and voluntary/community organisations. It is also installable as a network-only web app on supported browsers; no service worker or offline cache is used.
 

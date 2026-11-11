@@ -7,10 +7,10 @@
   const COPY = {
     en: {
       'meta.jobsDescription': 'Search current paid vacancies from local councils, NHS organisations, universities, schools, academy trusts, charities and voluntary/community organisations.',
-      'meta.jobsTitle': 'Nottinghamshire Job Opportunities | Transform Training',
+      'meta.jobsTitle': 'Transform Jobs | Local jobs and support | Transform Training',
       'meta.supportDescription': 'Support from Transform Training to help you build confidence, develop skills and move forward.',
-      'meta.supportTitle': 'Job-search support | Nottinghamshire Jobs | Transform Training',
-      'brand.aria': 'Nottinghamshire Jobs by Transform Training',
+      'meta.supportTitle': 'Get support | Transform Jobs | Transform Training',
+      'brand.aria': 'Transform Jobs by Transform Training',
       'brand.byTransform': 'by Transform Training',
       'language.selector': 'Language selector',
       'language.label': 'Language:',
@@ -60,14 +60,21 @@
       'footer.legalUpdate': 'This job list is updated regularly by Transform Training. Vacancies can close early or be withdrawn, so always check the employer’s official advert before applying.',
       'footer.legalRegistration': 'Transform Training Ltd is a company limited by guarantee registered in England and Wales, company number 08929034, and a registered charity in England and Wales, charity number 1158831.',
       'support.eyebrow': 'Support from Transform Training',
-      'support.backToJobs': '← Back to Nottinghamshire Jobs'
+      'support.backToJobs': '← Back to Transform Jobs',
+      'support.startTitle': 'How support begins',
+      'support.startBody': 'Tell us what you need through our enquiry form. We can discuss which support might be right for you. Sending an enquiry does not enrol you in a programme.',
+      'support.startRegistration': 'For Steps Towards Work, staff will explain the funded programme face to face, check eligibility and complete the required signed application before registration.',
+      'support.previewTitle': 'Meet My Next Step',
+      'support.previewBody': 'Explore a fictional interactive story about finding strengths in everyday experiences, preparing for opportunities and staying connected with a support worker between sessions.',
+      'support.previewAccess': 'The public previews are open to everyone. The real My Next Step app is only available to people enrolled in Steps Towards Work; a newsletter subscription or enquiry does not grant access.',
+      'support.previewDisclaimer': 'These are scripted demonstrations, not the live app. Nothing you enter in the preview is sent to Transform Training or saved to a server.'
     },
     'zh-Hant': {
       'meta.jobsDescription': '搜尋來自地方議會、國民保健服務、院校、學校、學院信託、慈善機構及志願／社區組織的現有有薪職位。',
-      'meta.jobsTitle': '諾定咸郡職位機會 | Transform Training',
+      'meta.jobsTitle': 'Transform Jobs｜諾定咸郡職位與支援｜Transform Training',
       'meta.supportDescription': 'Transform Training 提供支援，協助你建立信心、發展技能並繼續前行。',
-      'meta.supportTitle': '求職支援 | 諾定咸郡職位 | Transform Training',
-      'brand.aria': '由 Transform Training 提供的諾定咸郡職位',
+      'meta.supportTitle': '求職支援｜Transform Jobs｜Transform Training',
+      'brand.aria': 'Transform Jobs，由 Transform Training 提供',
       'brand.byTransform': '由 Transform Training 提供',
       'language.selector': '語言選擇',
       'language.label': '語言：',
@@ -117,7 +124,14 @@
       'footer.legalUpdate': '這份職位清單由 Transform Training 定期更新。職位可能提早截止或被撤回，因此申請前請務必查看僱主的官方招聘廣告。',
       'footer.legalRegistration': 'Transform Training Ltd 是一家在英格蘭及威爾斯註冊的擔保有限公司，註冊公司編號 08929034，亦是英格蘭及威爾斯的註冊慈善機構，慈善編號 1158831。',
       'support.eyebrow': 'Transform Training 提供的支援',
-      'support.backToJobs': '← 返回諾定咸郡職位'
+      'support.backToJobs': '← 返回 Transform Jobs',
+      'support.startTitle': '怎樣開始接受支援',
+      'support.startBody': '你可以透過查詢表格告訴我們需要甚麼協助。我們會與你了解情況，討論適合的支援。提交查詢並不代表已正式參加任何計劃。',
+      'support.startRegistration': '如希望參加 Steps Towards Work，工作員會安排面對面介紹資助計劃、核實參加資格，並在正式登記前完成所需的簽署申請表。',
+      'support.previewTitle': '認識 My Next Step',
+      'support.previewBody': '透過一段虛構的互動故事，看看如何從日常經歷重新認識自己的能力、為機會作準備，以及在兩次面談之間繼續與工作員保持連繫。',
+      'support.previewAccess': '任何人都可以觀看公開示範。但真正的 My Next Step 應用程式只供已加入 Steps Towards Work 的參加者使用；訂閱電郵或提交查詢不會自動取得使用權限。',
+      'support.previewDisclaimer': '這是預設情境的互動示範，不是真正的應用程式。示範中的輸入不會傳送給 Transform Training，也不會儲存在伺服器。'
     }
   };
 

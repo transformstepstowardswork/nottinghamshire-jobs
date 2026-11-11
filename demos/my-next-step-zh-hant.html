@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#F79549" name="theme-color"/><meta content="兩次見面之間，生活還在繼續。跟著阿樂的日常，認識 My Next Step 如何陪伴人們探索、記住經驗、準備下一步，並連結真實的人際支持。" name="description"/><title>My Next Step｜兩次見面之間・繁體中文互動故事</title><style>@import url('');
+:root{
+ --orange:#F79549;--orange2:#E8782C;--rust:#9D3B0E;--ink:#17191D;--paper:#FFFAF5;--cream:#FFF2E5;--chalk:#FFFDFC;--line:#E8D8C9;--muted:#5B5E64;--violet:#7651CB;--green:#216445;--greenwash:#E8F2E9;--sky:#DCE7EE;--shadow:0 22px 68px rgba(49,28,18,.13);
+ --sans:'Aptos','Segoe UI',Inter,system-ui,-apple-system,sans-serif;--serif:Georgia,'Times New Roman',serif;
+}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{font-family:var(--sans);background:var(--ink);color:var(--ink);-webkit-font-smoothing:antialiased}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--violet);outline-offset:3px}a{color:inherit}svg{display:block}::selection{background:var(--orange);color:var(--ink)}
+.deck{height:100dvh;min-height:530px;display:flex;flex-direction:column;position:relative;isolation:isolate;background:var(--paper);overflow:hidden}
+.top{flex:0 0 66px;display:flex;align-items:center;gap:22px;padding:0 clamp(18px,3.6vw,56px);background:var(--paper);border-bottom:1px solid var(--line);z-index:30;position:relative}
+.brand{display:flex;align-items:center;gap:11px;flex:0 0 auto}.mark{width:35px;height:35px;border-radius:11px;background:var(--orange);display:grid;place-items:center;color:var(--ink);font-size:23px;font-weight:800;line-height:1}.brand-text strong{display:block;font-weight:790;letter-spacing:-.05em;font-size:17px}.brand-text small{display:block;color:#7A6B60;letter-spacing:.15em;font-size:9px;text-transform:uppercase;font-weight:780;margin-top:2px}.top-title{margin:auto;display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.19em;text-transform:uppercase;font-weight:750;color:#786E66;white-space:nowrap}.top-title:before,.top-title:after{content:'·';color:var(--rust);font-size:17px}.top-actions{display:flex;gap:7px;align-items:center}.tool{border:1px solid var(--line);border-radius:999px;background:white;color:var(--ink);padding:9px 13px;font-weight:720;font-size:11px;display:inline-flex;align-items:center;gap:7px}.tool:hover{background:var(--cream)}.tool .key{color:#998578;font-weight:600}.simulate{border:1px solid #D8B5A0;background:#FFF0E5;color:#9D3B0E;letter-spacing:.08em;padding:7px 9px;border-radius:100px;font-size:9px;font-weight:820;text-transform:uppercase}.timeline-rail{height:3px;background:#EEE0D6;flex:0 0 auto;position:relative;z-index:10}.timeline-fill{height:100%;width:6.7%;background:var(--orange);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.stage{flex:1;min-height:0;position:relative;overflow:hidden}.scene{position:absolute;inset:0;overflow:auto;padding:clamp(25px,3.3vw,55px) clamp(22px,5vw,85px);display:flex;align-items:center;visibility:hidden;opacity:0;pointer-events:none;transform:translateY(22px);transition:opacity .45s ease,transform .55s cubic-bezier(.16,1,.3,1),visibility .45s;contain:layout paint}.scene.active{visibility:visible;opacity:1;pointer-events:auto;transform:none}.scene-wrap{width:min(1250px,100%);margin:auto;position:relative;z-index:2}.scene.dark{background:var(--ink);color:var(--paper)}.scene.orange{background:var(--orange);color:var(--ink)}.scene.cream{background:var(--cream)}.scene.paper{background:var(--paper)}.scene.deep-cream{background:#F6E8DC}
+.scene.dark .muted{color:#E6D8CC}.scene.orange .muted{color:#51382C}.scene.dark .kicker{color:#F8B47D}.scene.orange .kicker{color:#713209}.scene.dark .kicker:before{background:var(--orange)}
+.scene:before{content:'';position:absolute;pointer-events:none;inset:0;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.58' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.15' filter='url(%23n)'/%3E%3C/svg%3E");background-size:170px}
+.kicker{display:flex;align-items:center;gap:13px;color:var(--rust);font-size:11px;letter-spacing:.20em;text-transform:uppercase;font-weight:820;margin-bottom:20px}.kicker:before{content:'';width:22px;height:2px;background:var(--rust)}
+h1,h2,h3,h4,p{margin-top:0}h1,h2{letter-spacing:-.068em;line-height:1.025}h1{font-size:clamp(57px,6.9vw,106px);font-weight:730;margin-bottom:27px}h2{font-size:clamp(43px,5vw,78px);font-weight:720;margin-bottom:18px}h3{font-size:clamp(25px,2.65vw,40px);font-weight:730;letter-spacing:-.048em;line-height:1.13;margin-bottom:12px}.serif{font-family:var(--serif);font-style:italic;font-weight:450;letter-spacing:-.065em}.accent{color:var(--rust)}.dark .accent{color:var(--orange)}.muted{color:var(--muted)}.intro{font-size:clamp(17px,1.65vw,23px);line-height:1.5;max-width:740px;color:var(--muted)}.body{font-size:15px;line-height:1.62;color:var(--muted)}.micro{font-size:12px;line-height:1.55;color:var(--muted)}.overline{font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--rust)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,65px);align-items:center}.two.wide-left{grid-template-columns:1.1fr .9fr}.two.wide-right{grid-template-columns:.9fr 1.1fr}.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.stack{display:flex;flex-direction:column;gap:14px}.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.spread{display:flex;justify-content:space-between;align-items:center;gap:16px}.full{width:100%}.nowrap{white-space:nowrap}.hide{display:none!important}
+.btn{border:1px solid transparent;border-radius:999px;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:11px;padding:13px 19px;min-height:43px;font-size:13px;font-weight:790;line-height:1.25;transition:transform .2s,background .2s,border .2s}.btn:hover{transform:translateY(-2px)}.btn.light{background:#fff;color:var(--ink);border-color:var(--line)}.btn.outline{background:transparent;color:var(--ink);border-color:#BDA998}.btn.orange-btn{background:var(--orange);color:var(--ink)}.btn.small{padding:9px 13px;font-size:11px;min-height:34px}.btn.ghost{border-color:transparent;background:transparent;color:inherit}.dark .btn.outline{color:var(--paper);border-color:#6F6866}.dark .btn.light{color:var(--ink)}.orange .btn{background:var(--ink);color:#fff}.btn[aria-pressed='true'],.chip[aria-pressed='true']{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+.panel{border-radius:24px;border:1px solid var(--line);background:#FFFCF9;padding:clamp(20px,2.5vw,32px);box-shadow:0 10px 30px rgba(54,30,16,.05)}.panel.soft{background:#FFF2E6}.panel.ink{background:var(--ink);color:#fff;border-color:var(--ink)}.panel.translucent{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);backdrop-filter:blur(12px)}.note{border-left:3px solid var(--orange);padding:12px 15px;font-size:14px;line-height:1.5;background:rgba(247,149,73,.10);border-radius:0 10px 10px 0}.pill{display:inline-flex;padding:7px 11px;border:1px solid var(--line);border-radius:99px;color:var(--rust);font-size:10px;font-weight:790;letter-spacing:.08em;text-transform:uppercase;background:#FFF8F3}.dark .pill{color:#FFD7B9;background:#39312E;border-color:#59504A}.chip{display:inline-flex;align-items:center;gap:7px;line-height:1.1;border:1px solid var(--line);background:white;border-radius:100px;font-size:11px;font-weight:780;padding:10px 13px;color:var(--ink)}.chip:hover{border-color:#AF7B59}.chip.is-on{background:var(--orange);border-color:var(--orange)}.feature-eyebrow{font-family:var(--serif);font-size:25px;letter-spacing:-.05em;font-style:italic}
+.foot{z-index:25;display:flex;flex:0 0 65px;align-items:center;padding:0 clamp(18px,3.6vw,56px);gap:20px;background:var(--paper);border-top:1px solid var(--line)}.foot-left{width:260px;display:flex;align-items:baseline;gap:12px;color:var(--muted)}.count{color:var(--ink);font-weight:800;font-size:12px;font-variant-numeric:tabular-nums}.foot-title{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dots{display:flex;gap:5px;justify-content:center;flex:1}.dot{border:0;padding:0;width:7px;height:7px;border-radius:40px;background:#D8C9BF;transition:width .3s,background .3s}.dot.on{width:25px;background:var(--orange)}.foot-right{width:260px;display:flex;justify-content:flex-end;gap:9px}.arrow{width:37px;height:37px;border-radius:50%;border:1px solid var(--line);background:white;font-size:17px;color:var(--ink)}.arrow.next{background:var(--orange);border-color:var(--orange)}.arrow:not(:disabled):hover{transform:translateY(-2px)}.hintbar{font-size:10px;color:#89786E}
+/* scene 0 */
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center}.hero-grid h1{max-width:820px;font-size:clamp(57px,7vw,114px)}.hero-grid .intro{color:#F0E3D9}.hero-tag{color:#F7C69D;font-size:13px;letter-spacing:.17em;text-transform:uppercase;font-weight:700}.night-illustration{height:min(560px,64vh);min-height:360px;position:relative}.night-moon{width:360px;height:360px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFCE8F 0,#F79549 55%,#BA4B1A 99%);position:absolute;left:15%;top:9%;box-shadow:0 0 80px rgba(247,149,73,.22);animation:moonrise 7s ease-in-out infinite}.window{position:absolute;right:3%;top:5%;width:65%;height:82%;border:13px solid #DDC1A0;border-radius:160px 160px 16px 16px;background:linear-gradient(160deg,rgba(247,149,73,.02),rgba(247,149,73,.10));overflow:hidden;box-shadow:inset 0 0 45px #201D22}.window:after{content:'';position:absolute;left:50%;top:0;bottom:0;width:9px;background:#E9CEAE}.window:before{content:'';position:absolute;top:55%;left:0;right:0;height:9px;background:#E9CEAE}.silhouette{position:absolute;width:170px;height:290px;bottom:-45px;right:27%;background:#17191D;border-radius:90px 90px 0 0;transform:rotate(-7deg)}.silhouette:before{content:'';position:absolute;width:115px;height:115px;border-radius:55% 48% 54% 49%;background:#17191D;top:-75px;left:24px}.float-line{position:absolute;color:#FFE9D8;border:1px solid rgba(255,224,201,.38);background:rgba(30,27,30,.75);border-radius:18px;padding:14px 17px;backdrop-filter:blur(8px);font-size:13px;max-width:214px;line-height:1.35;box-shadow:0 20px 35px #0002}.float-line.a{top:13%;left:-4%;transform:rotate(-6deg);animation:floaty 5s ease-in-out infinite}.float-line.b{bottom:9%;right:-3%;transform:rotate(4deg);animation:floaty 6s ease-in-out -2s infinite}.float-line span{display:block;color:#E3B593;letter-spacing:.1em;font-size:9px;text-transform:uppercase;font-weight:800;margin-bottom:4px}
+/* scene 1 */
+.day-stage{position:relative;height:400px;border-radius:28px;background:#EBDDD0;overflow:hidden;box-shadow:var(--shadow)}.day-stage .sun{position:absolute;width:235px;height:235px;border-radius:50%;background:var(--orange);top:-70px;right:12%;box-shadow:0 0 0 27px rgba(247,149,73,.16)}.day-stage .room-floor{position:absolute;bottom:0;height:30%;width:100%;background:#CAB5A5}.day-stage .door{position:absolute;bottom:18%;left:9%;width:39%;height:70%;background:#FFF7EE;border:11px solid #6E594F;border-radius:85px 85px 0 0}.day-stage .door:after{content:'';position:absolute;left:50%;top:0;bottom:0;width:7px;background:#CDB6A2}.day-stage .exit-person{position:absolute;bottom:6%;left:43%;font-size:135px;line-height:1;filter:grayscale(1);opacity:.85}.day-stage .day-note{position:absolute;top:19%;right:4%;padding:15px;border-radius:17px;background:#fffefa;max-width:200px;font-size:13px;line-height:1.35;transform:rotate(3deg)}.pulse{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:var(--rust);font-weight:750}.pulse:before{content:'';width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 6px #F7954929;animation:pulse 2s ease-in-out infinite}.weekday-strip{display:flex;gap:7px;margin-top:19px}.weekday{flex:1;border-top:2px solid #DCC8B6;padding-top:9px;font-size:11px;color:#7C6C63}.weekday strong{display:block;font-size:12px;color:var(--ink)}.weekday.selected{border-color:var(--rust)}
+/* scene 2 */
+.orbit{height:min(500px,61vh);min-height:410px;position:relative;border-radius:26px;background:radial-gradient(circle at 50% 50%,#FFE0C7 0 20%,transparent 20.2%),radial-gradient(circle at 50% 50%,transparent 33%,#EBCDB6 33.4%,#EBCDB6 33.8%,transparent 34.1%),radial-gradient(circle at 50% 50%,transparent 46%,#EBCDB6 46.3%,#EBCDB6 46.7%,transparent 47%),#FFF6EE;border:1px solid var(--line)}.orbit-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:148px;height:148px;border-radius:47%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:var(--ink);color:white;box-shadow:0 20px 40px #17191D30}.orbit-core .big{font-size:47px}.orbit-core strong{font-size:12px;letter-spacing:.08em}.orbit-node{position:absolute;border:1px solid var(--line);background:white;padding:14px 17px;border-radius:17px;box-shadow:0 8px 23px #55381F12;text-align:left;min-width:170px;transition:transform .2s}.orbit-node:hover{transform:translateY(-5px)}.orbit-node strong{display:block;margin-bottom:4px;font-size:14px}.orbit-node small{font-size:11px;color:var(--muted)}.orbit-node.n1{top:5%;left:6%}.orbit-node.n2{top:5%;right:5%}.orbit-node.n3{bottom:7%;left:5%}.orbit-node.n4{bottom:8%;right:5%}.orbit-label{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-size:11px;color:#8D776B}
+/* challenge */
+.deck-screen{border:1px solid #DFC5B3;background:#FFF8F2;padding:24px;border-radius:27px;box-shadow:var(--shadow)}.challenge-hand{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:16px 0}.challenge-card{min-height:220px;border:1px solid #E4C9AF;background:#FFEAD8;border-radius:19px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;transition:transform .2s,box-shadow .2s}.challenge-card:nth-child(2){background:#F7E6D1}.challenge-card:nth-child(3){background:#E6ECE8}.challenge-card:hover{transform:rotate(-1deg) translateY(-4px);box-shadow:0 12px 23px #B8773823}.challenge-card.dealing{animation:deal .44s both}.challenge-card h3{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:-.045em;font-size:clamp(20px,2.2vw,32px)}.card-footer{display:flex;justify-content:space-between;gap:5px;flex-wrap:wrap}.link-btn{padding:5px 0;background:transparent;border:0;color:#8A461C;font-size:11px;font-weight:800}.link-btn:hover{text-decoration:underline}.challenge-note{min-height:41px;font-size:12px;color:#744E37;padding:7px 0}.no-badge{font-family:var(--serif);font-size:26px;font-style:italic;line-height:1.2}
+/* story */
+.chat{background:#FEF9F3;border-radius:23px;border:1px solid var(--line);padding:20px;min-height:355px;display:flex;flex-direction:column;box-shadow:0 12px 35px #55381f0a}.messages{display:flex;flex-direction:column;gap:12px;max-height:260px;min-height:150px;overflow:auto;margin:13px 0;padding:3px}.message{max-width:89%;border-radius:16px;padding:13px 15px;font-size:13px;line-height:1.53;animation:rise .33s both}.message.assistant{background:#FFF0DF;align-self:flex-start;border-top-left-radius:4px}.message.human{background:#DFEAE3;align-self:flex-end;border-top-right-radius:4px}.message .sender{display:block;font-size:9px;font-weight:850;letter-spacing:.13em;text-transform:uppercase;color:#875339;margin-bottom:5px}.chat-options{display:grid;grid-template-columns:1fr;gap:7px}.option{border:1px solid #D7C8BA;background:white;border-radius:12px;padding:10px 13px;font-size:12px;text-align:left;line-height:1.42;color:var(--ink);font-weight:660}.option:hover{background:#FFEDD8;border-color:var(--orange)}.story-paper{background:#fff;border:1px solid #E1D4C8;box-shadow:8px 12px 0 #F3E0CD,0 17px 32px #0001;padding:26px;border-radius:5px;transform:rotate(1deg);min-height:350px;position:relative}.story-paper:before{content:'';height:6px;position:absolute;top:0;left:0;right:0;background:var(--orange)}.story-paper .paper-lines{border-bottom:1px solid #E8DCD0;padding-bottom:11px;margin-bottom:11px}.story-paper .paper-lines p{font-size:13px;line-height:1.5;margin:6px 0 0}.story-paper strong{font-size:11px;color:var(--rust);letter-spacing:.09em;text-transform:uppercase}.mini-stamp{display:inline-block;padding:5px 8px;border:1px solid #D19B76;border-radius:4px;transform:rotate(-3deg);font-size:10px;font-weight:800;color:var(--rust)}
+/* turn */
+.before-after{display:grid;grid-template-columns:1fr 70px 1fr;gap:18px;align-items:stretch}.statequote{border-radius:22px;padding:28px;min-height:275px;display:flex;flex-direction:column;justify-content:space-between}.statequote.bef{background:#E9DED4}.statequote.aft{background:var(--orange)}.statequote blockquote{font-family:var(--serif);font-size:clamp(26px,2.6vw,43px);line-height:1.2;font-style:italic;margin:0;letter-spacing:-.045em}.transition-arrow{font-family:var(--serif);font-size:55px;align-self:center;text-align:center;color:var(--rust)}
+/* time */
+.timeline-zone{position:relative;padding:24px 0}.timeline-zone:before{content:'';position:absolute;left:0;right:0;top:42%;height:4px;border-radius:9px;background:#E7CCB9}.timecards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;position:relative;z-index:2}.timecard{background:#fff;border:1px solid #E6CABB;border-radius:20px;padding:22px;min-height:250px;box-shadow:0 14px 32px #5d361016;transition:transform .4s,opacity .4s,filter .4s}.timecard.inactive{opacity:.28;filter:grayscale(1);transform:translateY(17px)}.timecard .month{font-family:var(--serif);font-size:25px;font-style:italic;color:var(--rust);margin-bottom:15px}.timecard h3{font-size:23px}.timecard p{font-size:13px;line-height:1.55;color:var(--muted)}.timecard .tagline{font-size:11px;color:#8D755F;font-weight:760}.timecard .event-icon{display:grid;place-items:center;width:41px;height:41px;border-radius:14px;background:#FFE0CB;font-size:22px;margin-bottom:18px}
+/* constellation */
+.constellation{height:410px;border-radius:24px;background:#17191D;position:relative;overflow:hidden;border:1px solid #333840}.constellation svg{width:100%;height:100%;position:absolute;inset:0}.starpoint{position:absolute;border:1px solid #6A5750;background:#292728;color:#fff;border-radius:18px;padding:14px 15px;box-shadow:0 12px 30px #0004;max-width:185px;font-size:12px;line-height:1.4}.starpoint em{display:block;color:#FFB683;font-size:10px;font-style:normal;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px}.starpoint.s1{left:4%;top:13%}.starpoint.s2{right:7%;top:12%}.starpoint.s3{left:15%;bottom:11%}.starpoint.s4{right:7%;bottom:9%}.starcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:130px;height:130px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;color:var(--ink);font-family:var(--serif);font-size:19px;font-style:italic;box-shadow:0 0 0 13px #F7954923,0 0 0 33px #F7954914;line-height:1.2}.pattern-answer{min-height:75px;border-left:3px solid var(--orange);padding:13px 15px;background:#FFEDDD;border-radius:0 14px 14px 0;color:#55352A;font-size:13px;line-height:1.5}
+/* opportunity */
+.job-card{border-radius:23px;background:var(--ink);padding:27px;color:white;box-shadow:var(--shadow)}.job-card h3{font-size:30px}.job-card p{font-size:13px;line-height:1.5;color:#D9D4D0}.match-row{display:grid;grid-template-columns:35px 1fr auto;gap:13px;align-items:start;background:white;border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:9px}.match-row .num{height:32px;width:32px;display:grid;place-items:center;background:#FDE4D1;border-radius:9px;font-weight:800;color:var(--rust);font-size:12px}.match-row h4{font-size:14px;margin:0 0 5px}.match-row p{font-size:12px;line-height:1.4;color:var(--muted);margin:0}.flag{font-size:10px;font-weight:800;border-radius:99px;background:#E7F1E6;color:#266143;padding:7px 9px;white-space:nowrap}.flag.unknown{background:#F5EBE2;color:#8C5B34}
+/* writing */
+.writing-field{width:100%;min-height:162px;background:#FFFCF8;border:1px solid #CAA88C;border-radius:14px;padding:16px;resize:vertical;line-height:1.62;font-size:14px;color:var(--ink)}.feedbackbox{border-radius:16px;padding:14px 16px;background:#EBF1E9;border-left:4px solid #3B7850;font-size:13px;line-height:1.5;min-height:65px;color:#2F5038}.feedbackbox:empty:before{content:'When you ask for review, Sam’s example guidance will appear here.';color:#7B877A}
+/* practice */
+.practice-spot{background:radial-gradient(circle at center,#AD5D2D 0,#40281D 25%,#17191D 67%);border-radius:25px;height:330px;color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;position:relative;overflow:hidden}.practice-spot .halo-ring{border-radius:50%;width:95px;height:95px;background:var(--orange);color:#4E321F;display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:42px;box-shadow:0 0 0 18px #F795491c,0 0 0 42px #F7954910;animation:breathe 4s ease-in-out infinite;margin-bottom:30px}.practice-spot h3{font-size:24px;max-width:470px}.practice-spot small{color:#EDC7AA}.practice-answer{border:1px solid var(--line);border-radius:12px;background:white;padding:13px 14px;text-align:left;font-size:12px;line-height:1.47}.practice-answer.on{background:#FCE6D4;border-color:var(--orange)}
+/* worker */
+.share-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.share-row strong{display:block;font-size:13px}.share-row small{display:block;font-size:11px;color:var(--muted);margin-top:4px}.switch{width:43px;height:25px;border-radius:30px;border:0;background:#C9BDB3;padding:3px;flex:0 0 auto}.switch:after{content:'';display:block;width:19px;height:19px;border-radius:50%;background:white;transition:transform .25s}.switch.on{background:var(--orange)}.switch.on:after{transform:translateX(18px)}.worker-note{border:1px solid var(--line);background:#FFFDF9;border-radius:18px;padding:19px;font-size:13px;line-height:1.6}.worker-note .subline{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--rust);font-weight:800;margin-bottom:10px}.worker-items{margin:0;padding:0;list-style:none}.worker-items li{padding:9px 0;border-bottom:1px solid #EEE3DB;font-size:12px}.worker-items li:before{content:'↗';margin-right:10px;color:var(--rust);font-weight:800}
+/* alternative doors */
+.door-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.door-card{border-radius:25px;padding:28px;border:1px solid var(--line);background:white;min-height:295px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:16px;transition:transform .2s}.door-card:hover{transform:translateY(-5px)}.door-card .symbol{font-size:45px;line-height:1}.door-card strong{font-size:22px;letter-spacing:-.04em}.door-card p{font-size:13px;line-height:1.5;color:var(--muted)}.door-card .arrowlink{margin-top:auto;color:var(--rust);font-size:12px;font-weight:800}.door-card:nth-child(2){background:#FFE1CC}.door-card:nth-child(3){background:#EAEFEC}
+/* philosophy */
+.principles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.principle{background:rgba(255,255,255,.08);border:1px solid #4D4946;border-radius:18px;padding:20px;min-height:135px}.principle .symbol{font-size:23px;color:var(--orange);margin-bottom:13px}.principle strong{display:block;font-size:17px;margin-bottom:7px}.principle p{color:#D1C7C0;font-size:12px;line-height:1.5}
+/* outro */
+.end-arc{width:100%;height:380px;position:relative}.end-arc .circle{position:absolute;width:300px;height:300px;border-radius:50%;background:#F4B47D;left:50%;top:46%;transform:translate(-50%,-50%)}.end-arc .linepath{position:absolute;inset:0;width:100%;height:100%}.end-arc .end-note{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;background:#FFF8EF;border-radius:20px;max-width:270px;padding:23px 20px;box-shadow:0 25px 50px #9b460e30}.end-arc .end-note strong{font-family:var(--serif);font-size:23px;font-style:italic;letter-spacing:-.05em}.outro-mini{font-size:11px;color:#733D19;letter-spacing:.13em;text-transform:uppercase;font-weight:800}
+/* overlays */
+.overlay{position:fixed;inset:0;background:#17191De8;backdrop-filter:blur(8px);z-index:75;display:none;align-items:center;justify-content:center;padding:18px}.overlay.open{display:flex}.overlay-box{background:var(--paper);border:1px solid #DABAA2;border-radius:23px;width:min(730px,100%);max-height:min(720px,88vh);overflow:auto;padding:26px;box-shadow:0 25px 90px #0007}.overlay h3{margin:0;font-size:28px}.overlay-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.close{border:1px solid var(--line);width:37px;height:37px;border-radius:50%;background:white;font-size:19px}.scene-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.scene-jump{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);background:white;border-radius:12px;padding:12px 13px;font-size:12px;font-weight:700}.scene-jump:hover{background:#FFF0DE}.scene-jump span{color:var(--rust);font-size:10px}.notes-text{font-size:14px;line-height:1.8;color:#34343A;white-space:pre-line}.notes-text p{margin:0 0 12px}.notes-text strong{color:var(--rust)}
+/* animated rhythm */
+.scene.active .rise{animation:rise .75s both}.scene.active .rise.late{animation-delay:.17s}.scene.active .rise.latest{animation-delay:.32s}.scene.active .drawpath{stroke-dasharray:950;stroke-dashoffset:950;animation:draw 2.4s ease forwards .35s}.scene.active .pop{animation:pop .65s ease both .25s}@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}@keyframes moonrise{50%{transform:translateY(-9px)}}@keyframes floaty{50%{translate:0 -11px}}@keyframes breathe{50%{box-shadow:0 0 0 23px #F795491b,0 0 0 51px #F795490e}}@keyframes deal{from{opacity:.4;transform:translateY(22px) rotate(5deg)}to{opacity:1;transform:none}}@keyframes pulse{50%{box-shadow:0 0 0 10px #F7954906}}
+@media(max-width:950px){.top-title{display:none}.top-actions{margin-left:auto}.hero-grid{grid-template-columns:1.1fr .9fr}.night-illustration{transform:scale(.85);transform-origin:center}.two{gap:22px}.orbit-node{min-width:125px;padding:10px}.orbit-node strong{font-size:12px}.orbit-node small{font-size:10px}.scene{padding:28px 32px}.statequote{padding:22px}.foot-left,.foot-right{width:205px}}
+@media(max-width:720px){.deck{min-height:0}.top{flex-basis:55px;padding:0 13px}.brand-text small,.top-actions .key,.tool .text,.simulate,.hintbar{display:none}.tool{padding:9px;min-width:35px;justify-content:center}.stage{overflow:hidden}.scene{padding:22px 17px;align-items:flex-start}.scene-wrap{margin:auto 0}.hero-grid,.two,.two.wide-left,.two.wide-right,.three,.four,.door-grid{grid-template-columns:1fr}.hero-grid h1{font-size:clamp(50px,12vw,74px)}.night-illustration{height:280px;min-height:280px;transform:scale(.8);margin-top:-15px}.hero-grid{gap:0}.scene-wrap h2{font-size:clamp(37px,10vw,59px)}.intro{font-size:16px}.kicker{font-size:10px;margin-bottom:12px}.scene{overflow-y:auto}.foot{flex-basis:55px;padding:0 13px}.foot-left{width:auto;max-width:145px}.foot-title{display:none}.foot-right{width:auto;margin-left:auto}.dots{gap:4px}.dot{width:5px;height:5px}.dot.on{width:14px}.arrow{width:35px;height:35px}.day-stage{height:300px}.weekday-strip{gap:4px}.weekday{font-size:9px}.weekday strong{font-size:10px}.orbit{height:340px;min-height:340px}.orbit-core{height:108px;width:108px}.orbit-core .big{font-size:30px}.orbit-node{min-width:auto;width:37%;padding:10px}.orbit-node strong{font-size:11px}.orbit-node small{font-size:9px}.orbit-node.n1{left:2%;top:3%}.orbit-node.n2{right:2%;top:3%}.orbit-node.n3{left:2%;bottom:8%}.orbit-node.n4{right:2%;bottom:8%}.challenge-hand{grid-template-columns:1fr}.challenge-card{min-height:140px;padding:14px}.challenge-card h3{font-size:23px}.deck-screen{padding:15px}.chat{min-height:auto}.story-paper{min-height:290px;margin:5px 10px 12px}.before-after{grid-template-columns:1fr;gap:5px}.statequote{min-height:175px}.transition-arrow{font-size:35px;transform:rotate(90deg)}.timeline-zone{padding:0}.timeline-zone:before{display:none}.timecards{grid-template-columns:1fr}.timecard{min-height:130px;padding:17px}.timecard h3{font-size:20px}.timecard .event-icon{margin-bottom:6px}.timecard .month{margin-bottom:7px}.constellation{height:340px}.starpoint{max-width:118px;font-size:10px;padding:10px}.starpoint.s1{top:3%;left:2%}.starpoint.s2{top:3%;right:2%}.starpoint.s3{bottom:3%;left:2%}.starpoint.s4{bottom:3%;right:2%}.starcenter{height:104px;width:104px;font-size:16px}.match-row{grid-template-columns:25px 1fr}.match-row .flag{grid-column:2;justify-self:start}.job-card{padding:20px}.practice-spot{height:240px}.practice-spot .halo-ring{height:65px;width:65px;margin-bottom:18px}.practice-spot h3{font-size:19px}.panel{padding:17px}.scene-list{grid-template-columns:1fr}.overlay-box{padding:17px}.end-arc{height:270px}.end-arc .circle{height:235px;width:235px}.end-arc .end-note{min-width:215px}.principles{grid-template-columns:1fr}}
+@media(max-width:380px){.scene{padding:18px 13px}.scene-wrap h1{font-size:49px}.scene-wrap h2{font-size:36px}.brand-text strong{font-size:14px}.top-actions{gap:3px}.tool{padding:7px}.foot{gap:8px}.dot{width:4px;height:4px}.dot.on{width:11px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.scene.active .drawpath{stroke-dashoffset:0!important}}
+@media print{html,body{overflow:visible;height:auto;background:white}.deck{height:auto;display:block;overflow:visible}.top,.timeline-rail,.foot,.overlay{display:none!important}.stage{display:block;overflow:visible}.scene,.scene.active{position:relative;display:block;visibility:visible;opacity:1;pointer-events:auto;transform:none;height:auto;min-height:97vh;overflow:visible;break-after:page;padding:45px}.scene:last-child{break-after:auto}.scene-wrap{margin:0 auto}.scene.active .drawpath{stroke-dashoffset:0}}
+/* Shorter desktop viewports preserve the stage; interactive scenes still scroll when needed. */
+@media(min-width:721px) and (max-height:930px){
+ .scene{padding-top:23px;padding-bottom:23px}
+ .scene .kicker{margin-bottom:12px}
+ .scene h2{font-size:clamp(41px,4.65vw,70px)}
+ .scene .intro{font-size:clamp(16px,1.42vw,20px)}
+ .deck-screen{padding:18px}
+ .challenge-card{min-height:183px;padding:17px}
+ .challenge-hand{margin-top:10px;margin-bottom:10px}
+ .chat{min-height:315px;padding:16px}
+ .chat .messages{max-height:205px}
+ .story-paper{min-height:320px;padding:22px}
+ .practice-spot{height:285px}
+ .writing-field{min-height:135px}
+}
+@media(max-width:720px){
+ .night-illustration{margin-top:8px;transform-origin:top center}
+ .hero-grid{gap:7px}
+ .hero-grid .row .micro{max-width:175px}
+}
+.day-stage .exit-person{font-size:0;bottom:0;left:42%;height:190px;width:110px;filter:none;opacity:1;transform:rotate(-5deg)}
+.day-stage .exit-person:before{content:'';position:absolute;top:0;left:26px;width:59px;height:59px;background:#453F3A;border-radius:53% 47% 48% 55%}
+.day-stage .exit-person:after{content:'';position:absolute;bottom:-35px;left:0;width:110px;height:155px;background:linear-gradient(100deg,#37312D,#5A4F49);border-radius:55px 55px 17px 17px}
+.scrollhint{position:absolute;z-index:29;bottom:75px;right:22px;border:1px solid #DCC3B2;background:#fff9f3ed;color:#844B27;border-radius:999px;padding:8px 12px;font-size:10px;font-weight:800;box-shadow:0 4px 13px #3D21191a;opacity:0;pointer-events:none;transform:translateY(7px);transition:opacity .22s,transform .22s}
+.scrollhint.visible{opacity:1;transform:none}
+@media(max-width:720px){.night-illustration{overflow:hidden;border-radius:22px}.hero-grid .row .micro{width:100%;max-width:none}.scrollhint{right:13px;bottom:63px}}
+@media print{.scrollhint{display:none!important}}
+
+/* Optional fold-out recap: a practical journey map after Alex's emotional ending. */
+.recap-scene{background:radial-gradient(ellipse at 91% 3%,#F9E8D7,transparent 43%),var(--paper)}
+.recap-wrap{display:flex;flex-direction:column;gap:14px}
+.recap-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.recap-head h2{margin-bottom:9px;font-size:clamp(40px,4.7vw,69px)}
+.recap-head .intro{font-size:clamp(14px,1.3vw,18px);max-width:840px;margin:0}
+.recap-edition{font-size:10px;letter-spacing:.16em;font-weight:800;color:var(--rust);text-transform:uppercase;white-space:nowrap;border:1px solid #DAB69A;border-radius:50%;height:83px;width:83px;display:grid;place-items:center;text-align:center;transform:rotate(12deg);background:#FFF5EA;flex:0 0 auto}
+.recap-map{position:relative;padding:17px 11px 13px;border-radius:19px;border:1px solid #E7CEB9;background:#F8EBDD;box-shadow:inset 0 5px 15px #F6DCC360;overflow:hidden}
+.recap-map:after{content:'';position:absolute;left:50%;top:0;height:100%;border-left:1px dashed #D9BCA5;opacity:.34;pointer-events:none}
+.recap-track{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;isolation:isolate}
+.recap-track:before{content:'';position:absolute;left:9.2%;right:9.2%;top:24px;border-top:2px dashed #C7A487;z-index:-1}
+.recap-trace{height:2px;position:absolute;top:24px;left:9.2%;width:0;background:var(--rust);transition:width .55s cubic-bezier(.2,.8,.2,1);z-index:-1}
+.recap-stop{border:1px solid transparent;border-radius:15px;min-height:91px;padding:5px 3px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:7px;background:transparent;text-align:center;position:relative;color:#514338;transition:transform .2s,background .25s,border-color .25s}
+.recap-stop:hover{background:#FFF8F0;border-color:#E8C9B3;transform:translateY(-2px)}
+.recap-stop.is-current{background:#FFFDF9;border-color:#D9A87F;box-shadow:0 4px 20px #78421c13}
+.recap-bead{width:48px;height:48px;background:#FFF7F0;border:2px solid #D4B59A;border-radius:17px;display:grid;place-items:center;font-size:25px;font-weight:500;line-height:1;color:var(--rust);box-shadow:0 4px 0 #F0DAC5;transition:background .25s,transform .25s}
+.recap-stop.is-current .recap-bead{background:var(--orange);border-color:var(--rust);transform:rotate(-6deg)}
+.recap-stop strong{font-size:13px;letter-spacing:-.015em}.recap-stop small{font-size:10px;line-height:1.2;color:#866D5C}
+.recap-sheet{display:grid;grid-template-columns:minmax(185px,.85fr) minmax(0,2.05fr);min-height:244px;background:#FFFDFC;border:1px solid #DBC5B2;border-radius:23px;box-shadow:0 14px 45px #6D381810;overflow:hidden;position:relative}
+.recap-sheet:after{content:'';position:absolute;left:30%;top:0;bottom:0;border-right:1px dashed #E6D4C5;pointer-events:none}
+.recap-chapter{background:#FFE4CE;padding:25px 25px 19px;display:flex;flex-direction:column;justify-content:center;gap:7px}
+.recap-chapter-top{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:10px;letter-spacing:.17em;font-weight:850;color:#8A4323;text-transform:uppercase}
+.recap-large-mark{font-size:48px;line-height:1;margin:8px 0 5px;transform-origin:30% 50%}
+.recap-large-mark.reveal{animation:recap-mark .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes recap-mark{from{opacity:.3;transform:rotate(-14deg) scale(.75)}to{opacity:1;transform:none}}
+.recap-chapter h3{font-size:clamp(23px,2vw,31px);margin:0;line-height:1.09}
+.recap-chapter p{font-size:12px;line-height:1.45;color:#6D4C3D;margin:1px 0 0}
+.recap-sequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px;padding:25px 27px;align-items:center}
+.recap-moment{position:relative;display:flex;flex-direction:column;gap:11px;min-width:0}
+.recap-moment:not(:last-child):after{content:'→';position:absolute;right:-19px;top:-3px;font-size:19px;color:#B16A3D}
+.recap-moment .recap-stage{font-size:10px;text-transform:uppercase;letter-spacing:.15em;font-weight:900;color:#8E4C29;display:flex;align-items:center;gap:7px}
+.recap-moment .recap-stage:before{content:'';height:7px;width:7px;border-radius:50%;background:var(--orange)}
+.recap-moment:nth-child(2) .recap-stage:before{background:#7651CB}
+.recap-moment:nth-child(3) .recap-stage:before{background:#216445}
+.recap-moment p{font-size:clamp(12px,1.05vw,15px);line-height:1.57;color:#373A3C;margin:0;max-width:260px}
+.recap-moment.reveal{animation:rise .45s both}.recap-moment.reveal:nth-child(2){animation-delay:.1s}.recap-moment.reveal:nth-child(3){animation-delay:.2s}
+.recap-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.recap-action-buttons{display:flex;flex-wrap:wrap;gap:8px}
+.recap-links{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-start}
+.recap-links .btn{font-size:11px;min-height:34px;padding:9px 12px}
+.recap-boundary{display:flex;align-items:center;gap:11px;color:#715D4D;font-size:12px;line-height:1.4}
+.recap-boundary:before{content:'↶';color:var(--rust);font-size:26px}
+.recap-return{background:#EAF0E9!important;border-color:#A5B7A6!important;color:#216445!important}
+@media(max-width:1030px){.recap-sequence{gap:13px;padding:20px}.recap-moment:not(:last-child):after{right:-13px;font-size:19px}.recap-chapter{padding:19px}.recap-sheet{grid-template-columns:minmax(172px,.8fr) minmax(0,2.2fr)}}
+@media(max-width:720px){.recap-wrap{gap:13px}.recap-head h2{font-size:clamp(37px,9vw,54px)}.recap-head .intro{font-size:14px}.recap-edition{display:none}.recap-map{padding:10px 6px}.recap-track{gap:1px}.recap-track:before{top:20px}.recap-trace{top:20px}.recap-stop{min-height:79px;padding:4px 1px;gap:5px}.recap-bead{width:36px;height:36px;border-radius:12px;font-size:20px}.recap-stop strong{font-size:10px}.recap-stop small{font-size:9px}.recap-sheet{grid-template-columns:1fr;min-height:0}.recap-sheet:after{display:none}.recap-chapter{padding:17px 19px;gap:4px}.recap-large-mark{display:none}.recap-chapter h3{font-size:25px}.recap-chapter p{font-size:12px}.recap-sequence{padding:18px;gap:12px;grid-template-columns:1fr}.recap-moment{gap:5px;border-left:2px solid #EBCBB1;padding-left:12px}.recap-moment:not(:last-child):after{content:'↓';top:auto;right:auto;left:-9px;bottom:-15px;font-size:15px;background:#FFFDFC}.recap-moment p{max-width:none;font-size:13px}.recap-actions{align-items:flex-start}.recap-action-buttons{width:100%}.recap-links{justify-content:flex-start}.recap-boundary{font-size:11px}}
+@media(max-width:390px){.recap-stop strong{font-size:9px}.recap-bead{width:33px;height:33px}.recap-stop small{display:none}.recap-stop{min-height:65px}}
+@media print{.recap-scene .recap-moment.reveal,.recap-scene .recap-large-mark.reveal{animation:none!important}.recap-scene{break-before:page}}
+
+@media(min-width:721px){#scene-4 h2 br{display:none}#scene-4 h2 .serif{margin-left:.20em}}
+@media(min-width:721px){html[lang='zh-Hant-TW'] #scene-10 .practice-spot{height:250px}html[lang='zh-Hant-TW'] #scene-10 h2{margin-bottom:10px}html[lang='zh-Hant-TW'] #scene-10 .intro{line-height:1.6}}
+html[lang='zh-Hant-TW'] .feedbackbox:empty:before{content:'當你請 Sam 看看草稿時，示範建議就會出現在這裡。'}
+/* ═══════════════════════════════════════════════════════
+   繁體中文版的字體編排：明體的停頓 × 黑體的清晰
+   中文不套用英文字體的負字距、斜體或全部大寫。
+   ═══════════════════════════════════════════════════════ */
+:root{
+ --sans:'Noto Sans CJK TC','Noto Sans TC','Noto Sans CJK HK','PingFang TC','Microsoft JhengHei','Heiti TC',sans-serif;
+ --serif:'Noto Serif CJK TC','Noto Serif TC','Noto Serif CJK HK','Songti TC','PMingLiU',serif;
+}
+html[lang='zh-Hant-TW'] body{font-synthesis:none;letter-spacing:.025em;line-break:strict;overflow-wrap:break-word}
+html[lang='zh-Hant-TW'] .deck{font-kerning:normal}
+html[lang='zh-Hant-TW'] h1,html[lang='zh-Hant-TW'] h2,html[lang='zh-Hant-TW'] h3{
+ letter-spacing:.055em;font-weight:650;line-height:1.27;text-wrap:balance;
+}
+html[lang='zh-Hant-TW'] h1{font-size:clamp(44px,5.45vw,83px);line-height:1.31;margin-bottom:25px}
+html[lang='zh-Hant-TW'] h2{font-size:clamp(35px,4.1vw,63px);line-height:1.31;margin-bottom:17px}
+html[lang='zh-Hant-TW'] h3{font-size:clamp(23px,2.35vw,35px);line-height:1.31;letter-spacing:.035em}
+html[lang='zh-Hant-TW'] .hero-grid h1{font-size:clamp(44px,5.8vw,86px)}
+html[lang='zh-Hant-TW'] .serif{font-family:var(--serif);font-style:normal;font-weight:610;letter-spacing:.085em;line-height:1.33}
+html[lang='zh-Hant-TW'] .intro{font-size:clamp(17px,1.48vw,21px);line-height:1.78;letter-spacing:.036em}
+html[lang='zh-Hant-TW'] .body{font-size:14px;line-height:1.85;letter-spacing:.028em}
+html[lang='zh-Hant-TW'] .micro{font-size:11.5px;line-height:1.76}
+html[lang='zh-Hant-TW'] .kicker{font-size:11px;letter-spacing:.23em;line-height:1.45;text-transform:none;margin-bottom:17px}
+html[lang='zh-Hant-TW'] .overline{font-size:10px;letter-spacing:.15em;text-transform:none}
+html[lang='zh-Hant-TW'] .pill,html[lang='zh-Hant-TW'] .simulate,html[lang='zh-Hant-TW'] .hero-tag,html[lang='zh-Hant-TW'] .top-title{letter-spacing:.13em;text-transform:none}
+html[lang='zh-Hant-TW'] .brand-text strong{letter-spacing:0;font-size:15px}
+html[lang='zh-Hant-TW'] .brand-text small{letter-spacing:.13em;text-transform:none;font-size:10px}
+html[lang='zh-Hant-TW'] button{letter-spacing:.015em;line-height:1.55}
+html[lang='zh-Hant-TW'] .btn{font-weight:680;font-size:12.5px;letter-spacing:.03em}
+html[lang='zh-Hant-TW'] .tool{font-size:11px;letter-spacing:.055em}
+html[lang='zh-Hant-TW'] .chip{line-height:1.42}
+html[lang='zh-Hant-TW'] .feature-eyebrow{font-family:var(--serif);font-style:normal;letter-spacing:.06em}
+html[lang='zh-Hant-TW'] .message,html[lang='zh-Hant-TW'] .option{line-height:1.74;letter-spacing:.018em}
+html[lang='zh-Hant-TW'] .challenge-card h3{font-size:clamp(18px,1.65vw,24px);line-height:1.55;font-weight:570}
+html[lang='zh-Hant-TW'] .challenge-card .card-footer{gap:6px}
+html[lang='zh-Hant-TW'] .challenge-card .card-footer button{font-size:11px}
+html[lang='zh-Hant-TW'] .statequote{letter-spacing:.04em;line-height:1.57}
+html[lang='zh-Hant-TW'] .recap-head h2{font-size:clamp(34px,3.6vw,55px)}
+html[lang='zh-Hant-TW'] .recap-head .intro{font-size:clamp(13px,1.12vw,16px);line-height:1.7}
+html[lang='zh-Hant-TW'] .recap-chapter h3{font-size:clamp(20px,1.8vw,28px)}
+html[lang='zh-Hant-TW'] .recap-moment p{font-size:clamp(12px,.96vw,14px);line-height:1.77}
+html[lang='zh-Hant-TW'] .recap-stop strong{font-size:12px;letter-spacing:.065em}
+html[lang='zh-Hant-TW'] .recap-stop small{font-size:10px}
+html[lang='zh-Hant-TW'] .scene-jump{line-height:1.6}
+html[lang='zh-Hant-TW'] .foot-left{width:290px}
+html[lang='zh-Hant-TW'] .foot-right{width:260px}
+html[lang='zh-Hant-TW'] .top-title{font-size:10px;white-space:normal;text-align:center}
+html[lang='zh-Hant-TW'] .scene{padding-top:clamp(22px,2.65vw,46px);padding-bottom:clamp(22px,2.65vw,46px)}
+html[lang='zh-Hant-TW'] .panel{padding:clamp(19px,2.15vw,28px)}
+html[lang='zh-Hant-TW'] .note{line-height:1.76}
+html[lang='zh-Hant-TW'] .intro,html[lang='zh-Hant-TW'] .body,html[lang='zh-Hant-TW'] p{text-wrap:pretty}
+@media(min-width:721px) and (max-height:850px){
+ html[lang='zh-Hant-TW'] .scene{padding-top:20px;padding-bottom:20px}
+ html[lang='zh-Hant-TW'] h2{font-size:clamp(34px,3.55vw,56px)}
+ html[lang='zh-Hant-TW'] .intro{font-size:clamp(15px,1.22vw,18px)}
+ html[lang='zh-Hant-TW'] .recap-sequence{padding:19px 22px}
+ html[lang='zh-Hant-TW'] .recap-sheet{min-height:220px}
+}
+@media(max-width:720px){
+ html[lang='zh-Hant-TW'] .scene{padding:23px 16px 30px}
+ html[lang='zh-Hant-TW'] .hero-grid h1{font-size:clamp(40px,10.6vw,61px)}
+ html[lang='zh-Hant-TW'] .scene-wrap h2{font-size:clamp(31px,8.2vw,46px)}
+ html[lang='zh-Hant-TW'] h3{font-size:clamp(21px,6.1vw,29px)}
+ html[lang='zh-Hant-TW'] .intro{font-size:15px;line-height:1.82}
+ html[lang='zh-Hant-TW'] .recap-head h2{font-size:32px}
+ html[lang='zh-Hant-TW'] .brand-text small{font-size:8.5px}
+ html[lang='zh-Hant-TW'] .top-title{display:none}
+ html[lang='zh-Hant-TW'] .foot-left{width:auto}
+ html[lang='zh-Hant-TW'] .recap-chapter h3{font-size:25px}
+ html[lang='zh-Hant-TW'] .challenge-card h3{font-size:20px}
+}
+@media print{html[lang='zh-Hant-TW'] .scene{padding:40px}}
+
+/* The story closes after the practical recap; make its onward link unmistakable. */
+.recap-boundary .recap-finale{display:inline-flex;align-items:center;justify-content:center;margin-left:10px;padding:9px 15px;min-height:36px;background:var(--rust);border-color:var(--rust);color:#fff!important;vertical-align:middle;white-space:normal;text-decoration:none;font-size:12px;font-weight:750;box-shadow:0 5px 14px rgba(80,33,12,.14)}
+.recap-boundary .recap-finale:hover{background:var(--ink);border-color:var(--ink);color:#fff!important}
+@media(max-width:750px){.recap-boundary .recap-finale{margin-left:0;margin-top:10px}}
+</style></head><body><div class="deck" id="deck">
+<header class="top">
+<div class="brand"><div aria-hidden="true" class="mark">↗</div><div class="brand-text"><strong>My Next Step</strong><small>Transform 特別版</small></div></div>
+<div class="top-title">兩次見面之間的故事</div>
+<div class="top-actions"><button class="tool recap-return hide" id="recapReturn" title="返回互動路線圖" type="button">↶ <span class="text">路線回顧</span></button><button class="simulate" id="aboutBtn" title="關於這份離線示範" type="button">虛構故事・互動示範</button><button class="tool" id="indexBtn" title="選擇場景" type="button"><span aria-hidden="true">☷</span><span class="text">場景</span></button><button class="tool" id="notesBtn" title="講者筆記（N）" type="button"><span aria-hidden="true">ⓘ</span><span class="text">講者筆記</span></button><button class="tool" id="fullBtn" title="全螢幕播放（F）" type="button"><span aria-hidden="true">⛶</span><span class="text">全螢幕</span></button></div>
+</header>
+<div class="timeline-rail"><div class="timeline-fill" id="progressFill"></div></div>
+<main aria-label="互動簡報" class="stage" id="stage">
+<!-- Scene 0 -->
+<section aria-label="場景 1：兩次見面之間" class="scene dark active" data-label="兩次見面之間" id="scene-0">
+<div class="scene-wrap hero-grid">
+<div class="rise"><div class="kicker">My Next Step・一個關於陪伴的故事</div><div class="hero-tag">另一種陪伴方式</div><h1 style="margin-top:14px">生活，大多發生在 <span class="serif accent">兩次見面</span> 之間。</h1><p class="intro" style="max-width:585px">活動結束了，工作員也下班了。但那些還沒想通的事、那些剛剛萌生的可能，並不會跟著停下來。</p><div class="row" style="margin-top:26px"><button class="btn orange-btn" data-next="" type="button">認識阿樂 <span aria-hidden="true">↗</span></button><span class="micro" style="color:#D0B8A8">虛構人物・互動故事</span></div></div>
+<div aria-label="夜晚的窗邊，一個人仍在想著今天未完的問題" class="night-illustration" role="img"><div class="night-moon"></div><div class="window"></div><div class="silhouette"></div><div class="float-line a"><span>如果……</span>「我好像沒有甚麼特別可以說的。」</div><div class="float-line b"><span>明天</span>「其實，我還有一件事想問……」</div></div>
+</div>
+</section>
+<!-- Scene 1 -->
+<section aria-label="場景 2：一場活動結束了" class="scene cream" data-label="星期二・下午四時半" id="scene-1">
+<div class="scene-wrap two wide-left">
+<div class="rise"><div class="kicker">星期二・下午四時半</div><h2>課堂結束了。<br/><span class="serif accent">阿樂的生活，還在繼續。</span></h2><p class="intro">阿樂有一段時間沒有工作了。今天的活動帶來一些啟發，但回家的路上，心裡還有事情想慢慢想清楚。</p><div class="panel" style="margin-top:22px;max-width:580px"><span class="pulse">我們熟悉的那段空白</span><p style="font-family:var(--serif);font-style:italic;font-size:25px;letter-spacing:-.04em;line-height:1.27;margin:15px 0 4px">「偏偏回到家，才想到那個問題。」</p></div><p class="micro" style="margin-top:18px">人與人的支持仍然重要。只是，再用心的工作員，也不可能每一刻都在身旁。</p></div>
+<div class="rise late"><div class="day-stage"><div class="sun"></div><div class="room-floor"></div><div class="door"></div><div aria-hidden="true" class="exit-person">◕</div><div class="day-note"><span class="overline">阿樂・離開活動時</span><p style="margin:8px 0 0">「也許，我可以先試一件小事。」</p></div></div><div class="weekday-strip"><div class="weekday selected"><strong>週二</strong>小組活動</div><div class="weekday"><strong>週三</strong>日常生活</div><div class="weekday"><strong>週四</strong>一件小事</div><div class="weekday"><strong>週五</strong>另一個選擇</div><div class="weekday"><strong>下星期</strong>一對一面談</div></div></div>
+</div>
+</section>
+<!-- Scene 2 -->
+<section aria-label="場景 3：沒有規定的路線" class="scene paper" data-label="沒有規定的路線" id="scene-2">
+<div class="scene-wrap two wide-left">
+<div class="rise"><div class="kicker">第一個設計選擇</div><h2>這裡， <span class="serif accent">沒有規定的路線。</span></h2><p class="intro">阿樂不需要完成任何入門程序，也不用先把個人檔案填滿，才有資格得到幫助。</p><p class="body">每一天的需要可能不同。試著選一扇門：從哪裡開始都可以，也隨時可以回到自己的生活。</p><div class="note" style="margin-top:20px;max-width:520px"><strong>想用才用，才是真正的選擇。</strong> 使用 My Next Step，並非接受 Transform 服務的必經程序。</div></div>
+<div aria-label="環繞 My Next Step 的四個可自由選擇的起點" class="orbit rise late"><div class="orbit-core"><div aria-hidden="true" class="big">↗</div><strong>My Next Step</strong></div><button class="orbit-node n1" data-goto="3" type="button"><strong>✳ 我想隨意看看</strong><small>不帶目的，試一點新鮮事</small></button><button class="orbit-node n2" data-goto="4" type="button"><strong>◌ 今天有件事</strong><small>把一段經驗留下來</small></button><button class="orbit-node n3" data-goto="8" type="button"><strong>↗ 我找到一份招聘資訊</strong><small>帶進來一起看看</small></button><button class="orbit-node n4" data-goto="11" type="button"><strong>♡ 我想找人談談</strong><small>向工作員提出支援請求</small></button><span class="orbit-label">隨意選一扇門，或繼續阿樂的故事 →</span></div>
+</div>
+</section>
+<!-- Scene 3 -->
+<section aria-label="場景 4：小挑戰" class="scene deep-cream" data-label="一點好奇" id="scene-3">
+<div class="scene-wrap"><div class="spread" style="align-items:end;margin-bottom:19px"><div><div class="kicker">星期三・晚上七時十八分</div><h2 style="margin-bottom:9px">有時候，下一步 <span class="serif accent">不必有目標。</span></h2><p class="intro" style="max-width:750px">阿樂打開「小挑戰」。不用測驗，沒有功課，也不需要證明自己學會了甚麼。只是，想看看今天有甚麼有趣的可能。</p></div><div class="pill">可以親手試試・小挑戰卡牌</div></div>
+<div class="deck-screen"><div class="spread"><div><strong style="font-size:17px">今天，對甚麼有點好奇？</strong><p class="micro" style="margin:4px 0 0">選一個方向，或者甚麼都不想，讓卡牌替你起個頭。</p></div><div class="row" id="sparks"><button aria-pressed="true" class="chip is-on" data-spark="SURPRISE">✦ 隨意給我三張</button><button aria-pressed="false" class="chip" data-spark="LOOK">看看</button><button aria-pressed="false" class="chip" data-spark="TRY">試試</button><button aria-pressed="false" class="chip" data-spark="GO">走走</button><button aria-pressed="false" class="chip" data-spark="CONNECT">連結</button></div></div>
+<div aria-live="polite" class="challenge-hand" id="challengeHand"></div><div class="spread"><div class="row"><button class="btn small" id="dealButton" type="button">↻ 再來三張</button><button aria-pressed="false" class="btn outline small" id="fitButton" type="button">改成今天做得到的樣子</button><button class="btn ghost small" disabled="" id="keepButton" type="button">留下這張，換掉其他</button></div><span class="micro" id="challengeMode">沒有分數，也不用解釋。</span></div><div aria-live="polite" class="challenge-note" id="challengeNote">喜歡就拿走，不喜歡就換一張。也可以甚麼都不做，直接離開。這裡不會自動替你記錄成果。</div></div>
+<p class="micro" style="margin-top:14px">一個小小的探索，即使沒有留下任何「成果」，也已經足夠。</p>
+</div>
+</section>
+<!-- Scene 4 -->
+<section aria-label="場景 5：故事捕手與 Sam" class="scene paper" data-label="值得留下的一件事" id="scene-4">
+<div class="scene-wrap"><div class="spread" style="align-items:end;margin-bottom:20px"><div><div class="kicker">星期四・傍晚六時零五分</div><h2 style="margin-bottom:8px">後來，<br/><span class="serif accent">有件平常的小事。</span></h2><p class="intro" style="max-width:760px">阿樂陪媽媽看一封預約通知。事情過去了，卻忽然覺得：也許值得記住這一小段經歷。</p></div><span class="pill">選擇阿樂會說的話，看看 Sam 怎樣回應</span></div>
+<div class="two wide-left" style="align-items:stretch"><div class="chat"><div class="spread"><strong>◌ 和 Sam 聊幾分鐘</strong><button class="btn ghost small" id="resetStory" type="button">↻ 重新對話</button></div><div aria-live="polite" class="messages" id="storyMessages"></div><div class="chat-options" id="storyOptions"></div></div><div class="story-paper"><div class="spread"><span class="mini-stamp">由參與者作主</span><span class="micro" id="storySavedStatus">尚未儲存</span></div><h3 style="margin:23px 0 18px">一個平凡的星期四</h3><div class="paper-lines"><strong>發生了甚麼</strong><p>媽媽收到一封預約通知，不太確定上面的日期。</p></div><div class="paper-lines"><strong>我實際做了甚麼</strong><p id="storyActionDisplay">Sam 會陪阿樂說清楚自己做過的事，不會把它說得比事實更厲害。</p></div><div class="paper-lines"><strong>也許值得留意的是</strong><p id="storyMeaningDisplay">不必急著替經驗貼上技能標籤，也不用編出一個漂亮的結果。</p></div><div class="row"><button class="btn small" disabled="" id="saveStoryBtn" type="button">留下這段故事</button><button class="btn outline small" id="leaveStoryBtn" type="button">不儲存，直接離開</button></div></div></div>
+</div>
+</section>
+<!-- Scene 5 -->
+<section aria-label="場景 6：一次重新看見" class="scene cream" data-label="從重新理解開始" id="scene-5">
+<div class="scene-wrap"><div class="kicker">對話可能帶來的改變</div><h2>有時候，重點不是 <span class="serif accent">找出一項技能。</span></h2><p class="intro" style="margin-bottom:25px">有時候，真正的改變，是重新看見一件早已發生、原本不覺得特別的事。</p><div class="before-after"><div class="statequote bef"><span class="pill">原來的想法</span><blockquote>「我只是幫媽媽看了一封信。」</blockquote><span class="micro">好像只是微不足道的小事。</span></div><div aria-hidden="true" class="transition-arrow">↗</div><div class="statequote aft"><span class="pill" style="background:#FFF5EC">也許重新看見了</span><blockquote>「原來，我曾經主動把不清楚的日期弄明白。」</blockquote><span class="micro" style="color:#533725">看見的是實際做過的事，而不是憑空加上去的成就。</span></div></div><div class="note" style="margin-top:24px"><strong>對話本身，也是支持。</strong> 有價值的，不一定只是最後留下的故事。阿樂可以認同這個理解，也可以有不同看法，甚至就此打住。</div></div>
+</section>
+<!-- Scene 6 -->
+<section aria-label="場景 7：時間慢慢累積" class="scene deep-cream" data-label="幾分鐘，累積成幾個月" id="scene-6">
+<div class="scene-wrap"><div class="spread"><div><div class="kicker">時間，讓我們看見更多</div><h2>今天的幾分鐘。<br/><span class="serif accent">改天的另一件小事。</span></h2><p class="intro">日子照常過。有些經歷值得留下，有些不需要。阿樂不必為自己訂下蒐集多少故事的目標。</p></div><span class="pill" id="timelineCounter">九月・一個片段</span></div><div class="timeline-zone"><div class="timecards"><article class="timecard" id="time-0"><span class="month">九月</span><div aria-hidden="true" class="event-icon">✉</div><h3>一封看不明白的信</h3><p>陪媽媽確認預約日期，也把想問的問題記下來。</p><div class="tagline">一件平常的事</div></article><article class="timecard inactive" id="time-1"><span class="month">十月</span><div aria-hidden="true" class="event-icon">✳</div><h3>在社區活動裡</h3><p>歡迎到場的人，幫他們找到想參加的活動。</p><div class="tagline">另一段小經歷</div></article><article class="timecard inactive" id="time-2"><span class="month">十一月</span><div aria-hidden="true" class="event-icon">☎</div><h3>一通電話</h3><p>想好要問甚麼，然後打電話聯絡機構。</p><div class="tagline">以前會有點猶豫的事</div></article></div></div><div class="spread"><p class="micro" style="max-width:650px">這些都是虛構的生活片段，不代表系統會自動記錄，也不是必須完成的步驟。</p><div class="row"><button class="btn small" id="timeNext">讓日子繼續走 <span aria-hidden="true">→</span></button><button class="btn outline small" id="timeReset">從九月重新看</button></div></div></div>
+</section>
+<!-- Scene 7 -->
+<section aria-label="場景 8：一條可能的線索" class="scene paper" data-label="慢慢看見脈絡" id="scene-7">
+<div class="scene-wrap two wide-right"><div class="rise"><div class="kicker">回頭看，不是要打分數</div><h2>慢慢地， <span class="serif accent">也許看見一點脈絡。</span></h2><p class="intro">不是因為阿樂填好了幾個能力欄位，而是因為，已有幾段真實經歷可以放在一起看看。</p><div class="panel soft" style="margin-top:18px"><span class="overline">Sam 或許會輕輕提出</span><p style="font-family:var(--serif);font-size:24px;font-style:italic;line-height:1.28;margin:13px 0">「在幾件不同的事裡，你似乎都幫人把接下來要做的事弄清楚。你自己也有這樣的感覺嗎？」</p><div class="row" id="patternChoices"><button class="chip" data-pattern="yes">好像真的是這樣</button><button class="chip" data-pattern="unsure">我還不太確定</button><button class="chip" data-pattern="different">我看到的有點不同</button></div><div aria-live="polite" class="pattern-answer" id="patternAnswer" style="margin-top:14px">這只是一種可能的理解。阿樂可以認同、質疑，也可以說出自己的看法。</div></div></div>
+<div aria-label="幾段小小的經歷，透過虛線輕輕連起來" class="constellation rise late" role="img"><svg aria-hidden="true" preserveaspectratio="none" viewbox="0 0 520 410"><path class="drawpath" d="M100 78 Q225 35 265 205 Q342 80 420 75 M265 205 Q125 295 136 345 M265 205 Q345 330 422 340" fill="none" stroke="#F79549" stroke-dasharray="7 10" stroke-width="2"></path><circle cx="265" cy="205" fill="none" r="103" stroke="#F7954950" stroke-width="1"></circle></svg><div class="starpoint s1"><em>九月</em>陪媽媽看懂一封信</div><div class="starpoint s2"><em>十月</em>幫參加者找到活動</div><div class="starpoint s3"><em>十一月</em>為一通電話作準備</div><div class="starpoint s4"><em>還未發生</em>下一段經歷，會是甚麼？</div><div class="starcenter">是一條可能的線索，不是對人的定論</div></div>
+</div>
+</section>
+<!-- Scene 8 -->
+<section aria-label="場景 9：生活中的工作機會" class="scene cream" data-label="生活帶來的工作機會" id="scene-8">
+<div class="scene-wrap"><div class="spread" style="align-items:end;margin-bottom:20px"><div><div class="kicker">某一天・生活帶來的機會</div><h2>阿樂在別處 <span class="serif accent">看見一份招聘。</span></h2><p class="intro">工作機會不一定在 MNS 裡找到。阿樂可以把別處看到的招聘帶進來，看看自己的經歷和這份工作有沒有關連。</p></div><span class="pill">虛構招聘・並非聘用評估</span></div>
+<div class="two wide-right" style="align-items:stretch"><div class="stack"><div class="job-card"><span class="pill" style="background:#38302B;color:#FFCEAA;border-color:#6A4A38">從現實生活帶進來</span><h3 style="margin-top:16px">社區活動助理</h3><p>諾定咸・虛構的本地慈善機構</p><div style="border-top:1px solid #5B4C44;margin:20px 0;padding-top:14px;font-size:13px">協助接待訪客、介紹活動、整理基本紀錄。</div></div><button class="btn orange-btn" id="bringJob">↗ 把這份招聘帶進 MNS</button><p class="micro">機會由阿樂選擇。Sam 不會替阿樂決定應該走哪一條職業路。</p></div><div class="panel"><div class="spread"><h3 style="font-size:23px;margin:0">有甚麼可能連得上？</h3><span class="pill" id="matchStatus">還未開始探索</span></div><div id="matchResults" style="margin-top:19px"><div class="note">按下按鈕，看看 MNS 如何參照真實經歷，找出值得討論的連結。沒有「適合度分數」。</div></div></div></div>
+</div>
+</section>
+<!-- Scene 9 -->
+<section aria-label="場景 10：由阿樂寫的申請" class="scene paper" data-label="阿樂親手寫申請" id="scene-9">
+<div class="scene-wrap"><div class="spread" style="align-items:end;margin-bottom:18px"><div><div class="kicker">準備，不是代筆</div><h2>機會就在眼前。<br/><span class="serif accent">說出來的，應該是自己的話。</span></h2><p class="intro">Sam 可以一起找相關例子、看看哪些地方還不清楚、協助修改。但這份申請，仍然由阿樂自己寫。</p></div><span class="pill">可編輯示範・離線模擬</span></div>
+<div class="two wide-right" style="align-items:stretch"><div class="panel soft"><span class="overline">虛構職位要求</span><h3 style="margin:14px 0">「請分享一次你曾經幫助別人的經歷。」</h3><p class="body">阿樂可以用社區活動的經驗，也可以選另一件真實的事。不必為了令人留下好印象，而把故事寫得比事實更漂亮。</p><div class="note" style="margin-top:24px">目的是把做過的事說清楚，而不是把人包裝得比真實經歷更厲害。</div></div><div class="panel"><div class="spread"><strong style="font-size:15px">阿樂的草稿</strong><span class="pill" id="draftStatus">示範草稿・未儲存</span></div><textarea aria-label="可編輯的虛構求職申請草稿" class="writing-field" id="applicationDraft" style="margin-top:14px">在一次社區活動中，我負責歡迎到場的人，並幫他們找到想參加的活動。</textarea><div class="row" style="margin:13px 0"><button class="btn small" id="reviewDraft">幫我看看這段文字</button><button class="btn outline small" id="saveDraft">留下這份示範草稿</button></div><div aria-live="polite" class="feedbackbox" id="draftFeedback"></div></div></div>
+</div>
+</section>
+<!-- Scene 10 -->
+<section aria-label="場景 11：面試前的練習" class="scene deep-cream" data-label="練習，為了真實對話" id="scene-10">
+<div class="scene-wrap"><div class="spread" style="align-items:end;margin-bottom:18px"><div><div class="kicker">面試之前</div><h2>先在這裡練一練。<br/><span class="serif accent">然後，去面對真實的對話。</span></h2><p class="intro">沒有合格分數，也不評定你是甚麼類型的人。只是讓你在真正見到面試官之前，先試著把話說出來。</p></div><span class="pill">情境練習・不會錄音</span></div><div class="two" style="align-items:stretch"><div class="practice-spot"><div aria-hidden="true" class="halo-ring">“ ”</div><h3>「可不可以說說，你曾經怎樣幫助別人？」</h3><small>Sam・面試準備</small></div><div class="panel"><div class="spread"><strong style="font-size:17px">阿樂會怎樣回答？</strong><span class="micro">試試不同的說法</span></div><div class="stack" id="practiceOptions" style="margin-top:14px"><button class="practice-answer" data-practice="0">「我曾經在社區活動歡迎到場的人，帶他們找到活動地點。」</button><button class="practice-answer" data-practice="1">「我一向都很擅長幫助所有人。」</button><button class="practice-answer" data-practice="2">「我現在還不知道應該怎樣說。」</button></div><div aria-live="polite" class="feedbackbox" id="practiceFeedback" style="margin-top:16px;min-height:83px"></div><button class="btn outline small" data-goto="11" style="margin-top:15px">我想找工作員談談 ↗</button></div></div></div>
+</section>
+<!-- Scene 11 -->
+<section aria-label="場景 12：與工作員再連結" class="scene paper" data-label="回到人與人的支持" id="scene-11">
+<div class="scene-wrap"><div class="spread" style="align-items:end;margin-bottom:18px"><div><div class="kicker">回到人與人的支持</div><h2>Sam 陪阿樂先作準備。<br/><span class="serif accent">工作員陪阿樂走得更遠。</span></h2><p class="intro">MNS 陪伴的是兩次見面之間的時間，而不是取代人與人的關係。何時提出需要、願意分享甚麼，都由阿樂決定。</p></div><span class="pill">支援請求示範・不會傳送</span></div>
+<div class="two wide-right" style="align-items:stretch"><div class="panel"><strong style="font-size:17px">我想找人談一談</strong><p class="micro" style="margin-top:6px">我想跟工作員談談這份工作機會。</p><div class="share-row"><div><strong>分享這份招聘</strong><small>社區活動助理</small></div><button aria-label="Share vacancy" aria-pressed="true" class="switch on" data-share="vacancy" type="button"></button></div><div class="share-row"><div><strong>分享申請草稿</strong><small>只分享選取的內容</small></div><button aria-label="Share draft application" aria-pressed="true" class="switch on" data-share="application" type="button"></button></div><div class="share-row"><div><strong>分享 Sam 的相關建議</strong><small>可自行選擇，不會分享整段對話紀錄</small></div><button aria-label="Share related guidance" aria-pressed="false" class="switch" data-share="guidance" type="button"></button></div><div class="row" style="margin-top:17px"><button class="btn small" id="previewRequest">↗ 預覽阿樂的支援請求</button><span class="micro" id="requestStatus">尚未傳送</span></div></div><div class="worker-note"><div class="subline">工作員將會看到甚麼</div><h3 style="font-size:24px;margin-bottom:15px">「我們可不可以談談這件事？」</h3><ul class="worker-items" id="workerSharedList"></ul><p class="micro" style="margin:16px 0 0">阿樂私人的故事、其他機會，以及生活中的其他事情，不會被自動分享出去。</p><div class="note" style="margin-top:16px"><strong>人的判斷，仍然交給人。</strong> 工作員可能更了解阿樂的處境，也可以問出不同的問題，協助面對那些不能交給應用程式決定的事。</div></div></div>
+</div>
+</section>
+<!-- Scene 12 -->
+<section aria-label="場景 13：其他起點" class="scene cream" data-label="可以從不同地方開始" id="scene-12">
+<div class="scene-wrap"><div class="kicker">另一個人，另一種開始</div><h2>這個應用程式， <span class="serif accent">不必包辦整段旅程。</span></h2><p class="intro" style="margin-bottom:25px">另一位使用者，可能會從完全不同的地方開始。沒有任何一項功能，是使用其他功能的必經關卡。</p><div class="door-grid"><button class="door-card" data-goto="4"><span aria-hidden="true" class="symbol">◌</span><strong>「今天有件事，我想記下來。」</strong><p>先說一件事，花幾分鐘留下來。然後就可以離開，不用為了「完成檔案」而繼續填寫。</p><span class="arrowlink">去故事捕手看看 →</span></button><button class="door-card" id="profileDoor"><span aria-hidden="true" class="symbol">▤</span><strong>「我已經有一份 CV。」</strong><p>從已有的履歷開始。系統提出的資料建議，要經過自己確認，才會留下來。</p><span class="arrowlink">看看怎樣帶入 CV →</span></button><button class="door-card" data-goto="8"><span aria-hidden="true" class="symbol">↗</span><strong>「朋友傳來一份招聘。」</strong><p>直接把機會帶進來。已有的經歷可以先用，不必等個人檔案變得「完整」。</p><span class="arrowlink">看看機會配對 →</span></button></div><p class="micro" style="margin-top:21px">有人經常使用，有人偶爾才回來。也有人完全不用 MNS，仍然可以得到有價值的人際支持。</p></div>
+</section>
+<!-- Scene 13 -->
+<section aria-label="場景 14：MNS 的設計信念" class="scene dark" data-label="MNS 的信念與界線" id="scene-13">
+<div class="scene-wrap two wide-left"><div class="rise"><div class="kicker">我們的相信，也有清楚的界線</div><h2>不是一套要完成的程序。<br/><span class="serif accent">而是一個可以再回來的地方。</span></h2><p class="intro muted">MNS 不替阿樂定義自己、不指定職業方向、不取代工作員，也不把找到工作的功勞全算在自己身上。它的角色有邊界，才有機會把這個角色做好。</p><div class="panel translucent" style="margin-top:22px"><p style="font-family:var(--serif);font-style:italic;font-size:25px;line-height:1.3;margin:0">「我們支持的是一個人，不是要把一份檔案填完。」</p></div></div><div class="principles rise late"><div class="principle"><div class="symbol">◌</div><strong>真實，比漂亮重要</strong><p>一段平實、說得清楚的經歷，比經過誇大的成就更值得保存。</p></div><div class="principle"><div class="symbol">↝</div><strong>願意讓時間慢慢來</strong><p>有些脈絡，需要幾個月才看得見。今天，不必完成甚麼。</p></div><div class="principle"><div class="symbol">✳</div><strong>選擇，比照著做重要</strong><p>探索、留下、停一停、不同意，或者離開，都可以由自己決定。</p></div><div class="principle"><div class="symbol">♡</div><strong>人與人的關係始終重要</strong><p>Sam 陪伴兩次見面之間的時光；螢幕外，仍然有生活，也有人可以同行。</p></div></div></div>
+</section>
+<!-- Scene 14: The practical recap before Alex's closing moment -->
+<section aria-label="場景 15：互動路線回顧" class="scene paper recap-scene" data-label="一路怎樣連起來" id="scene-14">
+<div class="scene-wrap recap-wrap">
+<div class="recap-head rise"><div><div class="kicker">故事最後一頁之前・一起整理這段旅程</div><h2>再回頭看看，<span class="serif accent">這一路怎樣連起來。</span></h2><p class="intro">用五個片段，重新看阿樂怎樣使用 MNS。隨意點選：生活中發生了甚麼、MNS 可以怎樣幫忙，以及阿樂把甚麼帶回生活裡。</p></div><div aria-hidden="true" class="recap-edition">五個<br/>片段<br/>一段生活</div></div>
+<div aria-label="選擇阿樂旅程中的一個片段" class="recap-map rise late">
+<div class="recap-track" id="recapTrack"><span aria-hidden="true" class="recap-trace" id="recapTrace"></span>
+<button aria-controls="recapSheet" aria-pressed="true" class="recap-stop is-current" data-recap="0" type="button"><span aria-hidden="true" class="recap-bead">✳</span><strong>隨意探索</strong><small>好奇心</small></button>
+<button aria-controls="recapSheet" aria-pressed="false" class="recap-stop" data-recap="1" type="button"><span aria-hidden="true" class="recap-bead">◌</span><strong>留下經驗</strong><small>一段故事</small></button>
+<button aria-controls="recapSheet" aria-pressed="false" class="recap-stop" data-recap="2" type="button"><span aria-hidden="true" class="recap-bead">↔</span><strong>看見連結</strong><small>一份招聘</small></button>
+<button aria-controls="recapSheet" aria-pressed="false" class="recap-stop" data-recap="3" type="button"><span aria-hidden="true" class="recap-bead">✎</span><strong>做好準備</strong><small>自己的話</small></button>
+<button aria-controls="recapSheet" aria-pressed="false" class="recap-stop" data-recap="4" type="button"><span aria-hidden="true" class="recap-bead">♡</span><strong>找人同行</strong><small>人的支持</small></button>
+</div>
+</div>
+<div aria-atomic="true" aria-live="polite" class="recap-sheet rise late" id="recapSheet">
+<div class="recap-chapter"><div class="recap-chapter-top"><span id="recapNumber">01 / 05</span><span>阿樂的隨身筆記</span></div><div aria-hidden="true" class="recap-large-mark" id="recapMark">✳</div><h3 id="recapTitle">從一點好奇開始</h3><p id="recapSubtitle">一個小小的邀請，已經足夠。</p></div>
+<div class="recap-sequence" id="recapSequence">
+<div class="recap-moment"><span class="recap-stage">生活裡</span><p id="recapOutside">阿樂有點好奇，卻沒有特別想完成的目標。</p></div>
+<div class="recap-moment"><span class="recap-stage">在 MNS 裡</span><p id="recapInside">阿樂選一張小挑戰卡，也可以換一張，甚至只是看看。</p></div>
+<div class="recap-moment"><span class="recap-stage">回到生活</span><p id="recapBack">帶走一個小念頭。沒有甚麼需要交功課或證明。</p></div>
+</div>
+</div>
+<div class="recap-actions"><div aria-label="探索相關功能示範" class="recap-links" id="recapLinks"></div><div class="recap-action-buttons"><button class="btn outline small" disabled="" id="recapPrevious" type="button">← 上一個片段</button><button class="btn small" id="recapNext" type="button">下一個片段 →</button></div></div>
+<div class="recap-boundary"><span><strong>這只是一種走法，並非五個必經步驟。</strong> 可以從任何地方開始，做完一件有用的事就離開；生活帶來新的問題時，再回來也不遲。 <button class="btn small recap-finale" data-goto="15" type="button">看阿樂最後的一步 →</button></span></div>
+</div>
+</section>
+
+<!-- Scene 15: Alex's true closing scene -->
+<section aria-label="場景 16：故事的結尾" class="scene orange" data-label="下一步，在生活裡" id="scene-15">
+<div class="scene-wrap two wide-left"><div class="rise"><div class="kicker">另一種值得看見的進展</div><h2>阿樂還沒有找到工作。<br/><span class="serif">生活，還在繼續。</span></h2><p class="intro" style="color:#422A20">不過，阿樂已經有一段可以說清楚的經歷、一份值得討論的招聘，以及下次見面時想提出的問題。</p><h3 style="font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(27px,3.8vw,52px);margin:25px 0">「現在，我好像有些話可以說了。」</h3><p class="body" style="color:#563B2B;max-width:640px">這也可以是一種前進。MNS 可以在旁幫上一點忙，但未來，仍然屬於阿樂自己。</p><div class="row" style="margin-top:26px"><button class="btn" data-goto="14" type="button">↶ 回看這一路的連結</button><button class="btn light" data-goto="0" type="button">↻ 重新看這個故事</button><button class="btn outline" id="printBtn" type="button">列印／儲存 PDF</button></div></div>
+<div class="end-arc rise late"><div class="circle"></div><svg aria-hidden="true" class="linepath" preserveaspectratio="none" viewbox="0 0 550 380"><path class="drawpath" d="M30 290 C70 290 100 190 140 190 S200 310 265 170 S400 80 510 85" fill="none" stroke="#7A3E1E" stroke-linecap="round" stroke-width="3.2"></path><circle cx="30" cy="290" fill="#7A3E1E" r="7"></circle><circle cx="510" cy="85" fill="#7A3E1E" r="9"></circle></svg><div class="end-note"><span class="outro-mini">My Next Step</span><div style="font-size:45px;margin:4px 0">↗</div><strong>一件小事。<br/>然後，再一件。</strong><p class="micro" style="margin:12px 0 0;color:#785944">下一步，由阿樂自己走。</p></div></div>
+</div>
+</section>
+</main>
+<div aria-hidden="true" class="scrollhint" id="scrollHint">向下捲動，還有內容 ↓</div>
+<footer class="foot"><div class="foot-left"><span class="count" id="sceneCount">01 / 16</span><span class="foot-title" id="sceneTitle">兩次見面之間</span></div><div aria-label="場景導覽" class="dots" id="sceneDots"></div><div class="foot-right"><span class="hintbar">← → 切換場景</span><button aria-label="上一個場景" class="arrow" disabled="" id="prev" type="button">←</button><button aria-label="下一個場景" class="arrow next" id="next" type="button">→</button></div></footer>
+</div>
+<div aria-label="選擇場景" aria-modal="true" class="overlay" id="indexOverlay" role="dialog"><div class="overlay-box"><div class="overlay-head"><div><div class="overline">從任何場景開始</div><h3>探索故事</h3></div><button aria-label="關閉場景清單" class="close" data-close="indexOverlay" type="button">×</button></div><div class="scene-list" id="sceneList"></div><p class="micro" style="margin-top:16px">這份簡報也沒有規定的觀看順序。想從哪一頁開始，都可以。</p></div></div>
+<div aria-label="講者筆記" aria-modal="true" class="overlay" id="notesOverlay" role="dialog"><div class="overlay-box"><div class="overlay-head"><div><div class="overline">講者導讀</div><h3 id="notesTitle">兩次見面之間</h3></div><button aria-label="關閉講者筆記" class="close" data-close="notesOverlay" type="button">×</button></div><div class="notes-text" id="notesContent"></div></div></div>
+<div aria-label="可選的 CV 匯入示範" aria-modal="true" class="overlay" id="profileOverlay" role="dialog"><div class="overlay-box"><div class="overlay-head"><div><div class="overline">另一個起點</div><h3>從已有的經驗開始</h3></div><button aria-label="關閉匯入示範" class="close" data-close="profileOverlay" type="button">×</button></div><p class="body">如果已經有 CV，可以從這裡開始。MNS 可以提出值得納入個人檔案的資料，但是否接受，由本人確認。匯入資料不會自動變成故事，更不等於證實擁有某項能力。</p><div class="panel" style="margin:18px 0"><div class="share-row"><div><strong>客戶服務培訓</strong><small>從虛構 CV 提出的資料建議</small></div><input aria-label="接受客戶服務培訓資料" checked="" class="profile-check" type="checkbox"/></div><div class="share-row"><div><strong>活動義工經驗</strong><small>建議加入的經驗資料</small></div><input aria-label="接受義工經驗資料" checked="" class="profile-check" type="checkbox"/></div><div class="share-row"><div><strong>個人檔案已有相同資料</strong><small>已經有了，不必重複存放</small></div><span class="pill">已有紀錄</span></div></div><div class="row"><button class="btn small" id="profileConfirm" type="button">確認加入選取的示範資料</button><span class="micro" id="profileStatus">這份簡報不會真的匯入或上載任何資料。</span></div></div></div>
+<div aria-label="關於互動示範" aria-modal="true" class="overlay" id="aboutOverlay" role="dialog"><div class="overlay-box"><div class="overlay-head"><h3>關於這份互動簡報</h3><button class="close" data-close="aboutOverlay" type="button">×</button></div><p class="body">這是一份可以離線使用的虛構互動簡報。所有互動都是預先設計的示範，直接在瀏覽器裡運作。不會傳送真實使用者資料、CV、招聘資訊、錄音、支援請求或申請文件，也不會連線讓 AI 分析。</p><p class="body">內容呈現的是 My Next Step 的產品理念與體驗方向，不代表所有展示的功能都已在任何實際部署中啟用。視覺延續原有 Transform 版本的色彩設計。</p></div></div>
+<script>(() => {
+  'use strict';
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const slides=$$('.scene'); let current=0;let priorFocus=null;let recapVisit=false;
+  const noteData=[
+  "從人的生活開始，而不是先介紹功能。活動與一對一支援只佔一星期中的一小部分。其餘時間，人仍然在生活、嘗試、猶豫，也會在回家後才想到真正想問的問題。MNS 希望在這些時間裡，提供一種可自行選擇的陪伴，而不取代人際關係。\n\n阿樂是虛構人物。故事刻意沒有安排「成功找到工作」的大結局。所有互動均為離線預設情境，並非即時 AI 運作。",
+  "阿樂剛參與了一場有人帶領的活動。活動本身已有價值，不需要依賴 MNS 才能延續服務。只是離開之後，阿樂可能又想到甚麼，或希望在下次面談前先整理一下。\n\nMNS 是工作坊、小組、一對一與個人生活之間的連結，而不是要把真人工作員變成接收 AI 報告的人。",
+  "沒有必經流程。有些人先找到招聘，有些人想留下一個生活片段，有些人已有 CV，也有人只想隨意探索或尋求真人協助。做完一件有用的事就可以離開，過幾星期再回來也沒有問題。\n\n只有一段故事，不代表完成度是百分之十。這裡的四扇門可以點選，通往簡報中的不同場景。",
+  "好奇不等於要產出成果。「小挑戰」是一個不帶壓力、尊重成年人自主的探索空間。「看看、試試、走走、連結」只是幾種起點，不是學習指標。\n\n不設分數、連續使用獎勵，也不會自動把體驗轉成能力證明。這個示範可換卡、留一張換其他、要求類似或不同的卡，也可以把挑戰改小一點。",
+  "對話本身，就是支持的一部分。「故事捕手」不要求完整 STAR 格式，也不要求有令人印象深刻的成果。Sam 的角色是聆聽這個人正在說的事，釐清他實際做了甚麼；當材料足以忠實記錄時，由參與者決定要不要繼續。\n\n真正的 Sam 會在行為界線內運用語言模型回應。這裡的對話是兩條不同的預設示範分支，不是即時 AI。儲存動作只影響當前簡報。",
+  "有時候，重要的不是保存了甚麼，而是人在對話途中，看見了原先忽略的部分。\n\n「我只是幫媽媽看信」也許會慢慢轉成更清楚的理解；但不必因此貼上「溝通能力很強」的標籤。這個示範只呈現一種可能，不代表所有人都會產生相同的領悟。",
+  "願意讓時間慢慢來，是 MNS 的設計選擇。它不需要在服務開始時把一個人的所有經歷都訪問一遍。今天說一段，過一陣子又說一段；一段段真實經歷，慢慢可能提供更豐富的理解。\n\n這些生活片段不會被系統自動偵測。沒有固定目標、完成百分比，也沒有保證會出現某種人生模式。",
+  "幾段經驗放在一起，也許能看見一條反覆出現的線索，但那仍然只是一種假設，不是對人的定論。Sam 可以輕輕提出觀察，也必須容許阿樂說「不確定」或「我看見的是別的東西」。\n\n這個畫面沒有對人格或能力打分。日後若要發展長期模式探索，也應如實區分產品方向和已上線功能。",
+  "世界不在應用程式之內。阿樂在別處得到一份招聘資訊，這本身就是很自然的 MNS 起點。應用程式可協助看看職位要求與真實經歷之間可能有甚麼關連。\n\n如果沒有找到相關故事，不代表阿樂缺乏那種能力。這只是虛構的配對示範，不是招聘推薦，更不保證獲聘。",
+  "Sam 是寫作上的陪伴，不是代筆者。申請書的內容和文字仍屬阿樂；Sam 可以協助理解要求、找例子、看見不清楚的地方，卻不能偷偷添上未曾發生的成就。\n\n文字框可以編輯，回應會依據一些簡單的本地規則變化，不是連線到語言模型，也沒有任何實際申請會被提交。",
+  "練習是為了離開螢幕後的真人對話。可以先試著說、停一停、換一種說法，而不用被分數評定。\n\n示範提供三種不同回答與相應回饋。簡報沒有使用咪高峰，不錄音，也不保存聲音檔案。",
+  "人與人的關係始終是直接的。阿樂可以選擇甚麼時候請工作員幫忙，以及只分享與這次需要有關的資料。私人故事、其他申請和完整的 Sam 對話，不應自動向工作員開放。\n\n工作員有關係中的理解、專業判斷與責任，可以做應用程式不適合替代的事。這個支援請求只是預覽，不會真的發送。",
+  "沒有單一的入口，也沒有「填好個人檔案」才可開始的要求。有人從已有 CV 起步，有人帶來外部招聘，有人只想記住一件小事。使用 MNS 本身不是接受工作員協助的條件。\n\nCV 匯入示範只展示本人覆核後才接受資料的原則。沒有真正讀取檔案，也不會因為匯入資料而自動創作故事或宣稱能力。",
+  "這些價值不是寫在投影片上的口號，而應該在使用體驗裡感受得到。MNS 不把人當成需要填完的表格、分數或技能清單。它可能只是在某個時刻，幫人看清一點經歷，準備一點話，或找回下一個選擇。\n\nSam 應保有聆聽與判斷對話方向的空間。可靠的界線用來保護事實、私隱及人的主導權，而不是預先替每一段對話決定所有重要問題。",
+  "這是走向故事真正結尾前的一次簡短實用回顧，而不是第二輪功能介紹。點選五個片段，重看三件事：生活中發生了甚麼、MNS 可以做甚麼、阿樂又把甚麼帶回生活裡。\n\n可以用按鈕跳回之前的互動場景，再返回這張路線圖。五個片段只代表阿樂這一種走法；不是固定的入門流程。最重要的，不是完成五個步驟，而是人在每次小小的使用後，都能回到真實世界。\n\n看完五個片段後，請帶觀眾進入阿樂的最後一幕；這才是整份簡報真正的結尾。",
+  "不要安排一個不真實的大團圓結局。阿樂還沒有找到工作，但已能說出一段真實的經歷、討論一份機會，並帶著問題再見工作員。這也是值得看見的進展。\n\n真正的就業與人生進展，包含本人、工作員、家人、僱主和環境等許多因素。MNS 可以有所貢獻，但不會宣稱擁有整個結果。"
+
+];
+  const pad=(n)=>String(n).padStart(2,'0');
+  function goto(n){n=Math.max(0,Math.min(slides.length-1,n));if(n===current)return;const old=slides[current];old.classList.remove('active');old.setAttribute('aria-hidden','true');current=n;const slide=slides[n];slide.classList.add('active');slide.setAttribute('aria-hidden','false');slide.scrollTop=0;requestAnimationFrame(refreshScrollHint);$('#progressFill').style.width=((n+1)/slides.length*100)+'%';$('#sceneCount').textContent=`${pad(n+1)} / ${pad(slides.length)}`;$('#sceneTitle').textContent=slide.dataset.label;$('#prev').disabled=n===0;$('#next').disabled=n===slides.length-1;$('#recapReturn').classList.toggle('hide',!recapVisit||n===14);$$('.dot').forEach((d,i)=>{d.classList.toggle('on',i===n);d.setAttribute('aria-current',i===n?'step':'false')});try{history.replaceState(null,'',`#${n+1}`)}catch(e){} }
+  const refreshScrollHint=()=>{const s=slides[current];const more=s.scrollHeight>s.clientHeight+18 && (s.scrollTop+s.clientHeight<s.scrollHeight-32);$('#scrollHint').classList.toggle('visible',more)};
+  slides.forEach(s=>s.addEventListener('scroll',refreshScrollHint,{passive:true}));
+  $('#sceneDots').innerHTML=slides.map((s,i)=>`<button class="dot ${i===0?'on':''}" data-goto="${i}" type="button" title="${s.dataset.label}" aria-label="前往場景 ${i+1}：${s.dataset.label}"></button>`).join('');
+  $('#sceneList').innerHTML=slides.map((s,i)=>`<button class="scene-jump" type="button" data-goto="${i}"><span>${pad(i+1)}</span>${s.dataset.label}</button>`).join('');
+  slides.forEach((s,i)=>s.setAttribute('aria-hidden',i===0?'false':'true'));
+  function openOverlay(id){priorFocus=document.activeElement;const el=$('#'+id);el.classList.add('open');el.querySelector('.close')?.focus();}
+  function closeOverlay(id){$('#'+id).classList.remove('open');priorFocus?.focus?.();}
+  $('#indexBtn').addEventListener('click',()=>openOverlay('indexOverlay'));
+  $('#aboutBtn').addEventListener('click',()=>openOverlay('aboutOverlay'));
+  $('#notesBtn').addEventListener('click',()=>{ $('#notesTitle').textContent=slides[current].dataset.label;$('#notesContent').textContent=noteData[current];openOverlay('notesOverlay') });
+  $('#fullBtn').addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});else document.exitFullscreen?.().catch(()=>{})});
+  $$('[data-close]').forEach(b=>b.addEventListener('click',()=>closeOverlay(b.dataset.close)));
+  $$('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeOverlay(o.id)}));
+  document.addEventListener('click',e=>{const jump=e.target.closest('[data-goto]');if(jump){const inside=jump.closest('.overlay');if(inside)closeOverlay(inside.id);goto(Number(jump.dataset.goto));return} if(e.target.closest('[data-next]'))goto(current+1)});
+  $('#prev').addEventListener('click',()=>goto(current-1));$('#next').addEventListener('click',()=>goto(current+1));$('#recapReturn').addEventListener('click',()=>{recapVisit=false;goto(14)});$('#printBtn').addEventListener('click',()=>window.print());
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){const open=$$('.overlay.open').at(-1);if(open)closeOverlay(open.id);return}if($('.overlay.open'))return;if(/^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName)||e.target.isContentEditable)return;const k=e.key;if(k==='ArrowRight'||k==='PageDown'){e.preventDefault();goto(current+1)}if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();goto(current-1)}if(k==='Home')goto(0);if(k==='End')goto(slides.length-1);if(k.toLowerCase()==='n')$('#notesBtn').click();if(k.toLowerCase()==='f')$('#fullBtn').click();if(k===' ') {e.preventDefault();goto(current+1)}});
+  let touchX=null;$('#stage').addEventListener('touchstart',e=>{touchX=e.touches[0].clientX},{passive:true});$('#stage').addEventListener('touchend',e=>{if(touchX===null)return;const diff=e.changedTouches[0].clientX-touchX;touchX=null;if(Math.abs(diff)<100)return;if(e.target.closest('button,textarea,.chat,.challenge-hand,.orbit,.constellation'))return;goto(current+(diff<0?1:-1))},{passive:true});
+  const initial=Number(location.hash.slice(1))-1;if(Number.isInteger(initial)&&initial>0&&initial<slides.length)goto(initial);else $('#progressFill').style.width=100/slides.length+'%';requestAnimationFrame(refreshScrollHint);
+
+
+  // Optional one-scene, five-moment practical recap. This is Alex's route, not a requirement.
+  const recapMoments=[
+  {
+    "mark": "✳",
+    "title": "隨意探索",
+    "subtitle": "一個小念頭，就可以開始。",
+    "outside": "活動結束後，阿樂有點好奇，卻沒有特別想完成的事。",
+    "inside": "打開「小挑戰」，選擇看看、試試、走走、連結；或者隨意抽三張卡。喜歡的留下，不喜歡的換。",
+    "back": "帶走一個小小的可能，或者只是一點好奇。沒有分數，也不需要記錄成果。",
+    "demos": [
+      [
+        3,
+        "試試小挑戰卡牌"
+      ]
+    ]
+  },
+  {
+    "mark": "◌",
+    "title": "記住一件事",
+    "subtitle": "真實經歷，可以慢慢累積。",
+    "outside": "阿樂陪媽媽看懂一封預約通知。幾星期後，生活裡又發生其他小事。",
+    "inside": "和 Sam 說一件實際做過的事，再決定要不要留下故事；也可以先從已有的 CV 開始。",
+    "back": "阿樂多了一段可以說清楚的經驗。幾個月下來，幾段故事也許漸漸連出一些線索。",
+    "demos": [
+      [
+        4,
+        "體驗故事捕手"
+      ],
+      [
+        6,
+        "看看故事如何累積"
+      ],
+      [
+        12,
+        "從已有 CV 開始"
+      ]
+    ]
+  },
+  {
+    "mark": "↔",
+    "title": "帶進一份機會",
+    "subtitle": "現實生活，本來就是入口。",
+    "outside": "朋友傳來一份社區活動助理的招聘。阿樂是在 MNS 以外找到它的。",
+    "inside": "把招聘帶進來，看看職位要求與自己真實的故事、個人檔案有甚麼可能的連結。",
+    "back": "帶走值得討論的連結，以及還想問清楚的地方。這不是分數，也不是適合與否的判決。",
+    "demos": [
+      [
+        8,
+        "探索機會配對"
+      ]
+    ]
+  },
+  {
+    "mark": "✎",
+    "title": "用自己的話準備",
+    "subtitle": "為了螢幕外真正會發生的事。",
+    "outside": "阿樂想在求職申請裡說清楚自己的經歷，也想先練習面試問題。",
+    "inside": "Sam 可以幫忙找相關例子、檢視阿樂親手寫的草稿，並一起練習回答。",
+    "back": "帶走更清楚的文字和說法，接著用在真正的申請或面談裡。",
+    "demos": [
+      [
+        9,
+        "試試申請寫作指引"
+      ],
+      [
+        10,
+        "試試面試練習"
+      ]
+    ]
+  },
+  {
+    "mark": "♡",
+    "title": "再找人談一談",
+    "subtitle": "AI 不是人際關係的替代品。",
+    "outside": "阿樂仍然有問題想問，而下一次與工作員見面的日子快到了。",
+    "inside": "向工作員提出支援請求，只分享自己願意提供、與這次討論相關的資料。",
+    "back": "帶著更清楚的問題，回到人與人的對話。下一個選擇，仍由阿樂自己作出。",
+    "demos": [
+      [
+        11,
+        "預覽支援請求"
+      ]
+    ]
+  }
+];
+  let recapIndex=0;
+  function renderRecap(){
+    const d=recapMoments[recapIndex];
+    $('#recapNumber').textContent=`${pad(recapIndex+1)} / 05`;
+    $('#recapMark').textContent=d.mark;
+    $('#recapTitle').textContent=d.title;
+    $('#recapSubtitle').textContent=d.subtitle;
+    $('#recapOutside').textContent=d.outside;
+    $('#recapInside').textContent=d.inside;
+    $('#recapBack').textContent=d.back;
+    $('#recapTrace').style.width=(recapIndex*20.4)+'%';
+    $$('[data-recap]').forEach((button,i)=>{const active=i===recapIndex;button.classList.toggle('is-current',active);button.setAttribute('aria-pressed',String(active))});
+    $('#recapPrevious').disabled=recapIndex===0;
+    $('#recapNext').textContent=recapIndex===4?'看看阿樂的最後一步 →':'下一個片段 →';
+    const host=$('#recapLinks');host.replaceChildren();
+    d.demos.forEach(([n,label],i)=>{const b=document.createElement('button');b.type='button';b.className='btn '+(i===0?'orange-btn':'outline')+' small';b.textContent=label+' ↗';b.setAttribute('data-recap-demo',String(n));host.appendChild(b)});
+    const motion=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(motion){const elems=[$('#recapMark'),...$$('#recapSequence .recap-moment')];elems.forEach(el=>{el.classList.remove('reveal');void el.offsetWidth;el.classList.add('reveal')})}
+  }
+  function showRecapMoment(){renderRecap();if($('#scene-14').classList.contains('active')&&window.innerWidth<=720)$('#scene-14').scrollTop=0;}
+  $('#recapTrack').addEventListener('click',e=>{const b=e.target.closest('[data-recap]');if(!b)return;recapIndex=Number(b.dataset.recap);showRecapMoment()});
+  $('#recapPrevious').addEventListener('click',()=>{recapIndex=Math.max(0,recapIndex-1);showRecapMoment()});
+  $('#recapNext').addEventListener('click',()=>{if(recapIndex===4){goto(15);return;}recapIndex++;showRecapMoment()});
+  $('#recapLinks').addEventListener('click',e=>{const b=e.target.closest('[data-recap-demo]');if(!b)return;recapVisit=true;goto(Number(b.dataset.recapDemo))});
+  renderRecap();
+
+  // Small Challenge — deterministic offline play, no evidence saved.
+  const sparks=['LOOK','TRY','GO','CONNECT'];
+  const cardLibrary={
+  "LOOK": [
+    "留意一個平日走過、卻很少細看的顏色。",
+    "試著用第一次來到這條街的眼光，再看一次。",
+    "在熟悉的地方，找一個以前沒注意的小細節。",
+    "看看路邊的櫥窗，有甚麼讓你意外。",
+    "找一塊告示牌，看看它在說甚麼故事。"
+  ],
+  "TRY": [
+    "隨手畫一件眼前的東西，兩分鐘就好。",
+    "把每天慣常做的一件小事，稍微換個方法。",
+    "今天的茶或小食，試一點不一樣的做法。",
+    "用三個詞語，形容一個你喜歡的地方。",
+    "寫下一句今天令你有點意外的事。"
+  ],
+  "GO": [
+    "到圖書館，走到一個平日不會看的書架前。",
+    "在住處附近，改走另一條熟悉以外的路。",
+    "找個舒服的地方坐一坐，不用做甚麼。",
+    "看看附近有沒有一個免費、卻未去過的地方。",
+    "走去一個熟悉的地方，這次留意沿途發生甚麼。"
+  ],
+  "CONNECT": [
+    "問問朋友，最近對甚麼事情有點好奇。",
+    "向一個人分享你最近覺得不錯的小發現。",
+    "問問別人，有沒有一個他很喜歡去的地方。",
+    "告訴朋友，今天你留意到的一件小事。",
+    "邀請一個人，一起決定散步要走哪條路。"
+  ]
+};
+  const sparkNames={LOOK:"看看",TRY:"試試",GO:"走走",CONNECT:"連結"};
+  let spark='SURPRISE',hand=[],dealCount=0,taken=null,exclude=null,fit=false;
+  const pick=(kind,offset)=>({kind,raw:cardLibrary[kind][(dealCount+offset)%cardLibrary[kind].length]});
+  function displayPrompt(c){if(!fit)return c.raw;return `今天不一定要真的做。可以只花一分鐘想像一下：${c.raw.replace(/[。！？]$/,'')}。或者，改成更小的一步。`;}
+  function deal(preserve=false,forceDifferent=false){dealCount++;const next=[];for(let i=0;i<3;i++){if(preserve&&taken!==null&&i===taken&&hand[i]){next.push(hand[i]);continue}const allowed=sparks.filter(k=>k!==exclude);const pool=allowed.length?allowed:sparks;const kind=(!forceDifferent&&spark!=='SURPRISE'&&pool.includes(spark))?spark:pool[(dealCount+i*3+ (forceDifferent?i:0))%pool.length];next.push(pick(kind,i*2))}hand=next;if(!preserve)taken=null;renderHand();}
+  function renderHand(){ $('#challengeHand').innerHTML=hand.map((c,i)=>`<article class="challenge-card dealing" style="animation-delay:${i*.08}s"><span class="overline">${sparkNames[c.kind]} · ${pad(i+1)}</span><h3>${displayPrompt(c)}</h3><div class="card-footer"><button class="link-btn" data-take="${i}" type="button">${taken===i?'✓ 已選':'選這張 ↗'}</button><button class="link-btn" data-swap="${i}" type="button">換一張 ↻</button><button class="link-btn" data-like="${i}" type="button">多一點這樣的</button><button class="link-btn" data-not="${i}" type="button">不要這一類</button></div></article>`).join('');$('#keepButton').disabled=taken===null;$('#challengeMode').textContent=fit?'改小一點也可以；不做也沒關係。':'沒有分數，也不用解釋。';}
+  $('#sparks').addEventListener('click',e=>{const b=e.target.closest('[data-spark]');if(!b)return;spark=b.dataset.spark;exclude=null;$$('[data-spark]').forEach(x=>{x.classList.toggle('is-on',x===b);x.setAttribute('aria-pressed',String(x===b))});deal();$('#challengeNote').textContent='這些只是邀請，不是必須完成的任務。'});
+  $('#dealButton').addEventListener('click',()=>{exclude=null;deal(false,true);$('#challengeNote').textContent='換了三張。隨時可以離開。'});
+  $('#fitButton').addEventListener('click',()=>{fit=!fit;$('#fitButton').setAttribute('aria-pressed',String(fit));$('#fitButton').textContent=fit?'✓ 今天做小一點就好':'改成今天做得到的樣子';renderHand();$('#challengeNote').textContent='卡牌可以遷就今天的你，不必勉強自己配合卡牌。'});
+  $('#keepButton').addEventListener('click',()=>{deal(true,true);$('#challengeNote').textContent='留下一張，其他換掉。不用說明理由。'});
+  $('#challengeHand').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const idx=Number(b.dataset.take??b.dataset.swap??b.dataset.like??b.dataset.not);if('take'in b.dataset){taken=idx;$('#challengeNote').textContent=`你選了：「${hand[idx].raw}」你可以試試、改一改，或者甚麼都不做。沒有自動儲存。`;renderHand();return}if('swap'in b.dataset){dealCount++;hand[idx]=pick(hand[idx].kind,idx+3);renderHand();$('#challengeNote').textContent='只換了這一張。';return}if('like'in b.dataset){spark=hand[idx].kind;exclude=null;$$('[data-spark]').forEach(x=>{const on=x.dataset.spark===spark;x.classList.toggle('is-on',on);x.setAttribute('aria-pressed',String(on))});deal();$('#challengeNote').textContent=`再來一些「${sparkNames[spark]}」類的卡牌。喜歡再選，沒有壓力。`;return}if('not'in b.dataset){exclude=hand[idx].kind;spark='SURPRISE';$$('[data-spark]').forEach(x=>{const on=x.dataset.spark==='SURPRISE';x.classList.toggle('is-on',on);x.setAttribute('aria-pressed',String(on))});deal(false,true);$('#challengeNote').textContent=`這一輪先避開「${sparkNames[exclude]}」類的卡牌。你可以隨時再改。`;}});deal();
+
+  // Story Catcher — human-authored branching paths illustrating grounded listening.
+  let storyStage=0,chosenOpening='',chosenAction='',detail='',isComplete=false,isSaved=false;
+  const storyEl=$('#storyMessages'), optionsEl=$('#storyOptions');
+  const append=(speaker,text)=>{const div=document.createElement('div');div.className=`message ${speaker==='Sam'?'assistant':'human'}`;const title=document.createElement('span');title.className='sender';title.textContent=speaker;div.appendChild(title);div.appendChild(document.createTextNode(text));storyEl.appendChild(div);storyEl.scrollTop=storyEl.scrollHeight};
+  const showOptions=(options,cb)=>{optionsEl.innerHTML='';options.forEach(([label,value])=>{const b=document.createElement('button');b.type='button';b.className='option';b.textContent=label;b.addEventListener('click',()=>cb(value,label));optionsEl.appendChild(b)})};
+  function resetStory(){
+    storyStage=0;chosenOpening='';chosenAction='';detail='';isComplete=false;isSaved=false;
+    storyEl.innerHTML='';$('#storySavedStatus').textContent='尚未儲存';
+    $('#saveStoryBtn').disabled=true;$('#saveStoryBtn').textContent='留下這段故事';
+    $('#storyActionDisplay').textContent='Sam 會陪阿樂說清楚自己實際做了甚麼，不必把小事說得很了不起。';
+    $('#storyMeaningDisplay').textContent='不急著貼上技能標籤，也不必有漂亮的成果。';
+    append('Sam','阿樂，最近有沒有一件事，是你想說一說的？平常的小事也可以。');
+    showOptions([['我幫媽媽看一封預約通知。','help'],['媽媽收到一封信，對預約日期不太肯定。','letter']],onOpening)
+  }
+  function onOpening(value,label){
+    chosenOpening=value;append('阿樂',label);
+    if(value==='help')append('Sam','你說幫媽媽看那封信。當時你具體做了甚麼？');
+    else append('Sam','你發現日期不太清楚，後來你怎樣處理？');
+    showOptions([['我和媽媽一起看，核對了預約日期。','dates'],['我打電話去確認預約的日期。','call']],onAction)
+  }
+  function onAction(value,label){
+    chosenAction=value;append('阿樂',label);
+    $('#storyActionDisplay').textContent=value==='dates'?'我和媽媽一起看信，核對了預約日期。':'我打電話去確認預約日期。';
+    const reflection=value==='dates'?'你陪媽媽一起核對日期，不只是把信上的字讀出來。':'你決定打電話，把不清楚的日期問明白。';
+    append('Sam',`${reflection} 還有甚麼你想補充？還是這樣已經足夠？`);
+    $('#storyMeaningDisplay').textContent='也許這讓我們看見，你當時願意花心思把資訊弄清楚。這只是可能的理解，仍由阿樂決定。';
+    showOptions([['我覺得這樣已經足夠了。','done'],['我還把我們想問的問題記下來。','more']],onFinishChoice)
+  }
+  function onFinishChoice(value,label){
+    append('阿樂',label);
+    if(value==='more'){
+      detail='我把我們想問的問題記下來。';$('#storyActionDisplay').textContent+=' 我也把想問的問題記了下來。';
+      append('Sam','原來你還把問題先記好了。現在要不要把這段經歷整理成一個故事？');
+      showOptions([['好，這樣就可以了。','done'],['我暫時不想儲存。','leave']],onFinalChoice)
+    }else finishStory()
+  }
+  function onFinalChoice(value,label){append('阿樂',label);if(value==='leave')leaveStory();else finishStory()}
+  function finishStory(){
+    isComplete=true;
+    append('Sam','這是我根據你剛才說的事，整理出來的一段經歷。你可以看看是否貼近事實，再決定要不要留下。不需要替它加上一個了不起的結局。');
+    showOptions([['留下這段故事。','save'],['先不用，暫時放下。','leave']],(v,l)=>{append('阿樂',l);if(v==='save')saveStory();else leaveStory()});
+    $('#saveStoryBtn').disabled=false;
+  }
+  function saveStory(){
+    if(!isComplete)return;isSaved=true;
+    $('#storySavedStatus').textContent='已保留於這次示範';$('#saveStoryBtn').disabled=true;$('#saveStoryBtn').textContent='✓ 示範中已保留';
+    append('Sam','這段故事只留在目前的簡報示範裡。往後想起來時，你隨時可以再看看。');
+    optionsEl.innerHTML='<span class="micro">現在可以繼續看故事的下一幕。</span>'
+  }
+  function leaveStory(){
+    isSaved=false;isComplete=false;$('#saveStoryBtn').disabled=true;$('#storySavedStatus').textContent='沒有儲存，也沒有關係';
+    append('Sam','好，我們就先放在這裡。不必每一次都留下甚麼。');
+    optionsEl.innerHTML='<span class="micro">沒有儲存任何資料；但剛才的對話，也許仍然有用。</span>'
+  }
+  $('#resetStory').addEventListener('click',resetStory);
+  $('#saveStoryBtn').addEventListener('click',saveStory);
+  $('#leaveStoryBtn').addEventListener('click',()=>{if(!isSaved)leaveStory()});
+  resetStory();
+
+  // The passing of time and participant-owned interpretation.
+  let timeCount=1;
+  function renderTime(){for(let i=0;i<3;i++)$('#time-'+i).classList.toggle('inactive',i>=timeCount);$('#timelineCounter').textContent=['九月・一個片段','十月・兩段故事','十一月・三段故事'][timeCount-1];$('#timeNext').disabled=timeCount===3;$('#timeNext').textContent=timeCount===3?'幾個月，慢慢過去了':'讓時間向前 →'}
+  $('#timeNext').addEventListener('click',()=>{timeCount=Math.min(3,timeCount+1);renderTime()});$('#timeReset').addEventListener('click',()=>{timeCount=1;renderTime()});renderTime();
+  const patternMessages={yes:'也許這是一條值得留意的線索。不過，怎樣理解它，可以隨著新的經歷再慢慢改變。',unsure:'還不確定，也沒有關係。今天不必急著替這幾件事下定論。',different:'你看見的不同，很值得聽一聽。Sam 可以先問你注意到甚麼，而不是堅持自己的說法。'};
+  $('#patternChoices').addEventListener('click',e=>{const b=e.target.closest('[data-pattern]');if(!b)return;$$('#patternChoices .chip').forEach(x=>{const on=x===b;x.classList.toggle('is-on',on);x.setAttribute('aria-pressed',String(on))});$('#patternAnswer').textContent=patternMessages[b.dataset.pattern]});
+
+  // Opportunity exploration — explicit external source and bounded conclusions.
+  let jobBrought=false;
+  $('#bringJob').addEventListener('click',()=>{jobBrought=true;$('#bringJob').textContent='✓ 已把招聘帶進示範';$('#matchStatus').textContent='探索可能的連結・沒有分數';$('#matchResults').innerHTML=`<div class="match-row"><div class="num">1</div><div><h4>接待訪客</h4><p>阿樂在社區活動裡曾歡迎到場的人，也協助他們找到活動。</p></div><span class="flag">可能相關</span></div><div class="match-row"><div class="num">2</div><div><h4>向人介紹活動</h4><p>阿樂曾協助訪客找活動，可能與這個要求有關。要不要採用，由阿樂決定。</p></div><span class="flag">值得再看看</span></div><div class="match-row"><div class="num">3</div><div><h4>整理基本紀錄</h4><p>目前沒有一段已儲存的經歷可以對應這個要求。但這不代表阿樂做不到。</p></div><span class="flag unknown">暫時沒有相關故事</span></div><p class="micro" style="margin-top:10px">機會配對提供的是根據經歷出發的討論起點，不是就業能力百分比，更不是 AI 的聘用判決。</p>`});
+
+  // Writing review — local, simple content-sensitive hints, never represented as live Sam.
+  $('#applicationDraft').addEventListener('input',()=>{$('#draftStatus').textContent='示範草稿・未儲存';$('#draftFeedback').textContent=''});
+  $('#reviewDraft').addEventListener('click',()=>{
+    const t=$('#applicationDraft').value.trim();let msg='';
+    if(!t){msg='草稿還是空白的。可以先從一件真正做過的小事開始，不需要一開頭就寫得很漂亮。'}
+    else if(/所有人|全部都|一定|完美|最厲害|最出色|超級優秀|總是|always|everyone|best at/i.test(t)){
+      msg='這句話似乎說得比較籠統。不如換成一件你親自做過、也說得清楚的事。'}
+    else if(/我/.test(t)&&/歡迎|幫|協助|解釋|聆聽|聽|帶|安排|整理|確認|準備|聯絡|問|接待/.test(t)){
+      msg='你已經說出了自己做過的事。如果願意，可以再補充一點當時的情況。沒有根據的結果，就不用加上去。'}
+    else if(/我/.test(t)){msg='這是你自己的說法。讀的人能否知道你實際做了甚麼？或許可以加上一個小小的具體例子。'}
+    else {msg='也許可以再說清楚一點：在這件事裡，你自己做了甚麼？不用誇大，真實就好。'}
+    $('#draftFeedback').textContent='示範建議・'+msg;
+  });
+  $('#saveDraft').addEventListener('click',()=>{$('#draftStatus').textContent='已留在本次簡報示範';$('#draftFeedback').textContent='只在目前開啟的簡報中保留。沒有提交任何求職申請。'});
+
+  const answers=['這句說清楚了你實際做過的事。如果記得，可以再說說當時怎樣回應訪客。不需要加上沒有根據的成果。','這句比較像對自己的籠統評價。與其說自己有多厲害，不如試著分享一件真正做過的事。','暫時不知道怎樣開口，也沒有關係。可以從一段平常的經歷開始，一句一句慢慢練習。'];
+  $('#practiceOptions').addEventListener('click',e=>{const b=e.target.closest('[data-practice]');if(!b)return;$$('.practice-answer').forEach(x=>x.classList.toggle('on',x===b));$('#practiceFeedback').textContent='示範回饋・'+answers[Number(b.dataset.practice)]});
+
+  // Explicit participant sharing choices. Preview only.
+  const share={vacancy:true,application:true,guidance:false};
+  function renderShare(){const labels={vacancy:'選取的招聘：社區活動助理',application:'選取的申請草稿',guidance:'Sam 的相關建議'};$('#workerSharedList').innerHTML='<li>這次想討論：一份可能的工作機會</li>'+Object.entries(share).filter(([key,value])=>value).map(([key])=>`<li>${labels[key]}</li>`).join('')+(Object.values(share).some(Boolean)?'':'<li>沒有選取其他分享資料</li>');$$('[data-share]').forEach(b=>{const on=share[b.dataset.share];b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))})}
+  $$('[data-share]').forEach(b=>b.addEventListener('click',()=>{share[b.dataset.share]=!share[b.dataset.share];$('#requestStatus').textContent='預覽已更改，沒有傳送';renderShare()}));
+  $('#previewRequest').addEventListener('click',()=>{$('#requestStatus').textContent='✓ 已更新預覽・沒有傳送';$('#previewRequest').textContent='✓ 更新預覽'});renderShare();
+
+  // Optional import is a separate entry, no file upload.
+  $('#profileDoor').addEventListener('click',()=>openOverlay('profileOverlay'));
+  $('#profileConfirm').addEventListener('click',()=>{const count=$$('.profile-check:checked').length;$('#profileStatus').textContent=count?`已在本次示範中確認加入 ${count} 項資料。`:'沒有選擇加入任何資料，因此沒有改動。'});
+})();
+</script></body></html>

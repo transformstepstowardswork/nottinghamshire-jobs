@@ -44,6 +44,15 @@ class PublicSiteTests(unittest.TestCase):
         self.assertTrue(any('missing local resource' in e for e in errors))
         self.assertTrue(any('internal source' in e for e in errors))
 
+    def test_missing_or_modified_public_preview_blocks_publication(self):
+        demo = self.site / 'demos' / 'my-next-step-en.html'
+        demo.write_text('altered demo', encoding='utf-8')
+        errors = self.check()
+        self.assertTrue(any('demos/my-next-step-en.html: missing or changed' in e for e in errors))
+        demo.unlink()
+        errors = self.check()
+        self.assertTrue(any('demos/my-next-step-en.html: missing or changed' in e for e in errors))
+
     def test_changed_support_and_missing_public_asset_block_publication(self):
         (self.site / 'support.html').write_text('<html>Missing enquiry</html>', encoding='utf-8')
         (self.site / 'locale.js').unlink()

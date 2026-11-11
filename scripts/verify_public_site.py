@@ -12,6 +12,7 @@ except ImportError:  # Direct CLI execution from scripts/.
 BASE = '/nottinghamshire-jobs/'
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ('app.js', 'jobs.csv', 'locale.js', 'articles.js', 'activities.js',
+          'demos/my-next-step-en.html', 'demos/my-next-step-zh-hant.html',
           'styles.css', 'logo_wbg.jpg', 'manifest.webmanifest',
           'icons/apple-touch-icon.png', 'icons/app-icon-192.png', 'icons/app-icon-512.png')
 ARCHIVES = ('articles/index.html', 'articles/zh-hant/index.html',
