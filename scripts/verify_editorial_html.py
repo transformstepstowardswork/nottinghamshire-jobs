@@ -18,7 +18,7 @@ SCRIPTS = {BASE + 'locale.js', BASE + 'activities.js', BASE + 'articles.js'}
 # At the site root, all /paths share a prefix. Preserve the safety boundary
 # through a narrow route allowlist instead of accepting any local path.
 LOCAL_LINK_PREFIXES = ('/articles/', '/activities/', '/media/images/', '/icons/', '/demos/')
-LOCAL_LINK_EXACT = {'/', '/support.html', '/jobs.csv', '/logo_wbg.jpg', '/styles.css', '/manifest.webmanifest'}
+LOCAL_LINK_EXACT = {'/', '/support.html', '/jobs.csv', '/logo_wbg.jpg', '/styles.css', '/manifest.webmanifest', '/locale.js', '/articles.js', '/activities.js'}
 
 
 def decoded_url(value):
