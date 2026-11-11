@@ -61,6 +61,17 @@ test('Jobs and Support expose only static locale hooks and the shared language s
       keys.add(match[1]);
     }
   }
+  assert.equal(COPY.en['brand.aria'], 'Transform Jobs by Transform Training');
+  assert.match(index, /<strong>Transform Jobs<\/strong>/);
+  assert.match(support, /<strong>Transform Jobs<\/strong>/);
+  assert.match(index, /apple-mobile-web-app-title" content="Transform Jobs"/);
+  assert.match(support, /apple-mobile-web-app-title" content="Transform Jobs"/);
+  assert.match(support, /demos\/my-next-step-en\.html/);
+  assert.match(support, /demos\/my-next-step-zh-hant\.html/);
+  assert.match(support, /support\.previewAccess/);
+  assert.match(support, /data-locale-copy-pending="zh-Hant"/);
+  assert.match(COPY.en['support.previewAccess'], /only available to people enrolled in Steps Towards Work/);
+  assert.match(COPY['zh-Hant']['support.previewAccess'], /Steps Towards Work/);
   assert.equal(COPY['zh-Hant']['nav.skip'], '跳至主要內容');
   assert.doesNotMatch(Object.values(COPY['zh-Hant']).join(' '), /洛定咸/);
   for (const key of keys) {

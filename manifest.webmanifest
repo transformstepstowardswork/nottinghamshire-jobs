@@ -1,7 +1,7 @@
 {
-  "name": "Nottinghamshire Job Opportunities",
-  "short_name": "Nottinghamshire Jobs",
-  "description": "Search current paid vacancies from local councils, NHS organisations, universities, schools, academy trusts, charities and voluntary/community organisations.",
+  "name": "Transform Jobs — Local opportunities and support",
+  "short_name": "Transform Jobs",
+  "description": "Local jobs, job-search advice, articles, activities and support from Transform Training.",
   "id": "./",
   "start_url": "./",
   "scope": "./",

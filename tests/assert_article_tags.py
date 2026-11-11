@@ -1,3 +1,4 @@
+from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
@@ -32,14 +33,20 @@ def chips(path):
 
 en = chips('_site/articles/index.html')
 zh = chips('_site/articles/zh-hant/index.html')
-assert [text for _, text in en] == ['#Work Skills', '#Career & Training', '#<Example>', '#work skills'], en
-assert [text for _, text in zh] == ['#求職', '#社區', '#求職'], zh
+fixture_en = ['#Work Skills', '#Career & Training', '#<Example>', '#work skills']
+fixture_zh = ['#求職', '#社區', '#求職']
+
+# Real CMS articles legitimately add tags; check fixed fixtures separately.
+assert not Counter(fixture_en) - Counter(text for _, text in en), en
+assert not Counter(fixture_zh) - Counter(text for _, text in zh), zh
 for href, text in en + zh:
     parsed = urlsplit(href)
     assert parse_qs(parsed.query)['tag'] == [text[1:]], (href, text)
     assert parsed.path.startswith('/nottinghamshire-jobs/articles/')
-assert chips('_site/articles/en/sample/index.html') == en[:3]
-assert chips('_site/articles/zh-hant/sample/index.html') == zh[:2]
+assert [text for _, text in chips('_site/articles/en/sample/index.html')] == fixture_en[:3]
+assert [text for _, text in chips('_site/articles/zh-hant/sample/index.html')] == fixture_zh[:2]
+assert [text for _, text in chips('_site/articles/en/shared/index.html')] == fixture_en[3:]
+assert [text for _, text in chips('_site/articles/zh-hant/shared/index.html')] == fixture_zh[2:]
 assert not chips('_site/articles/en/untagged/index.html')
 assert not chips('_site/articles/zh-hant/untagged/index.html')
 print('Locale-specific, deduplicated, escaped article topics and shareable links verified.')
