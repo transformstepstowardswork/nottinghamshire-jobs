@@ -64,6 +64,8 @@ test('Jobs and Support expose only static locale hooks and the shared language s
   assert.equal(COPY.en['brand.aria'], 'Transform Jobs by Transform Training');
   assert.match(index, /<strong>Transform Jobs<\/strong>/);
   assert.match(support, /<strong>Transform Jobs<\/strong>/);
+  assert.match(index, /apple-mobile-web-app-title" content="Transform Jobs"/);
+  assert.match(support, /apple-mobile-web-app-title" content="Transform Jobs"/);
   assert.match(support, /demos\/my-next-step-en\.html/);
   assert.match(support, /demos\/my-next-step-zh-hant\.html/);
   assert.match(support, /support\.previewAccess/);
