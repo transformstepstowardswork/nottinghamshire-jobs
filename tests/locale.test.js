@@ -47,7 +47,7 @@ test('Jobs and Support expose only static locale hooks and the shared language s
   assert.match(support, /data-lang-option="zh-Hant"/);
   assert.match(index, /data-locale-link/);
   assert.match(support, /data-locale-link/);
-  assert.match(support, /data-locale-copy-pending="zh-Hant"/);
+  assert.doesNotMatch(support, /data-locale-copy-pending/);
   assert.match(support, /https:\/\/forms\.cloud\.microsoft\/e\/7A0mceck5C/);
   assert.doesNotMatch(locale, /MutationObserver/);
   assert.doesNotMatch(locale, /querySelectorAll\('\[data-locale-copy-pending/);
@@ -69,7 +69,6 @@ test('Jobs and Support expose only static locale hooks and the shared language s
   assert.match(support, /demos\/my-next-step-en\.html/);
   assert.match(support, /demos\/my-next-step-zh-hant\.html/);
   assert.match(support, /support\.previewAccess/);
-  assert.match(support, /data-locale-copy-pending="zh-Hant"/);
   assert.match(COPY.en['support.previewAccess'], /only available to people enrolled in Steps Towards Work/);
   assert.match(COPY['zh-Hant']['support.previewAccess'], /Steps Towards Work/);
   assert.equal(COPY['zh-Hant']['nav.skip'], '跳至主要內容');
