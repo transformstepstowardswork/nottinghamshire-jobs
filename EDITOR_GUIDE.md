@@ -1,6 +1,6 @@
 # Editing articles and activities
 
-After the CMS has been commissioned, open Pages CMS and select this repository and its publishing branch. Choose **Articles — English**, **文章 — 繁體中文**, **Activities — English** or **活動 — 繁體中文**. These are independent collections: publishing in one language does not create or translate an entry in the other.
+Open Pages CMS with your authorised editor account and select this repository and its publishing branch. Choose **Articles — English**, **文章 — 繁體中文**, **Activities — English** or **活動 — 繁體中文**. These are independent collections: publishing in one language does not create or translate an entry in the other.
 
 Choose **New** to create an entry, or open an existing entry to edit or delete it. Add a title and the available details. For an activity, leave unknown dates, times, cost and other details blank; use 24-hour `HH:MM` times in London local time. Unknown cost is displayed as unspecified. Add the main text in the rich-text editor; headings, lists, links and inline images can be added there. Use an `https://` or `http://` address for registration links.
 
@@ -14,6 +14,8 @@ If an entry is missing, check that you selected the intended language, saved it 
 
 The repository and its content, including drafts committed there, are not private. Do not put sensitive or personal information in an entry or image.
 
-## Commissioning dependency
+## Verified publication
 
-The existing branch-source Pages publisher does not run the editorial verifier before publishing. Do not activate the CMS or publish these collections using that path. The prepared `Publish verified Pages` workflow builds, verifies and uploads the same checked output before a downstream deployment; it is inert on the review branch. Independent security review, Anthony's specific approvals and the ordered [commissioning runbook](PAGES_RUNBOOK.md) precede activation. Pages Source must be switched to GitHub Actions **before** the combined editorial source is merged to main. Source-only readiness checks do not perform that switch or deploy the site. After commissioning, check `Publish verified Pages` for the exact saved commit; a failed verification needs correction before the saved content can become public.
+Articles and Activities use the established `Publish verified Pages` workflow. An approved change reaching `main` triggers a build, verification of the generated pages, and deployment of that same checked output. Routine editing does not require repeating the original commissioning steps or changing Pages settings or App permissions.
+
+Check the workflow for the exact saved or merged `main` revision, then open the public archive and entry. A save on another branch does not publish until the approved change reaches `main`; a failed verification needs correction before publication. See the [publishing and recovery runbook](PAGES_RUNBOOK.md) for failures and recovery. CMS editing does not manage the weekly Jobs feed.

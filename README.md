@@ -249,18 +249,20 @@ The live HTTPS site includes `manifest.webmanifest` and branded square icons for
 
 ## GitHub Pages
 
-The existing live publisher uses the repository root from `main`. This review
-branch prepares a single guarded Actions publisher; it has not switched the live
-Pages Source setting or deployed the editorial site. Follow the
-[commissioning and recovery runbook](PAGES_RUNBOOK.md): independent review and
-Anthony's specific approvals precede a Pages Source switch to GitHub Actions,
-then combined-source promotion. Never merge editorial source while the old
-branch-source publisher can bypass the generated-HTML verifier.
+The site uses the existing `Publish verified Pages` GitHub Actions workflow.
+Follow the [publishing and recovery runbook](PAGES_RUNBOOK.md) for routine
+content publication, deployment verification and recovery. Initial commissioning
+is complete; its original sequence remains in Git history and is not a checklist
+to repeat for each content update. Changes to the publisher, Pages settings or
+CMS permissions still require their own applicable review and Anthony's approval.
 
-After commissioning, every approved main push, including an ordinary one-file
+Every approved main push, including an ordinary one-file
 weekly Jobs merge, attempts `Publish verified Pages`: build → editorial/public
 integrity gates → upload that verified output → downstream Pages deploy. A failed
 gate does not upload or deploy. Weekly Jobs review/squash-merge controls remain.
+Keep documentation/source changes separate from routine `jobs.csv`-only PRs.
+A documentation-only main merge also triggers this publisher with the existing
+Jobs feed; it does not constitute a new weekly vacancy update.
 
 Non-deploying `Verify Pages readiness` checks the same build gate and official
 artifact handoff, plus a hostile generated-HTML rejection with upload skipped.

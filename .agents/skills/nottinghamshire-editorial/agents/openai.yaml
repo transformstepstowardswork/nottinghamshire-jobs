@@ -1,0 +1,4 @@
+interface:
+  display_name: "Nottinghamshire Articles & Activities"
+  short_description: "Draft and edit Transform articles and activities"
+  default_prompt: "Use $nottinghamshire-editorial to prepare an Article or Activity from the information I provide, and show me the draft before publication."

@@ -1,7 +1,7 @@
 name: Publish verified Pages
 
-# Inert on review branches. Owner must switch Pages Source to GitHub Actions
-# BEFORE promoting the combined editorial source to main. See PAGES_RUNBOOK.md.
+# Publishes approved main pushes through the established verified build gate.
+# PR checks do not deploy. See PAGES_RUNBOOK.md for publication and recovery.
 on:
   push:
     branches: [main]
