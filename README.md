@@ -279,7 +279,7 @@ provide the Pages-compatible Jekyll build on hosts without Ruby/Jekyll.
 
 ## Web analytics
 
-The public page includes the Cloudflare Web Analytics beacon in `index.html`. It provides lightweight page-view and visitor metrics in the Cloudflare dashboard without adding a visible counter to the site. Analytics is independent of the vacancy-data publication pipeline and must not be changed as part of routine vacancy updates.
+All four public sections include the same Cloudflare Web Analytics beacon: Jobs in `index.html`, Get support in `support.html`, and Articles and Activities through `_layouts/base.html`. The shared layout covers both languages, archives and individual editorial pages. The editorial HTML verifier permits only this exact beacon alongside the approved site scripts. It provides lightweight page-view and visitor metrics in the Cloudflare dashboard without adding a visible counter to the site. Analytics is independent of the vacancy-data publication pipeline and must not be changed as part of routine vacancy updates.
 
 ## Included files
 
