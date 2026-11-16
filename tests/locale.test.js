@@ -36,6 +36,13 @@ test('localized URLs preserve the working route and remove the default language 
   );
 });
 
+test('locale URLs resolve at the new custom-domain root', () => {
+  const base = 'https://jobs.transformtraining.org.uk/support.html?from=jobs';
+  assert.equal(localizedUrl('./', 'zh-Hant', base), '/?lang=zh-Hant');
+  assert.equal(localizedUrl('support.html?lang=zh-Hant', 'en', base), '/support.html');
+  assert.equal(localizedUrl('./#main-content', 'zh-Hant', base), '/?lang=zh-Hant#main-content');
+});
+
 test('Jobs and Support expose only static locale hooks and the shared language shell', () => {
   const index = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   const support = fs.readFileSync(path.join(__dirname, '..', 'support.html'), 'utf8');

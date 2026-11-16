@@ -10,7 +10,7 @@ layout: base
       {% if page.summary %}<p class="lede">{{ page.summary | escape }}</p>{% endif %}
       {% if page.section == 'articles' and page.tags %}<div class="article-tags" aria-label="{% if page.locale == 'zh-Hant' %}文章主題{% else %}Article topics{% endif %}">{% include article-tags.html tags=page.tags %}</div>{% endif %}
     </header>
-    {% if page.image and page.image_alt %}{% assign image_prefix = page.image | slice: 0, 35 %}{% if image_prefix == '/nottinghamshire-jobs/media/images/' %}<img class="editorial-cover" src="{{ page.image | escape }}" alt="{{ page.image_alt | escape }}">{% endif %}{% endif %}
+    {% if page.image and page.image_alt %}{% assign image_url = page.image | replace: '/nottinghamshire-jobs/media/images/', '/media/images/' %}{% assign image_prefix = image_url | slice: 0, 14 %}{% if image_prefix == '/media/images/' %}<img class="editorial-cover" src="{{ image_url | escape }}" alt="{{ page.image_alt | escape }}">{% endif %}{% endif %}
     {% if page.section == 'activities' %}
       <dl class="event-details">
         <div><dt>{% if page.locale == 'zh-Hant' %}日期及時間{% else %}Date and time{% endif %}</dt><dd>{% if page.start_date %}{{ page.start_date | escape }}{% if page.start_time %} {{ page.start_time | escape }}{% endif %}{% if page.end_date %} – {{ page.end_date | escape }}{% endif %}{% if page.end_time %} {{ page.end_time | escape }}{% endif %} (Europe/London){% else %}{% if page.locale == 'zh-Hant' %}尚未確定{% else %}To be confirmed{% endif %}{% endif %}</dd></div>
@@ -22,6 +22,6 @@ layout: base
       {% assign scheme8 = page.registration_url | slice: 0, 8 | downcase %}{% assign scheme7 = page.registration_url | slice: 0, 7 | downcase %}
       {% if scheme8 == 'https://' or scheme7 == 'http://' %}<p><a href="{{ page.registration_url | escape }}" rel="noopener noreferrer">{% if page.locale == 'zh-Hant' %}報名或查看更多詳情{% else %}Registration or further details{% endif %}</a></p>{% endif %}
     {% endif %}
-    <div class="editorial-prose">{{ content }}</div>
+    <div class="editorial-prose">{{ content | replace: '/nottinghamshire-jobs/media/images/', '/media/images/' }}</div>
   </article>
 </main>

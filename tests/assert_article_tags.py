@@ -42,7 +42,7 @@ assert not Counter(fixture_zh) - Counter(text for _, text in zh), zh
 for href, text in en + zh:
     parsed = urlsplit(href)
     assert parse_qs(parsed.query)['tag'] == [text[1:]], (href, text)
-    assert parsed.path.startswith('/nottinghamshire-jobs/articles/')
+    assert parsed.path.startswith('/articles/')
 assert [text for _, text in chips('_site/articles/en/sample/index.html')] == fixture_en[:3]
 assert [text for _, text in chips('_site/articles/zh-hant/sample/index.html')] == fixture_zh[:2]
 assert [text for _, text in chips('_site/articles/en/shared/index.html')] == fixture_en[3:]

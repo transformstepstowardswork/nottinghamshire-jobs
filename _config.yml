@@ -1,4 +1,4 @@
-baseurl: /nottinghamshire-jobs
+baseurl: ""
 markdown: CommonMarkGhPages
 commonmark:
   extensions: [table, strikethrough, autolink, tagfilter]

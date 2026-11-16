@@ -292,3 +292,36 @@ The public page includes the Cloudflare Web Analytics beacon in `index.html`. It
 - `.github/workflows/validate-source-pr.yml` — source-change regression checks; it does not run for a routine `jobs.csv`-only Job Update.
 - `scripts/validate_job_update.py` — whole-file structural/security validator.
 - `tests/` — Python validator tests plus Node standard-library parser/search/render/link regression tests.
+
+## Planned custom-domain cutover — not yet active
+
+The future hostname is `https://jobs.transformtraining.org.uk/`. The
+Jekyll source uses `baseurl: ""` so generated Articles, Activities, navigation
+and site assets resolve from the root of that hostname. Pages CMS now writes
+media references as `/media/images`; the Jekyll layouts render pre-existing
+`/nottinghamshire-jobs/media/images/` references at `/media/images/`
+without rewriting previously published CMS content. Jobs, Support and the PWA
+manifest retain their relative URLs and thus work at the new root.
+
+**Do not merge this source change into production before the coordinated domain
+cutover is separately approved.** The existing Pages project site still lives
+under `https://transformstepstowardswork.github.io/nottinghamshire-jobs/`.
+A root-base build would break editorial assets and navigation at that address.
+
+At the authorised cutover, coordinate the GitHub Pages custom-domain setting
+for `jobs.transformtraining.org.uk`, the DNS-only `jobs` CNAME to
+`transformstepstowardswork.github.io`, an approved merge triggering the
+existing verified GitHub Actions publisher, and live HTTPS/UAT. Do not create
+a source CNAME file for this Actions publisher; GitHub Pages associates its
+custom domain through repository settings. Check the root `/jobs.csv`, four
+navigation sections, both languages, CMS images, PWA manifest, Support form
+and both My Next Step previews.
+
+**Legacy public-feed consumer check:** the published feed URL
+`https://transformstepstowardswork.github.io/nottinghamshire-jobs/jobs.csv`
+is used externally. Its redirect chain and returned bytes cannot be certified
+until the GitHub Pages domain setting has changed. Verify this at cutover.
+If the URL does not resolve to the new canonical feed, do not claim backwards
+compatibility: establish a verified redirect/alias or explicitly approved
+consumer migration before final acceptance. Keep `jobs.csv` bytes and weekly
+publication behaviour unchanged by this hostname-only change.
