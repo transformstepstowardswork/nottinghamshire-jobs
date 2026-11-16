@@ -145,6 +145,10 @@
   .reset-all{min-height:40px}
 
   .job-list{overflow:hidden;border:1px solid var(--border);border-radius:21px;background:var(--surface)}
+  .job-pagination{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-top:16px}
+  #previous-jobs-page{grid-column:1;grid-row:1;justify-self:end}
+  .job-pagination__position{grid-column:2;grid-row:1;color:var(--muted);font-size:14px;text-align:center}
+  #next-jobs-page{grid-column:3;grid-row:1;justify-self:start}
   .job-row{
     display:grid;grid-template-columns:minmax(0,1.7fr) minmax(205px,.7fr) auto;
     grid-template-areas:"main facts action";gap:24px;padding:20px 20px 19px;align-items:start

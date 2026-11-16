@@ -149,11 +149,12 @@ test('unique application URLs keep the existing View & Apply action', () => {
 
 // Exercise the production controller and event handlers without a runtime dependency.
 // Rendered layout, native controls and focus are also checked in a real browser.
-async function siteHarness(rows, { fail = false } = {}) {
+async function siteHarness(rows, { fail = false, lang = 'en' } = {}) {
   const ids = ['job-controls', 'keyword-search', 'job-area-filter', 'organisation-filter',
     'location-filter', 'work-pattern-filter', 'filter-button', 'filter-panel',
     'filter-count', 'active-chips', 'clear-filters', 'sort-filter', 'reset-filters',
-    'last-checked', 'current-vacancies', 'results-heading', 'state-message', 'job-list'];
+    'last-checked', 'current-vacancies', 'results-heading', 'state-message', 'job-list',
+    'job-pagination', 'jobs-page-position', 'previous-jobs-page', 'next-jobs-page'];
   let focused = null;
   function element() {
     const classes = new Set();
@@ -168,6 +169,9 @@ async function siteHarness(rows, { fail = false } = {}) {
     };
   }
   const elements = Object.fromEntries(ids.map(id => [id, element()]));
+  const list = elements['job-list'];
+  const jobTitles = html => [...html.matchAll(/<h3 class="job-title">(.*?)<\/h3>/g)].map(match => match[1]);
+  elements['job-pagination'].hidden = true;
   elements['sort-filter'].value = 'closing-soonest';
   elements['filter-panel'].hidden = true;
   elements['job-controls'].disabled = true;
@@ -184,6 +188,7 @@ async function siteHarness(rows, { fail = false } = {}) {
   vm.runInNewContext(fs.readFileSync(require.resolve('../app.js'), 'utf8'), {
     Date: ClockDate, Intl, URL,
     document: {
+      documentElement: { lang },
       querySelector: selector => selector === 'main' ? main : elements[selector.slice(1)],
       createDocumentFragment: element, createElement: element
     },
@@ -199,7 +204,7 @@ async function siteHarness(rows, { fail = false } = {}) {
       elements[id].listeners[event]({ target: elements[id] });
     },
     click(id, event = {}) { elements[id].listeners.click(event); },
-    titles() { return [...elements['job-list'].innerHTML.matchAll(/<h3 class="job-title">(.*?)<\/h3>/g)].map(match => match[1]); },
+    titles() { return jobTitles(list.innerHTML); },
     advance(time) { now = new Date(time); refresh(); },
     focused: () => focused
   };
@@ -328,9 +333,60 @@ test('empty feed and failed fetch expose honest states without enabling failed-l
   const empty = await siteHarness([]);
   assert.equal(empty.elements['current-vacancies'].textContent, '0');
   assert.match(empty.elements['state-message'].innerHTML, /currently no vacancies/);
+  assert.equal(empty.elements['job-pagination'].hidden, true);
   const failed = await siteHarness(interactionRows, { fail: true });
   assert.equal(failed.elements['job-controls'].disabled, true);
   assert.equal(failed.main.attributes['aria-busy'], 'false');
   assert.match(failed.elements['state-message'].innerHTML, /temporarily unavailable/);
+  assert.equal(failed.elements['job-pagination'].hidden, true);
   assert.equal(failed.errors.length, 1);
+});
+
+test('pagination replaces the visible page and resets when search, filters or sort change', async () => {
+  const rows = Array.from({ length: 41 }, (_, index) => ({
+    ...baseRow,
+    job_title: `Vacancy ${String(index + 1).padStart(2, '0')}`,
+    job_area: index === 40 ? 'IT & Digital' : baseRow.job_area,
+    closing_date: '2026-10-30'
+  }));
+  const site = await siteHarness(rows);
+  const count = site.elements['results-heading'];
+  const pager = site.elements['job-pagination'];
+  const position = site.elements['jobs-page-position'];
+  const previous = site.elements['previous-jobs-page'];
+  const next = site.elements['next-jobs-page'];
+
+  assert.deepEqual(site.titles(), rows.slice(0, 20).map(row => row.job_title));
+  assert.equal(count.textContent, 'Showing 1–20 of 41 jobs');
+  assert.equal(position.textContent, 'Page 1 of 3');
+  assert.equal(pager.hidden, false);
+  assert.equal(previous.hidden, true);
+  assert.equal(next.hidden, false);
+  site.click('next-jobs-page');
+  assert.deepEqual(site.titles(), rows.slice(20, 40).map(row => row.job_title));
+  assert.equal(site.focused(), count);
+  assert.equal(count.textContent, 'Showing 21–40 of 41 jobs');
+  assert.equal(position.textContent, 'Page 2 of 3');
+  site.click('next-jobs-page');
+  assert.deepEqual(site.titles(), ['Vacancy 41']);
+  assert.equal(count.textContent, 'Showing 41 of 41 jobs');
+  assert.equal(next.hidden, true);
+  assert.equal(previous.hidden, false);
+  site.click('previous-jobs-page');
+  assert.deepEqual(site.titles(), rows.slice(20, 40).map(row => row.job_title));
+
+  site.set('sort-filter', 'title-az');
+  assert.equal(position.textContent, 'Page 1 of 3');
+  site.click('next-jobs-page');
+  site.set('keyword-search', 'Vacancy 41', 'input');
+  assert.deepEqual(site.titles(), ['Vacancy 41']);
+  assert.equal(pager.hidden, true);
+  site.set('keyword-search', '', 'input');
+  site.click('next-jobs-page');
+  site.set('job-area-filter', 'IT & Digital');
+  assert.deepEqual(site.titles(), ['Vacancy 41']);
+
+  const chinese = await siteHarness(rows, { lang: 'zh-Hant' });
+  assert.equal(chinese.elements['results-heading'].textContent, '共 41 個職位，顯示第 1 至 20 個');
+  assert.equal(chinese.elements['jobs-page-position'].textContent, '第 1 頁，共 3 頁');
 });

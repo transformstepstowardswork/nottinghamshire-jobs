@@ -126,14 +126,19 @@
 
     <div class="results-toolbar">
       <div>
-        <h2 id="results-heading" aria-live="polite" lang="en">Loading jobs…</h2>
+        <h2 id="results-heading" tabindex="-1" aria-live="polite" aria-atomic="true" lang="en">Loading jobs…</h2>
         <p data-i18n="jobs.resultsDescription">Showing current vacancies from the latest checked list.</p>
       </div>
       <button class="quiet-button reset-all" id="reset-filters" type="button" hidden data-i18n="jobs.reset">Reset search &amp; filters</button>
     </div>
 
     <div class="empty state-message" id="state-message" role="status" lang="en"><p class="state-message__title">Loading the latest job list…</p><p>Please wait a moment.</p></div>
-    <section aria-labelledby="results-heading" id="job-list" class="job-list" aria-live="polite" lang="en" hidden></section>
+    <section aria-labelledby="results-heading" id="job-list" class="job-list" lang="en" hidden></section>
+    <nav class="job-pagination" id="job-pagination" aria-label="Job results pages" data-i18n-aria-label="jobs.pagination" hidden>
+      <button class="control-button" id="previous-jobs-page" type="button" aria-controls="job-list" data-i18n="jobs.previousPage">Previous</button>
+      <span class="job-pagination__position" id="jobs-page-position"></span>
+      <button class="control-button" id="next-jobs-page" type="button" aria-controls="job-list" data-i18n="jobs.nextPage">Next</button>
+    </nav>
   </main>
 
   <footer class="site-footer">
