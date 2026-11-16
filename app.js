@@ -170,9 +170,13 @@
     return;
   }
 
+  const JOBS_PER_PAGE = 20;
+  const isTraditionalChinese = document.documentElement.lang === 'zh-Hant';
+
   const state = {
     allJobs: [],
     currentJobs: [],
+    page: 1,
     applyUrlCounts: new Map(),
     londonNow: null,
     loaded: false
@@ -197,7 +201,11 @@
     currentVacancies: document.querySelector('#current-vacancies'),
     resultsHeading: document.querySelector('#results-heading'),
     stateMessage: document.querySelector('#state-message'),
-    jobList: document.querySelector('#job-list')
+    jobList: document.querySelector('#job-list'),
+    pagination: document.querySelector('#job-pagination'),
+    pagePosition: document.querySelector('#jobs-page-position'),
+    previousPage: document.querySelector('#previous-jobs-page'),
+    nextPage: document.querySelector('#next-jobs-page')
   };
 
   const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -488,25 +496,52 @@
     elements.stateMessage.innerHTML = '';
   }
 
-  function render() {
+  function updateResultsSummary(start, end, total, pageCount) {
+    elements.resultsHeading.lang = document.documentElement.lang;
+
+    if (total === 0) {
+      elements.resultsHeading.textContent = isTraditionalChinese ? '找不到符合條件的職位' : 'No jobs found';
+    } else if (isTraditionalChinese) {
+      elements.resultsHeading.textContent = `共 ${total} 個職位，顯示第 ${start} 至 ${end} 個`;
+    } else {
+      const range = start === end ? start : `${start}–${end}`;
+      elements.resultsHeading.textContent = `Showing ${range} of ${total} ${total === 1 ? 'job' : 'jobs'}`;
+    }
+
+    elements.pagination.hidden = pageCount <= 1;
+    elements.previousPage.hidden = state.page <= 1;
+    elements.nextPage.hidden = state.page >= pageCount;
+    elements.pagePosition.textContent = isTraditionalChinese
+      ? `第 ${state.page} 頁，共 ${pageCount} 頁`
+      : `Page ${state.page} of ${pageCount}`;
+  }
+
+  function changePage(offset) {
+    render(state.page + offset);
+    elements.resultsHeading.focus();
+  }
+
+  function render(page = 1) {
     if (!state.loaded) {
       return;
     }
 
     const jobs = filteredJobs();
-    const active = hasActiveFilters();
-    elements.resultsHeading.textContent = `${jobs.length} ${jobs.length === 1 ? 'job' : 'jobs'} found`;
-    elements.reset.hidden = !active;
+    const pageCount = Math.max(1, Math.ceil(jobs.length / JOBS_PER_PAGE));
+    state.page = Math.min(Math.max(1, page), pageCount);
+    const start = (state.page - 1) * JOBS_PER_PAGE;
+    const end = Math.min(start + JOBS_PER_PAGE, jobs.length);
+    elements.reset.hidden = !hasActiveFilters();
     renderFilterChips();
     elements.jobList.hidden = jobs.length === 0;
+    elements.jobList.innerHTML = jobs.slice(start, end).map(renderJob).join('');
+    updateResultsSummary(start + 1, end, jobs.length, pageCount);
 
     if (jobs.length > 0) {
       hideState();
-      elements.jobList.innerHTML = jobs.map(renderJob).join('');
       return;
     }
 
-    elements.jobList.innerHTML = '';
     if (state.currentJobs.length === 0) {
       showState('There are currently no vacancies in the list.', 'Please check again after the next update.');
     } else {
@@ -576,7 +611,7 @@
     if (previousKeys !== nextKeys) {
       state.currentJobs = nextJobs;
       loadSummary();
-      render();
+      render(state.page);
     }
   }
 
@@ -604,9 +639,11 @@
     }
   }
 
-  elements.keyword.addEventListener('input', render);
+  elements.keyword.addEventListener('input', () => render());
   [elements.jobArea, elements.organisation, elements.location, elements.workPattern, elements.sort]
-    .forEach((control) => control.addEventListener('change', render));
+    .forEach((control) => control.addEventListener('change', () => render()));
+  elements.previousPage.addEventListener('click', () => changePage(-1));
+  elements.nextPage.addEventListener('click', () => changePage(1));
   elements.reset.addEventListener('click', resetFilters);
   elements.clearFilters.addEventListener('click', clearFilterDimensions);
   elements.filterButton.addEventListener('click', () => setFilterPanelOpen(elements.filterPanel.hidden));
