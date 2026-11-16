@@ -3,6 +3,7 @@ from scripts.verify_editorial_html import EditorialParser
 
 HEAD = '<!doctype html><html><head><script src="/nottinghamshire-jobs/locale.js" defer></script></head><body>'
 TAIL = '</body></html>'
+BEACON = '<script type=\'module\' src=\'https://static.cloudflareinsights.com/beacon.min.js\' data-cf-beacon=\'{"token": "cf190a01d4624debbc4128a92c9a0d2f"}\'></script>'
 
 
 def errors(fragment):
@@ -12,6 +13,25 @@ def errors(fragment):
 
 
 class EditorialSafetyTests(unittest.TestCase):
+    def test_approved_analytics_beacon_is_allowed_once_in_body(self):
+        self.assertEqual(errors('<main><p>Article</p></main>' + BEACON), [])
+        self.assertTrue(errors(BEACON + BEACON))
+
+    def test_analytics_exception_is_limited_to_exact_beacon(self):
+        for fragment in [
+            BEACON.replace('static.cloudflareinsights.com', 'evil.example'),
+            BEACON.replace('cf190a01d4624debbc4128a92c9a0d2f', 'another-token'),
+            BEACON.replace("type='module'", "type='text/javascript'"),
+            BEACON.replace("type='module'", "type='module' onload='alert(1)'"),
+            BEACON.replace('</script>', 'alert(1)</script>'),
+            '<article>' + BEACON + '</article>',
+        ]:
+            with self.subTest(fragment=fragment):
+                self.assertTrue(errors(fragment))
+        parser = EditorialParser('/nottinghamshire-jobs/articles/')
+        parser.feed(HEAD.replace('</head>', BEACON + '</head>') + TAIL)
+        self.assertTrue(parser.finish())
+
     def test_safe_markdown_output(self):
         self.assertEqual(errors('<h2>Heading</h2><p><strong>Bold</strong> <a href="https://example.org/">link</a></p><ul><li>One</li></ul><img src="/nottinghamshire-jobs/media/images/test.png" alt="Example">'), [])
 

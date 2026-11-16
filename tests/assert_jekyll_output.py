@@ -1,6 +1,17 @@
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from scripts.verify_editorial_html import EditorialParser, ANALYTICS_SCRIPT
 
 site = Path('_site')
+for section in ('articles', 'activities'):
+    for path in (site / section).rglob('*.html'):
+        html = path.read_text(encoding='utf-8')
+        parser = EditorialParser('/nottinghamshire-jobs/' + path.relative_to(site).as_posix())
+        parser.feed(html)
+        assert parser.finish() == [], path
+        assert ANALYTICS_SCRIPT['src'] in parser.scripts, f'Analytics missing: {path}'
 for name in ['app.js', 'jobs.csv', 'locale.js', 'styles.css', 'logo_wbg.jpg', 'manifest.webmanifest', 'icons/apple-touch-icon.png']:
     assert (site / name).read_bytes() == Path(name).read_bytes(), name
 for name in ['index.html', 'support.html']:

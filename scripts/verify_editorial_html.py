@@ -15,6 +15,11 @@ ATTRS = {
     'script': {'src', 'defer'}, 'ol': {'start'}, 'th': {'align'}, 'td': {'align'},
 }
 SCRIPTS = {BASE + 'locale.js', BASE + 'activities.js', BASE + 'articles.js'}
+ANALYTICS_SCRIPT = {
+    'type': 'module',
+    'src': 'https://static.cloudflareinsights.com/beacon.min.js',
+    'data-cf-beacon': '{"token": "cf190a01d4624debbc4128a92c9a0d2f"}',
+}
 
 
 def decoded_url(value):
@@ -80,8 +85,10 @@ class EditorialParser(HTMLParser):
         if len(names) != len(set(names)):
             self.fail(f'duplicate attribute on <{tag}>')
         attributes = dict(attrs)
+        is_analytics = (attributes == ANALYTICS_SCRIPT and tag == 'script'
+                        and self.stack == ['html', 'body'])
         for name, value in attrs:
-            if name not in COMMON | ATTRS.get(tag, set()):
+            if name not in COMMON | ATTRS.get(tag, set()) and not is_analytics:
                 self.fail(f'unsupported {name} attribute on <{tag}>')
             if name in {'href', 'src'}:
                 try:
@@ -100,7 +107,9 @@ class EditorialParser(HTMLParser):
             self.fail('unsupported metadata')
         if tag == 'script':
             src = attributes.get('src')
-            if self.stack != ['html', 'head'] or set(attributes) != {'src', 'defer'} or src not in SCRIPTS or src in self.scripts:
+            is_site_script = (self.stack == ['html', 'head']
+                              and set(attributes) == {'src', 'defer'} and src in SCRIPTS)
+            if not (is_site_script or is_analytics) or src in self.scripts:
                 self.fail('unsupported script')
             self.scripts.add(src)
         if tag not in VOID:
