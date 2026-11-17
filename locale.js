@@ -64,9 +64,9 @@
       'footer.legalRegistration': 'Transform Training Ltd is a company limited by guarantee registered in England and Wales, company number 08929034, and a registered charity in England and Wales, charity number 1158831.',
       'support.eyebrow': 'Support from Transform Training',
       'support.title': 'Support to help you move forward',
-      'support.lede': 'Everyone’s situation is different. Our support is designed to work with you over time, understand what you need, and help you make realistic progress towards your next step.',
-      'support.backToJobs': '← Back to Transform Jobs',
+      'support.lede': 'Everyone’s situation is different. We’ll work with you to understand what you need and help you take your next step.',
       'support.pathwaysIntro': 'We currently offer two support pathways.',
+      'support.pathwaysTitle': 'Support for your next step',
       'support.pathwaysLabel': 'Support pathways',
       'support.youthLabel': 'Young people',
       'support.youthTitle': 'If you are aged 18–24',
@@ -91,16 +91,19 @@
       'support.startBody': 'Tell us what you need through our enquiry form. We can discuss which support might be right for you. Sending an enquiry does not enrol you in a programme.',
       'support.startRegistration': 'For Steps Towards Work, staff will explain the funded programme face to face, check eligibility and complete the required signed application before registration.',
       'support.previewTitle': 'Meet My Next Step',
+      'support.previewCaption': 'A scene from Maya’s fictional story.',
+      'support.previewImageAlt': 'A scene from Maya’s fictional My Next Step story, recalling how she welcomed visitors at a community hall.',
       'support.previewBody': 'Explore a fictional interactive story about finding strengths in everyday experiences, preparing for opportunities and staying connected with a support worker between sessions.',
       'support.previewAccess': 'The public previews are open to everyone. The real My Next Step app is only available to people enrolled in Steps Towards Work; a newsletter subscription or enquiry does not grant access.',
-      'support.previewEnglish': 'Explore in English (new tab)',
+      'support.previewAction': 'Explore the story (new tab)',
+      'support.previewUrl': 'demos/my-next-step-en.html',
       'support.previewDisclaimer': 'These are scripted demonstrations, not the live app. Nothing you enter in the preview is sent to Transform Training or saved to a server.',
       'support.enquiryTitle': 'Interested in getting support?',
       'support.enquiryBody': 'Tell us a little about yourself and how we can contact you. A member of the Transform Training team can then get in touch with you to discuss what support may be suitable.',
       'support.enquiryAction': 'Ask about support',
       'support.enquiryNote': 'Submitting the enquiry form asks Transform Training to contact you. It does not automatically enrol you in a programme.',
       'support.privacyTitle': 'Your contact details are not collected on Transform Jobs.',
-      'support.privacyBody': 'The final button will open Transform Training’s existing enquiry form, where you can choose to leave your details.'
+      'support.privacyBody': 'The button opens Transform Training’s enquiry form in a new tab, where you can choose to leave your details.'
     },
     'zh-Hant': {
       'meta.jobsDescription': '搜尋來自地方議會、國民保健服務、院校、學校、學院信託、慈善機構及志願／社區組織的現有有薪職位。',
@@ -161,9 +164,9 @@
       'footer.legalRegistration': 'Transform Training Ltd 是一家在英格蘭及威爾斯註冊的擔保有限公司，註冊公司編號 08929034，亦是英格蘭及威爾斯的註冊慈善機構，慈善編號 1158831。',
       'support.eyebrow': 'Transform Training 提供的支援',
       'support.title': '陪你踏出下一步',
-      'support.lede': '每個人的情況都不同。我們會持續與你合作，了解你的需要，陪你一步一步朝着切合實際的目標前進。',
-      'support.backToJobs': '← 返回 Transform Jobs',
+      'support.lede': '每個人的情況都不同。我們會與你了解需要，陪你一步一步踏出下一步。',
       'support.pathwaysIntro': '我們目前提供兩類支援。',
+      'support.pathwaysTitle': '助你踏出下一步的支援',
       'support.pathwaysLabel': '支援類別',
       'support.youthLabel': '青年',
       'support.youthTitle': '如果你年齡介乎 18 至 24 歲',
@@ -188,21 +191,26 @@
       'support.startBody': '你可以透過查詢表格告訴我們需要甚麼協助。我們會與你了解情況，討論適合的支援。提交查詢並不代表已正式參加任何計劃。',
       'support.startRegistration': '如希望參加 Steps Towards Work，工作員會安排面對面介紹資助計劃、核實參加資格，並在正式登記前完成所需的簽署申請表。',
       'support.previewTitle': '認識 My Next Step',
+      'support.previewCaption': 'Maya 虛構故事中的一個場景。',
+      'support.previewImageAlt': 'Maya 的 My Next Step 虛構故事場景，回想她在社區會堂迎接訪客的經歷。',
       'support.previewBody': '透過一段虛構的互動故事，看看如何從日常經歷重新認識自己的能力、為機會作準備，以及在兩次面談之間繼續與工作員保持連繫。',
       'support.previewAccess': '任何人都可以觀看公開示範。但真正的 My Next Step 應用程式只供已加入 Steps Towards Work 的參加者使用；訂閱電郵或提交查詢不會自動取得使用權限。',
-      'support.previewEnglish': '觀看英文版（新分頁）',
+      'support.previewAction': '觀看互動故事（新分頁）',
+      'support.previewUrl': 'demos/my-next-step-zh-hant.html',
       'support.previewDisclaimer': '這是預設情境的互動示範，不是真正的應用程式。示範中的輸入不會傳送給 Transform Training，也不會儲存在伺服器。',
       'support.enquiryTitle': '想了解可以獲得哪些支援？',
       'support.enquiryBody': '請簡單介紹你的情況，並告訴我們如何聯絡你。Transform Training 的工作員可以聯絡你，一起討論哪些支援適合你。',
       'support.enquiryAction': '查詢支援服務',
       'support.enquiryNote': '提交查詢表格後，Transform Training 便知道你希望我們聯絡你。提交表格不會自動報名參加任何計劃。',
       'support.privacyTitle': 'Transform Jobs 不會收集你的聯絡資料。',
-      'support.privacyBody': '按下上方按鈕會開啟 Transform Training 的查詢表格，你可以自行選擇是否留下聯絡資料。'
+      'support.privacyBody': '按鈕會在新分頁開啟 Transform Training 的查詢表格，你可以自行選擇是否留下聯絡資料。'
     }
   };
 
   const ATTRIBUTE_COPY = {
     'data-i18n-aria-label': 'aria-label',
+    'data-i18n-alt': 'alt',
+    'data-i18n-href': 'href',
     'data-i18n-placeholder': 'placeholder',
     'data-i18n-content': 'content'
   };
