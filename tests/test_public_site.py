@@ -13,7 +13,8 @@ class PublicSiteTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.site = Path(self.temp.name)
-        for name in (*ASSETS, 'index.html', 'support.html'):
+        for name in (*ASSETS, 'index.html', 'support.html',
+                     'media/images/my-next-step-story-preview.jpg'):
             target = self.site / name
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / name, target)

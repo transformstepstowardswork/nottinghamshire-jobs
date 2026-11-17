@@ -67,7 +67,9 @@ test('Jobs and Support expose only static locale hooks and the shared language s
   assert.match(index, /apple-mobile-web-app-title" content="Transform Jobs"/);
   assert.match(support, /apple-mobile-web-app-title" content="Transform Jobs"/);
   assert.match(support, /demos\/my-next-step-en\.html/);
-  assert.match(support, /demos\/my-next-step-zh-hant\.html/);
+  assert.match(support, /data-i18n-href="support\.previewUrl"/);
+  assert.equal(COPY.en['support.previewUrl'], 'demos/my-next-step-en.html');
+  assert.equal(COPY['zh-Hant']['support.previewUrl'], 'demos/my-next-step-zh-hant.html');
   assert.match(support, /support\.previewAccess/);
   assert.match(COPY.en['support.previewAccess'], /only available to people enrolled in Steps Towards Work/);
   assert.match(COPY['zh-Hant']['support.previewAccess'], /Steps Towards Work/);
