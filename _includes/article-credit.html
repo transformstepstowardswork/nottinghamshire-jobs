@@ -1,0 +1,8 @@
+{% assign credit_author = include.author | default: '' | strip %}
+{% assign credit_source = include.source | default: '' | strip %}
+{% assign credit_url = include.url | default: '' | strip %}
+{% assign credit_scheme8 = credit_url | slice: 0, 8 | downcase %}
+{% assign credit_scheme7 = credit_url | slice: 0, 7 | downcase %}
+{% if credit_author != '' or credit_source != '' %}
+<p class="article-credit">{% if credit_author != '' %}<span>{% if page.locale == 'zh-Hant' %}作者：{% else %}By {% endif %}{{ credit_author | escape }}</span>{% endif %}{% if credit_author != '' and credit_source != '' %} · {% endif %}{% if credit_source != '' %}<span>{% if page.locale == 'zh-Hant' %}來源：{% else %}Source: {% endif %}{% if credit_scheme8 == 'https://' or credit_scheme7 == 'http://' %}<a href="{{ credit_url | escape }}">{{ credit_source | escape }}</a>{% else %}{{ credit_source | escape }}{% endif %}</span>{% endif %}</p>
+{% endif %}
