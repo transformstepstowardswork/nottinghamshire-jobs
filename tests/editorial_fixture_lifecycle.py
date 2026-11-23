@@ -4,6 +4,16 @@ import sys
 
 
 def prepare():
+    cases = {
+        'source-only': 'source_name: Plain source\nsource_url: http://example.org/source\n',
+        'author-only': 'author_name: Sole author\n',
+        'url-only': 'source_url: https://example.org/hidden\n',
+        'blank-credit': 'author_name: "   "\nsource_name: "   "\nsource_url: "   "\n',
+        'unsafe-credit': 'author_name: Credited author\nsource_name: Unsafe source\nsource_url: javascript:alert(1)\n',
+    }
+    for name, fields in cases.items():
+        Path(f'_articles_en/{name}.md').write_text(
+            f'---\ntitle: {name}\ndate: 2026-11-01\n{fields}---\n\nCredit fixture.\n', encoding='utf-8')
     en = Path('_articles_en/sample.md')
     original = en.read_text(encoding='utf-8')
     Path('_articles_en/sample-2.md').write_text(original, encoding='utf-8')
@@ -30,6 +40,18 @@ def check():
     assert 'Synthetic activity' not in en_activity and not (site / 'activities/en/sample/index.html').exists()
     assert '已修改活動' in zh_activity and '中文測試活動' in zh_activity
     assert '/activities/zh-hant/sample/' in zh_activity and '/activities/zh-hant/sample-2/' in zh_activity
+    source_only = (site / 'articles/en/source-only/index.html').read_text(encoding='utf-8')
+    assert 'Source: <a href="http://example.org/source">Plain source</a>' in source_only
+    assert '<span>By ' not in source_only and ' · ' not in source_only
+    author_only = (site / 'articles/en/author-only/index.html').read_text(encoding='utf-8')
+    assert 'By Sole author' in author_only and 'Source:' not in author_only
+    for name in ('url-only', 'blank-credit'):
+        html = (site / f'articles/en/{name}/index.html').read_text(encoding='utf-8')
+        assert 'class="article-credit"' not in html
+        assert 'https://example.org/hidden' not in html
+    unsafe = (site / 'articles/en/unsafe-credit/index.html').read_text(encoding='utf-8')
+    assert 'By Credited author' in unsafe and 'Source: Unsafe source' in unsafe
+    assert 'javascript:' not in unsafe
     print('Independent fixture creation, editing, deletion and stable distinct URLs verified.')
 
 

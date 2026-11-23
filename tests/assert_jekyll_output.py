@@ -29,6 +29,18 @@ activity = (site / 'activities/en/sample/index.html').read_text(encoding='utf-8'
 assert '<html lang="zh-Hant"' in chinese
 assert '/nottinghamshire-jobs/articles/zh-hant/' in chinese
 assert 'Sample heading' in article and 'https://example.org/' in article
+for html, author_label, source_label in [(article, 'By ', 'Source: '), (chinese, '作者：', '來源：')]:
+    assert author_label + 'Alex &lt;Writer&gt; &amp; Co' in html
+    assert source_label in html
+    assert 'href="https://example.org/credits?from=article&amp;lang=en"' in html
+    assert '>Career &lt;Notes&gt; &amp; Advice</a>' in html
+    assert '<Writer>' not in html and '<Notes>' not in html
+    assert html.index('class="article-credit"') < html.index('class="lede"')
+for html, label in [(en, 'By '), (zh, '作者：')]:
+    assert label + 'Alex &lt;Writer&gt; &amp; Co' in html
+    assert 'example.org/credits' not in html, 'Source link belongs on the article, not its archive card'
+assert 'class="article-credit"' not in (site / 'articles/en/untagged/index.html').read_text(encoding='utf-8')
+assert 'class="article-credit"' not in activity
 assert 'href="javascript:' not in article.lower(), 'Unsafe Markdown link survived rendering'
 assert '<script>alert' not in article.lower(), 'Raw script survived rendering'
 assert 'alt="Inline example"' in article

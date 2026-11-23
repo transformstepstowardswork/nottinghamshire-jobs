@@ -6,6 +6,16 @@ Choose **New** to create an entry, or open an existing entry to edit or delete i
 
 For an article, add one or more topics using the repeatable topic field, one topic per item. Enter the words without `#`; the site adds it. Readers can select topics on that language's article archive. Leave the field empty when no topic is needed.
 
+## Article authors and source credits
+
+Both Article collections have three optional credit fields: **Author / 作者** (`author_name`), **Source website or publication / 來源網站或刊物名稱** (`source_name`), and **Source link / 來源連結** (`source_url`). Enter the credited author, website/publication name and the HTTP(S) destination Anthony supplies. The destination may be the original article or the author's homepage; use the specified link.
+
+For a repost, obtain confirmation that permission to repost has been given and complete all three fields before publication. Ask Anthony for missing credit details or permission confirmation. A credit link alone does not establish permission. Never infer authorship from an email sender, website owner or organisation, and do not invent credits for existing articles.
+
+Preserve the credited names and URL across English and Traditional Chinese versions. Translate a website/publication name only when Anthony supplies or approves that version. Use these fields for the standard credit rather than repeating it in the article body; retain any separately supplied copyright or permission wording.
+
+The article page shows the author and linked source beneath its date/category, before its summary. Archive cards show the author only. Blank fields produce no empty labels. If only a source name is entered, it appears as text; a source URL without a source name is not displayed. These partial states support ordinary editing but do not replace the complete credit required for a repost.
+
 Choose an image from the image picker or upload one. Use a common web image (JPEG, PNG, WebP or GIF), a descriptive filename and a reasonably small file; add a clear image description in the alt-text field. Add a description to inline images too. A cover without an image description is not displayed. The CMS stores uploaded images in this repository.
 
 Save the entry. **Save creates a Git commit; it does not prove the site built or published successfully.** Check the repository's Pages build in GitHub Actions, then open the published archive and the entry's link in the intended language. A new item receives a stable filename; changing its title does not change that address. Entries with the same title remain separate. If the build reports an editorial HTML error, remove the unsafe link or unsupported raw HTML and save again; ordinary headings, lists, links and images are supported.

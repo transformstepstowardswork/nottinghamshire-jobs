@@ -51,6 +51,28 @@ both only when requested; otherwise use the intended language. Preserve names,
 addresses, links and factual meaning across requested translations. Do not put
 confidential participant information into public content or committed drafts.
 
+## Author and source credits
+
+Both Article collections support `author_name`, `source_name` and `source_url`.
+Use the author, website/publication name and HTTP(S) destination Anthony supplies;
+the link may point to the original article or the author's homepage. For a repost,
+complete all three fields and confirm that permission to repost has been given
+before publication. Ask for missing details or permission confirmation. A credit
+link is not permission, and an email sender or website owner is not automatically
+the author. Never invent credits or backfill existing articles by inference.
+
+Preserve credited names and the URL across requested language versions. Translate
+a website/publication name only when Anthony supplies or approves that version.
+Use these fields for the standard credit instead of duplicating it in the body;
+retain separately supplied copyright or permission wording. The fields remain
+optional for ordinary articles; leave unknown credits absent. Activity entries
+do not have these credit fields.
+
+The layout displays author and named source below date/category and before the
+summary; archive cards show author only. A source name without a URL displays as
+text; a URL without a source name is hidden. These partial editing states do not
+waive the complete-credit requirement for a repost.
+
 ## Post structure
 
 The layouts supply the page heading and metadata; do not repeat the title as
@@ -60,7 +82,7 @@ Use [the entry layout](../../../_layouts/editorial.html) and
 
 | Part | Article | Activity |
 | --- | --- | --- |
-| Heading and metadata | Title, publication date, optional category | Title |
+| Heading and metadata | Title, publication date, optional category, author and source credit | Title |
 | Introduction | Short summary | Short summary |
 | Topics and image | Relevant article tags, then optional described cover | Optional described cover |
 | Structured details | No event details panel | Dates/times, venue, organiser, eligibility, cost, then registration/details link |
@@ -109,7 +131,8 @@ frontmatter string. Quote YAML strings where necessary so colons, quotes, dates
 and line breaks retain their intended values.
 
 - Articles currently require `title` and `date` (`YYYY-MM-DD`). Optional fields
-  include `summary`, `category`, `tags`, `image` and `image_alt`. Store topics
+  include `summary`, `category`, `author_name`, `source_name`, `source_url`, `tags`,
+  `image` and `image_alt`. Source links must use HTTP(S). Store topics
   as a YAML list without leading `#`.
 - Activities currently require `title`. Use available `summary`, `start_date`,
   `start_time`, `end_date`, `end_time`, `venue`, `organiser`, `eligibility`,

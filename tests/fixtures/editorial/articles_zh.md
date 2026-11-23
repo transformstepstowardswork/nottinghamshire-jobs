@@ -2,6 +2,9 @@
 title: 中文測試文章
 date: 2026-11-01
 summary: 獨立的測試內容。
+author_name: 'Alex <Writer> & Co'
+source_name: 'Career <Notes> & Advice'
+source_url: 'https://example.org/credits?from=article&lang=en'
 tags: [" 求職 ", "求職", "社區"]
 ---
 
